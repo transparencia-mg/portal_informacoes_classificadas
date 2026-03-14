@@ -1,0 +1,120 @@
+{
+  "name": "portal_informacoes_classificadas",
+  "owner_org": "",
+  "profile": "data-package",
+  "resources": [
+    {
+      "description": "Insira a descrição/explicação detalhada deste recurso.",
+      "dialect": {
+        "delimiter": ";"
+      },
+      "encoding": "utf-8-sig",
+      "format": "csv",
+      "hashing": "md5",
+      "name": "informacoes_classificadas_desclassificadas",
+      "path": "data/informacoes_classificadas_desclassificadas.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "name": "orgao_entidade",
+            "type": "string"
+          },
+          {
+            "name": "sigla",
+            "type": "string"
+          },
+          {
+            "name": "codigo_indexacao",
+            "type": "string"
+          },
+          {
+            "name": "tipo_documento",
+            "type": "string"
+          },
+          {
+            "name": "grau_sigilo",
+            "type": "string"
+          },
+          {
+            "name": "categoria",
+            "type": "string"
+          },
+          {
+            "name": "fundamento_legal",
+            "type": "string"
+          },
+          {
+            "name": "data_producao",
+            "type": "date"
+          },
+          {
+            "name": "data_classificacao",
+            "type": "string"
+          },
+          {
+            "name": "data_desclassificacao",
+            "type": "date"
+          },
+          {
+            "name": "prazo_classificacao",
+            "type": "string"
+          },
+          {
+            "name": "data_atualizacao",
+            "type": "any"
+          },
+          {
+            "name": "link",
+            "type": "string"
+          }
+        ]
+      },
+      "scheme": "file",
+      "title": "Insira um título humanamente legível para este recurso."
+    },
+    {
+      "description": "Insira a descrição/explicação detalhada deste recurso.",
+      "dialect": {
+        "delimiter": ";"
+      },
+      "encoding": "utf-8-sig",
+      "format": "csv",
+      "hashing": "md5",
+      "name": "orgao_sem_informacoes_classificadas",
+      "path": "data/orgao_sem_informacoes_classificadas.csv",
+      "profile": "tabular-data-resource",
+      "schema": {
+        "fields": [
+          {
+            "name": "orgao_entidade",
+            "type": "string"
+          },
+          {
+            "name": "sigla",
+            "type": "string"
+          },
+          {
+            "name": "informacao_classificada",
+            "type": "string"
+          },
+          {
+            "name": "informacao_desclassificada",
+            "type": "string"
+          },
+          {
+            "name": "data_atualizacao",
+            "type": "date"
+          },
+          {
+            "name": "link",
+            "type": "string"
+          }
+        ]
+      },
+      "scheme": "file",
+      "title": "Insira um título humanamente legível para este recurso."
+    }
+  ],
+  "title": "Portal_informacoes_classificadas"
+}
