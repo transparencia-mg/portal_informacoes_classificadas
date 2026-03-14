@@ -794,7 +794,7 @@
             switch(tipo) {
                 case 'classificada': return '<span class="badge-classificacao badge-classificada"><i class="material-icons" style="font-size: 12px;">lock</i> Classificada</span>';
                 case 'desclassificada': return '<span class="badge-classificacao badge-desclassificada"><i class="material-icons" style="font-size: 12px;">lock_open</i> Desclassificada</span>';
-                default: return '<span class="badge-classificacao badge-sem-info"><i class="material-icons" style="font-size: 12px;">info</i> Sem informação</span>';
+                default: return '<span class="badge-classificacao badge-sem-info"><i class="material-icons" style="font-size: 12px;">info</i> Não possui informação classificada ou desclassificada</span>';
             }
         }
 
@@ -968,7 +968,7 @@
                                 <option value="">Todas</option>
                                 <option value="classificada">Classificadas</option>
                                 <option value="desclassificada">Desclassificadas</option>
-                                <option value="sem-info">Sem informação</option>
+                                <option value="sem-info">Não possui informação classificada ou desclassificada</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -1276,7 +1276,7 @@
                                 <option value="">Todas</option>
                                 <option value="classificada">Classificadas</option>
                                 <option value="desclassificada">Desclassificadas</option>
-                                <option value="sem-info">Sem informação</option>
+                                <option value="sem-info">Não possui informação classificada ou desclassificada</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -1560,7 +1560,7 @@
                 return [
                     o.orgao,
                     o.sigla,
-                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Sem informação'),
+                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Não possui informação classificada ou desclassificada'),
                     o.totalDocumentos.toString(),
                     formatarData(dataAtualizacao)
                 ];
