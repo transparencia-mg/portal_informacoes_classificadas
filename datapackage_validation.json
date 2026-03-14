@@ -1,0 +1,194 @@
+{
+  "version": "4.16.6",
+  "time": 0.074,
+  "errors": [],
+  "tasks": [
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "informacoes_classificadas_desclassificadas",
+        "path": "data/informacoes_classificadas_desclassificadas.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "orgao_entidade",
+              "type": "string"
+            },
+            {
+              "name": "sigla",
+              "type": "string"
+            },
+            {
+              "name": "codigo_indexacao",
+              "type": "string"
+            },
+            {
+              "name": "tipo_documento",
+              "type": "string"
+            },
+            {
+              "name": "grau_sigilo",
+              "type": "string"
+            },
+            {
+              "name": "categoria",
+              "type": "string"
+            },
+            {
+              "name": "fundamento_legal",
+              "type": "string"
+            },
+            {
+              "name": "data_producao",
+              "type": "date"
+            },
+            {
+              "name": "data_classificacao",
+              "type": "string"
+            },
+            {
+              "name": "data_desclassificacao",
+              "type": "date"
+            },
+            {
+              "name": "prazo_classificacao",
+              "type": "string"
+            },
+            {
+              "name": "data_atualizacao",
+              "type": "any"
+            },
+            {
+              "name": "link",
+              "type": "string"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "f827bd2794574e109d7e00bbf7af170b",
+          "bytes": 69138,
+          "fields": 13,
+          "rows": 169
+        }
+      },
+      "time": 0.03,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    },
+    {
+      "resource": {
+        "description": "Insira a descrição/explicação detalhada deste recurso.",
+        "dialect": {
+          "delimiter": ";"
+        },
+        "encoding": "utf-8-sig",
+        "format": "csv",
+        "hashing": "md5",
+        "name": "orgao_sem_informacoes_classificadas",
+        "path": "data/orgao_sem_informacoes_classificadas.csv",
+        "profile": "tabular-data-resource",
+        "schema": {
+          "fields": [
+            {
+              "name": "orgao_entidade",
+              "type": "string"
+            },
+            {
+              "name": "sigla",
+              "type": "string"
+            },
+            {
+              "name": "informacao_classificada",
+              "type": "string"
+            },
+            {
+              "name": "informacao_desclassificada",
+              "type": "string"
+            },
+            {
+              "name": "data_atualizacao",
+              "type": "date"
+            },
+            {
+              "name": "link",
+              "type": "string"
+            }
+          ]
+        },
+        "scheme": "file",
+        "title": "Insira um título humanamente legível para este recurso.",
+        "stats": {
+          "hash": "6d6fd559e74752e27afe9a503bf8f3f0",
+          "bytes": 33111,
+          "fields": 6,
+          "rows": 52
+        }
+      },
+      "time": 0.019,
+      "scope": [
+        "hash-count-error",
+        "byte-count-error",
+        "field-count-error",
+        "row-count-error",
+        "blank-header",
+        "extra-label",
+        "missing-label",
+        "blank-label",
+        "duplicate-label",
+        "incorrect-label",
+        "blank-row",
+        "primary-key-error",
+        "foreign-key-error",
+        "extra-cell",
+        "missing-cell",
+        "type-error",
+        "constraint-error",
+        "unique-error"
+      ],
+      "partial": false,
+      "errors": [],
+      "stats": {
+        "errors": 0
+      },
+      "valid": true
+    }
+  ],
+  "stats": {
+    "errors": 0,
+    "tasks": 2
+  },
+  "valid": true
+}
