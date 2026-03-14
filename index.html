@@ -33,6 +33,7 @@
             --info-blue: #17a2b8;
             --classified-red: #dc3545;
             --declassified-green: #28a745;
+            --no-info-gray: #6c757d;
             --restricted-orange: #fd7e14;
         }
 
@@ -143,6 +144,15 @@
         .form-control:focus, .form-select:focus {
             border-color: var(--accent-red);
             box-shadow: 0 0 0 2px rgba(185, 60, 66, 0.15);
+        }
+
+        /* Aumentar tamanho do filtro de situação */
+        #filtroSituacaoCI, #filtroSituacaoVG {
+            font-size: 13px;
+            white-space: normal;
+            height: auto;
+            min-height: 42px;
+            padding: 8px 12px;
         }
 
         /* ==================== CARDS DE MÉTRICAS ==================== */
@@ -298,6 +308,9 @@
             font-size: 11px;
             font-weight: 600;
             white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         .badge-classificada { background-color: #f8d7da; color: #721c24; }
         .badge-desclassificada { background-color: #d4edda; color: #155724; }
@@ -460,6 +473,11 @@
             border-bottom: none;
         }
         .modal-creative .modal-body { padding: 30px; background: #f8fafc; }
+        .modal-creative .modal-footer {
+            background: white;
+            padding: 15px 30px;
+            border-top: 1px solid #dee2e6;
+        }
         .info-card {
             background: white;
             border-radius: 10px;
@@ -549,6 +567,36 @@
             word-break: break-all;
         }
         .link-info:hover { color: var(--accent-red); text-decoration: underline; }
+
+        /* ==================== TABELA MODAL ==================== */
+        .modal-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+        .table-modal thead {
+            position: sticky;
+            top: 0;
+            background-color: var(--primary-dark);
+            color: white;
+            z-index: 10;
+        }
+        .table-modal th {
+            padding: 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+        .table-modal td {
+            padding: 8px 10px;
+            font-size: 12px;
+        }
+        .table-modal .table-success {
+            background-color: #d4edda;
+        }
+        .table-modal .table-danger {
+            background-color: #f8d7da;
+        }
     </style>
 </head>
 <body>
@@ -591,15 +639,17 @@
 
     <!-- ==================== MODAL DE DETALHES ==================== -->
     <div class="modal fade" id="detailModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog modal-xl">
             <div class="modal-content modal-creative">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="material-icons me-2">lock</i> Detalhes da Informação</h5>
+                    <h5 class="modal-title"><i class="material-icons me-2">lock</i> Detalhes do Órgão</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalContent"></div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary-custom" data-bs-dismiss="modal"><i class="material-icons me-2">close</i>Fechar</button>
+                    <button type="button" class="btn-secondary-custom" onclick="exportarModalPDF()"><i class="material-icons me-2">picture_as_pdf</i>Exportar PDF</button>
+                    <button type="button" class="btn-secondary-custom" onclick="exportarModalCSV()"><i class="material-icons me-2">description</i>Exportar CSV</button>
+                    <button type="button" class="btn-primary-custom" data-bs-dismiss="modal"><i class="material-icons me-2">close</i>Fechar</button>
                 </div>
             </div>
         </div>
@@ -622,16 +672,17 @@
         let dadosClassificadas = [];
         let dadosOrgaosSemInfo = [];
         let dadosCompletos = [];
-        let orgaosVisaoGeral = []; // Array para os órgãos da visão geral
-        let orgaosFiltradosVG = []; // Array para os órgãos filtrados na visão geral
+        let orgaosVisaoGeral = [];
+        let orgaosFiltradosVG = [];
         let metricaGeral = {};
+        let currentModalData = null;
 
         // Variáveis de paginação para Consulta Individual
         let paginaAtualCI = 1;
         let itensPorPaginaCI = 50;
         let totalPaginasCI = 1;
-        let todosOrgaos = [];
-        let orgaosFiltrados = [];
+        let todosOrgaos = []; // Array com órgãos únicos
+        let orgaosFiltrados = []; // Array com órgãos podendo ter duplicatas (classificada/desclassificada)
 
         const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
         const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae60'];
@@ -716,7 +767,6 @@
         }
 
         function setupEventListeners() {
-            // Dropdown de compartilhamento - fechar ao clicar fora
             window.addEventListener('click', (e) => {
                 if (!e.target.closest('.share-dropdown')) {
                     document.querySelectorAll('.share-options').forEach(opt => opt.classList.remove('show'));
@@ -763,11 +813,6 @@
             }
         }
 
-        function formatarPrazoClassificacao(prazo) {
-            if (!prazo) return '-';
-            return prazo;
-        }
-
         function getBadgeGrauSigilo(grau) {
             if (!grau) return 'badge-sem-info';
             grau = grau.toLowerCase();
@@ -777,41 +822,25 @@
             return 'badge-classificada';
         }
 
-        function getClassificacaoOrgao(sigla) {
-            // Verifica se há documentos com data de desclassificação preenchida
-            const documentosDesclassificados = dadosClassificadas.filter(d => 
-                d.sigla === sigla && d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00'
-            );
-            
-            if (documentosDesclassificados.length > 0) {
-                return 'desclassificada';
-            }
-            
-            // Verifica se há documentos classificados (sem data de desclassificação)
-            const documentosClassificados = dadosClassificadas.filter(d => 
+        function verificarTemClassificados(sigla) {
+            return dadosClassificadas.some(d => 
                 d.sigla === sigla && (!d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00')
             );
-            
-            if (documentosClassificados.length > 0) {
-                return 'classificada';
-            }
-            
-            // Verifica no arquivo de órgãos sem informação
-            const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === sigla);
-            if (semInfo) {
-                if (semInfo.informacao_desclassificada === 'sim') return 'desclassificada';
-                if (semInfo.informacao_classificada === 'sim') return 'classificada';
-            }
-            
-            return 'sem-info';
+        }
+        
+        function verificarTemDesclassificados(sigla) {
+            return dadosClassificadas.some(d => 
+                d.sigla === sigla && d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00'
+            );
         }
 
-        function getBadgeClassificacao(sigla) {
-            const tipo = getClassificacaoOrgao(sigla);
-            switch(tipo) {
-                case 'classificada': return '<span class="badge-classificacao badge-classificada"><i class="material-icons" style="font-size: 12px;">lock</i> Classificada</span>';
-                case 'desclassificada': return '<span class="badge-classificacao badge-desclassificada"><i class="material-icons" style="font-size: 12px;">lock_open</i> Desclassificada</span>';
-                default: return '<span class="badge-classificacao badge-sem-info"><i class="material-icons" style="font-size: 12px;">info</i> Não possui inf. classificada ou desclassificada</span>';
+        function getBadgeSituacao(situacao) {
+            if (situacao === 'classificada') {
+                return '<span class="badge-classificacao badge-classificada"><i class="material-icons" style="font-size: 12px;">lock</i> Classificada</span>';
+            } else if (situacao === 'desclassificada') {
+                return '<span class="badge-classificacao badge-desclassificada"><i class="material-icons" style="font-size: 12px;">lock_open</i> Desclassificada</span>';
+            } else {
+                return '<span class="badge-classificacao badge-sem-info"><i class="material-icons" style="font-size: 12px;">info</i> Não possui inf. classificada ou desclassificada</span>';
             }
         }
 
@@ -833,30 +862,27 @@
 
         function calcularMetricas() {
             const orgaos = new Set();
-            let classificadas = 0;
-            let desclassificadas = 0;
+            let orgaosClassificadas = new Set();
+            let orgaosDesclassificadas = new Set();
             
-            // Contar documentos classificados e desclassificados
             dadosClassificadas.forEach(d => {
                 orgaos.add(d.sigla);
                 if (d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') {
-                    desclassificadas++;
+                    orgaosDesclassificadas.add(d.sigla);
                 } else {
-                    classificadas++;
+                    orgaosClassificadas.add(d.sigla);
                 }
             });
             
-            // Adicionar órgãos do arquivo sem informação
             dadosOrgaosSemInfo.forEach(d => {
                 orgaos.add(d.sigla);
             });
             
             return {
                 totalOrgaos: orgaos.size,
-                totalDocumentosClassificados: classificadas,
-                totalDocumentosDesclassificados: desclassificadas,
-                totalDocumentos: dadosClassificadas.length,
-                orgaosComClassificacao: new Set(dadosClassificadas.map(d => d.sigla)).size
+                totalClassificadas: orgaosClassificadas.size,
+                totalDesclassificadas: orgaosDesclassificadas.size,
+                totalDocumentos: dadosClassificadas.length
             };
         }
 
@@ -869,42 +895,24 @@
         function agruparOrgaosCompletos() {
             const mapa = new Map();
             
-            // Processa documentos classificados/desclassificados
             dadosClassificadas.forEach(item => {
                 if (!mapa.has(item.sigla)) {
-                    const isDesclassificado = item.data_desclassificacao && item.data_desclassificacao !== '' && item.data_desclassificacao !== '0000-00-00 00:00:00';
-                    
                     mapa.set(item.sigla, {
                         orgao: item.orgao_entidade,
                         sigla: item.sigla,
-                        documentosClassificados: isDesclassificado ? 0 : 1,
-                        documentosDesclassificados: isDesclassificado ? 1 : 0,
-                        totalDocumentos: 1,
                         documentos: [item]
                     });
                 } else {
                     const o = mapa.get(item.sigla);
-                    const isDesclassificado = item.data_desclassificacao && item.data_desclassificacao !== '' && item.data_desclassificacao !== '0000-00-00 00:00:00';
-                    
-                    if (isDesclassificado) {
-                        o.documentosDesclassificados++;
-                    } else {
-                        o.documentosClassificados++;
-                    }
-                    o.totalDocumentos++;
                     o.documentos.push(item);
                 }
             });
             
-            // Adiciona órgãos sem informações classificadas
             dadosOrgaosSemInfo.forEach(item => {
                 if (!mapa.has(item.sigla)) {
                     mapa.set(item.sigla, {
                         orgao: item.orgao_entidade,
                         sigla: item.sigla,
-                        documentosClassificados: 0,
-                        documentosDesclassificados: 0,
-                        totalDocumentos: 0,
                         documentos: []
                     });
                 }
@@ -919,17 +927,14 @@
         async function carregarDados() {
             mostrarLoading(true);
             try {
-                // Carregar dados de informações classificadas
                 const respostaClassificadas = await fetch(CLASSIFICADAS_URL);
                 const textoClassificadas = await respostaClassificadas.text();
                 dadosClassificadas = parseCSV(textoClassificadas);
                 
-                // Carregar dados de órgãos sem informações
                 const respostaOrgaos = await fetch(ORGAOS_SEM_INFO_URL);
                 const textoOrgaos = await respostaOrgaos.text();
                 dadosOrgaosSemInfo = parseCSV(textoOrgaos);
                 
-                // Combinar dados
                 dadosCompletos = [...dadosClassificadas, ...dadosOrgaosSemInfo];
                 metricaGeral = calcularMetricas();
                 todosOrgaos = agruparOrgaosCompletos();
@@ -940,7 +945,6 @@
                 renderizarConsulta();
                 renderizarDownloads();
                 
-                // Atualizar altura do iframe após renderizar
                 setTimeout(iframeUpdateHeight, 500);
             } catch (erro) {
                 console.error('Erro:', erro);
@@ -955,7 +959,6 @@
             const container = document.getElementById('visao-geral-content');
             const opcoes = obterOpcoesFiltro();
             
-            // Dados para gráficos
             const docsPorGrau = {};
             dadosClassificadas.forEach(d => {
                 docsPorGrau[d.grau_sigilo] = (docsPorGrau[d.grau_sigilo] || 0) + 1;
@@ -972,7 +975,6 @@
                 .slice(0, 10);
             
             let html = `
-                <!-- Filtros -->
                 <div class="filter-container">
                     <div class="row g-3">
                         <div class="col-md-3">
@@ -989,17 +991,16 @@
                                 ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">lock</i>Situação</label>
+                        <div class="col-md-4">
+                            <label class="filter-label"><i class="material-icons">info</i>Situação</label>
                             <select class="form-select" id="filtroSituacaoVG">
                                 <option value="">Todas</option>
-                                <option value="classificada">Classificadas</option>
-                                <option value="desclassificada">Desclassificadas</option>
-                                <option value="sem-info">Não possui inf. classificada ou desclassificada</option>
+                                <option value="classificada">Classificada</option>
+                                <option value="desclassificada">Desclassificada</option>
+                                <option value="nenhuma">Não possui inf. classificada ou desclassificada</option>
                             </select>
                         </div>
-                        <div class="col-md-3">
-                            <!-- Espaço vazio para alinhamento -->
+                        <div class="col-md-2">
                         </div>
                     </div>
                     
@@ -1014,21 +1015,18 @@
                     </div>
                 </div>
 
-                <!-- Cards -->
                 <div class="row mb-4">
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Órgãos</div><div class="metric-value">${metricaGeral.totalOrgaos.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Documentos Classificados</div><div class="metric-value">${metricaGeral.totalDocumentosClassificados.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Documentos Desclassificados</div><div class="metric-value">${metricaGeral.totalDocumentosDesclassificados.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Documentos</div><div class="metric-value">${metricaGeral.totalDocumentos.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total Órgãos</div><div class="metric-value">${metricaGeral.totalOrgaos}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Classificadas</div><div class="metric-value">${metricaGeral.totalClassificadas}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Desclassificadas</div><div class="metric-value">${metricaGeral.totalDesclassificadas}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total Documentos</div><div class="metric-value">${metricaGeral.totalDocumentos}</div></div></div>
                 </div>
 
-                <!-- Gráficos -->
                 <div class="row mb-4">
                     <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Documentos por Grau de Sigilo</h4></div><div class="chart-wrapper"><canvas id="chartGrauSigilo"></canvas></div></div></div>
                     <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Top 10 Órgãos com Documentos</h4></div><div class="chart-wrapper"><canvas id="chartOrgaos"></canvas></div></div></div>
                 </div>
 
-                <!-- Ações -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <div class="d-flex gap-2">
                         <button class="btn-export" onclick="exportarTabelaVisaoGeralCSV()"><i class="material-icons me-2">description</i>CSV</button>
@@ -1047,7 +1045,6 @@
                     <span class="table-badge" id="totalOrgaosBadge">${orgaosVisaoGeral.length} órgãos</span>
                 </div>
 
-                <!-- Tabela -->
                 <div class="table-container">
                     <div class="table-fixed-header-container">
                         <table class="table" id="orgaosTable">
@@ -1055,15 +1052,13 @@
                                 <tr>
                                     <th>Órgão</th>
                                     <th>Sigla</th>
-                                    <th class="text-center">Classificação</th>
-                                    <th class="text-center">Documentos Classificados</th>
-                                    <th class="text-center">Documentos Desclassificados</th>
-                                    <th class="text-center">Total</th>
+                                    <th class="text-center">Situação</th>
+                                    <th class="text-center">Total Documentos</th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="orgaosTableBody">
-                                ${gerarLinhasTabelaOrgaos(orgaosVisaoGeral)}
+                                ${gerarLinhasTabelaOrgaosVG(orgaosVisaoGeral)}
                             </tbody>
                         </table>
                     </div>
@@ -1071,34 +1066,49 @@
             `;
             container.innerHTML = html;
             
-            // Criar gráficos
             criarGraficoGrauSigilo(docsPorGrau);
             criarGraficoOrgaos(topOrgaos);
             
             setTimeout(iframeUpdateHeight, 300);
         }
 
-        function gerarLinhasTabelaOrgaos(orgaos) {
-            return orgaos.map(item => `
-                <tr>
-                    <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}')">${item.orgao}</a></td>
-                    <td><strong>${item.sigla}</strong></td>
-                    <td class="text-center">${getBadgeClassificacao(item.sigla)}</td>
-                    <td class="text-center">${item.documentosClassificados || 0}</td>
-                    <td class="text-center">${item.documentosDesclassificados || 0}</td>
-                    <td class="text-center">${item.totalDocumentos}</td>
-                    <td class="text-center">
-                        ${item.totalDocumentos > 0 ? 
-                            `<button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
+        function gerarLinhasTabelaOrgaosVG(orgaos) {
+            return orgaos.map(item => {
+                const temClassificados = verificarTemClassificados(item.sigla);
+                const temDesclassificados = verificarTemDesclassificados(item.sigla);
+                
+                let situacao = 'nenhuma';
+                if (temClassificados && temDesclassificados) {
+                    // Para visão geral, mostrar apenas uma linha com "Classificada e Desclassificada"
+                    return `<tr>
+                        <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${item.sigla}')">${item.orgao}</a></td>
+                        <td><strong>${item.sigla}</strong></td>
+                        <td class="text-center"><span class="badge-classificacao" style="background-color: #cce5ff; color: #004085;"><i class="material-icons" style="font-size: 12px;">lock</i> Classificada e Desclassificada</span></td>
+                        <td class="text-center">${item.documentos?.length || 0}</td>
+                        <td class="text-center">
+                            <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
                                 <i class="material-icons">visibility</i>
-                            </button>` : 
-                            `<a href="${dadosOrgaosSemInfo.find(d => d.sigla === item.sigla)?.link || '#'}" target="_blank" class="btn-action" title="Acessar portal">
-                                <i class="material-icons">open_in_new</i>
-                            </a>`
-                        }
+                            </button>
+                        </td>
+                    </tr>`;
+                } else if (temClassificados) {
+                    situacao = 'classificada';
+                } else if (temDesclassificados) {
+                    situacao = 'desclassificada';
+                }
+                
+                return `<tr>
+                    <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${item.sigla}')">${item.orgao}</a></td>
+                    <td><strong>${item.sigla}</strong></td>
+                    <td class="text-center">${getBadgeSituacao(situacao)}</td>
+                    <td class="text-center">${item.documentos?.length || 0}</td>
+                    <td class="text-center">
+                        <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
+                            <i class="material-icons">visibility</i>
+                        </button>
                     </td>
-                </tr>
-            `).join('');
+                </tr>`;
+            }).join('');
         }
 
         window.aplicarFiltrosVG = function() {
@@ -1108,28 +1118,28 @@
             const buscaNome = (document.getElementById('buscaOrgaoVG')?.value || '').toLowerCase();
             
             orgaosFiltradosVG = orgaosVisaoGeral.filter(o => {
-                // Filtro por órgão específico
                 if (orgao && o.sigla !== orgao) return false;
                 
-                // Filtro por grau de sigilo
                 if (tipo) {
                     const temDocumentosComGrau = o.documentos?.some(d => d.grau_sigilo === tipo);
                     if (!temDocumentosComGrau) return false;
                 }
                 
-                // Filtro por situação (classificada/desclassificada/sem-info)
                 if (situacao) {
-                    const tipoOrgao = getClassificacaoOrgao(o.sigla);
-                    if (tipoOrgao !== situacao) return false;
+                    const temClassificados = verificarTemClassificados(o.sigla);
+                    const temDesclassificados = verificarTemDesclassificados(o.sigla);
+                    
+                    if (situacao === 'classificada' && !temClassificados) return false;
+                    if (situacao === 'desclassificada' && !temDesclassificados) return false;
+                    if (situacao === 'nenhuma' && (temClassificados || temDesclassificados)) return false;
                 }
                 
-                // Filtro por nome do órgão
                 if (buscaNome && !o.orgao.toLowerCase().includes(buscaNome) && !o.sigla.toLowerCase().includes(buscaNome)) return false;
                 
                 return true;
             });
             
-            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaos(orgaosFiltradosVG);
+            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaosVG(orgaosFiltradosVG);
             document.getElementById('totalOrgaosBadge').innerText = orgaosFiltradosVG.length + ' órgãos';
         };
 
@@ -1139,133 +1149,404 @@
             document.getElementById('filtroSituacaoVG').value = '';
             document.getElementById('buscaOrgaoVG').value = '';
             orgaosFiltradosVG = [...orgaosVisaoGeral];
-            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaos(orgaosFiltradosVG);
+            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaosVG(orgaosFiltradosVG);
             document.getElementById('totalOrgaosBadge').innerText = orgaosFiltradosVG.length + ' órgãos';
         };
 
-        window.irParaConsulta = function(sigla) {
-            document.getElementById('consulta-tab').click();
-            setTimeout(() => {
-                const select = document.getElementById('filtroOrgaoCI');
-                if (select) { 
-                    select.value = sigla; 
-                    aplicarFiltrosCI(); 
-                }
-            }, 300);
-        };
-
+        // ============================================
+        // FUNÇÕES DO MODAL
+        // ============================================
         window.verDetalhesOrgao = function(sigla) {
-            const documentos = dadosClassificadas.filter(d => d.sigla === sigla);
-            if (!documentos.length) return;
+            const orgao = todosOrgaos.find(o => o.sigla === sigla);
+            if (!orgao) return;
             
-            const orgao = documentos[0].orgao_entidade;
+            currentModalData = orgao;
+            
+            const documentos = dadosClassificadas.filter(d => d.sigla === sigla);
             const classificados = documentos.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00');
             const desclassificados = documentos.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00');
             
             let html = `
-                <div class="info-card classified mb-4">
+                <div class="info-card mb-4">
                     <div class="info-label">Órgão</div>
-                    <div class="info-value highlight">${orgao} (${sigla})</div>
+                    <div class="info-value highlight">${orgao.orgao} (${sigla})</div>
                     <div class="row mt-3">
-                        <div class="col-6">
-                            <div class="info-label">Documentos Classificados</div>
+                        <div class="col-4">
+                            <div class="info-label">Classificados</div>
                             <div class="info-value">${classificados.length}</div>
                         </div>
-                        <div class="col-6">
-                            <div class="info-label">Documentos Desclassificados</div>
+                        <div class="col-4">
+                            <div class="info-label">Desclassificados</div>
                             <div class="info-value">${desclassificados.length}</div>
+                        </div>
+                        <div class="col-4">
+                            <div class="info-label">Total</div>
+                            <div class="info-value">${documentos.length}</div>
                         </div>
                     </div>
                 </div>
-                <h6 class="fw-bold mb-3">Documentos</h6>
+                
+                <div class="modal-table-container">
+                    <table class="table table-modal table-striped">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Tipo</th>
+                                <th>Categoria</th>
+                                <th>Grau Sigilo</th>
+                                <th>Data Classif.</th>
+                                <th>Data Desclassif.</th>
+                                <th>Prazo</th>
+                                <th>Fundamento Legal</th>
+                                <th>Link</th>
+                            </tr>
+                        </thead>
+                        <tbody>
             `;
             
-            // Primeiro mostrar documentos desclassificados (se houver)
-            if (desclassificados.length > 0) {
-                html += `<h6 class="fw-bold mt-3 text-success">Documentos Desclassificados</h6>`;
-                desclassificados.forEach((doc, index) => {
-                    html += gerarCardDocumento(doc, 'declassified');
+            if (documentos.length === 0) {
+                html += `<tr><td colspan="9" class="text-center">Nenhum documento encontrado</td></tr>`;
+            } else {
+                // Primeiro mostrar desclassificados (verde)
+                desclassificados.forEach(doc => {
+                    html += `
+                        <tr class="table-success">
+                            <td>${doc.codigo_indexacao || '-'}</td>
+                            <td>${doc.tipo_documento || '-'}</td>
+                            <td>${doc.categoria || '-'}</td>
+                            <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                            <td>${formatarData(doc.data_classificacao)}</td>
+                            <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
+                            <td>${doc.prazo_classificacao || '-'}</td>
+                            <td>${doc.fundamento_legal || '-'}</td>
+                            <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
+                        </tr>
+                    `;
+                });
+                
+                // Depois mostrar classificados (vermelho)
+                classificados.forEach(doc => {
+                    html += `
+                        <tr class="table-danger">
+                            <td>${doc.codigo_indexacao || '-'}</td>
+                            <td>${doc.tipo_documento || '-'}</td>
+                            <td>${doc.categoria || '-'}</td>
+                            <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                            <td>${formatarData(doc.data_classificacao)}</td>
+                            <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
+                            <td>${doc.prazo_classificacao || '-'}</td>
+                            <td>${doc.fundamento_legal || '-'}</td>
+                            <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
+                        </tr>
+                    `;
                 });
             }
             
-            // Depois mostrar documentos classificados
-            if (classificados.length > 0) {
-                html += `<h6 class="fw-bold mt-3 text-danger">Documentos Classificados</h6>`;
-                classificados.forEach((doc, index) => {
-                    html += gerarCardDocumento(doc, 'classified');
-                });
-            }
+            html += `
+                        </tbody>
+                    </table>
+                </div>
+            `;
             
             document.getElementById('modalContent').innerHTML = html;
             new bootstrap.Modal(document.getElementById('detailModal')).show();
         };
 
-        function gerarCardDocumento(doc, tipo) {
-            const isDesclassificado = tipo === 'declassified';
+        // ============================================
+        // RENDERIZAÇÃO CONSULTA POR ÓRGÃO (COM DUPLICATAS)
+        // ============================================
+        function renderizarConsulta() {
+            const opcoes = obterOpcoesFiltro();
+            todosOrgaos = agruparOrgaosCompletos();
+            orgaosFiltrados = gerarListaComDuplicatas(todosOrgaos);
             
-            return `
-                <div class="info-card ${tipo} mb-3">
-                    <div class="row">
+            const container = document.getElementById('consulta-content');
+            container.innerHTML = `
+                <div class="filter-container">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <label class="filter-label"><i class="material-icons">business</i>Órgão</label>
+                            <select class="form-select" id="filtroOrgaoCI">
+                                <option value="">Todos</option>
+                                ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="filter-label"><i class="material-icons">security</i>Grau de Sigilo</label>
+                            <select class="form-select" id="filtroTipoCI">
+                                <option value="">Todos</option>
+                                ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="filter-label"><i class="material-icons">info</i>Situação</label>
+                            <select class="form-select" id="filtroSituacaoCI">
+                                <option value="">Todas</option>
+                                <option value="classificada">Classificada</option>
+                                <option value="desclassificada">Desclassificada</option>
+                                <option value="nenhuma">Não possui inf. classificada ou desclassificada</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                        </div>
+                    </div>
+                    
+                    <div class="row mt-3">
                         <div class="col-md-6">
-                            <div class="info-label">Código de Indexação</div>
-                            <div class="info-value">${doc.codigo_indexacao || '-'}</div>
+                            <input type="text" class="search-box" id="buscaOrgaoCI" placeholder="Buscar por nome do órgão...">
                         </div>
-                        <div class="col-md-6">
-                            <div class="info-label">Tipo de Documento</div>
-                            <div class="info-value">${doc.tipo_documento || '-'}</div>
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-4">
-                            <div class="info-label">Grau de Sigilo</div>
-                            <div class="info-value"><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="info-label">Categoria</div>
-                            <div class="info-value">${doc.categoria || '-'}</div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="info-label">Fundamento Legal</div>
-                            <div class="info-value">${doc.fundamento_legal || '-'}</div>
+                        <div class="col-md-6 d-flex justify-content-end gap-2">
+                            <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                         </div>
                     </div>
-                    <div class="row mt-2">
-                        <div class="col-md-3">
-                            <div class="info-label">Data de Produção</div>
-                            <div class="info-value">${formatarData(doc.data_producao)}</div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="info-label">Data de Classificação</div>
-                            <div class="info-value">${formatarData(doc.data_classificacao)}</div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="info-label">Data de Desclassificação</div>
-                            <div class="info-value">${formatarData(doc.data_desclassificacao) || 'Não desclassificado'}</div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="info-label">Prazo de Classificação</div>
-                            <div class="info-value">${doc.prazo_classificacao || '-'}</div>
-                        </div>
-                    </div>
-                    ${doc.link ? `
-                    <div class="row mt-2">
-                        <div class="col-12">
-                            <div class="info-label">Link para mais informações</div>
-                            <div class="info-value">
-                                <a href="${doc.link}" target="_blank" class="link-info">${doc.link}</a>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex gap-2">
+                        <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>
+                        <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-2">print</i>PDF</button>
+                        <div class="share-dropdown">
+                            <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-2">share</i>Compartilhar</button>
+                            <div class="share-options" id="shareOptions2">
+                                <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
+                                <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
+                                <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
+                                <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+                                <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                             </div>
                         </div>
                     </div>
-                    ` : ''}
+                    <div class="d-flex align-items-center gap-3">
+                        <span class="table-badge" id="totalOrgaosBadgeCI">${orgaosFiltrados.length} registros</span>
+                        <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                            <option value="${orgaosFiltrados.length}">Todos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="table-fixed-header-container">
+                        <table class="table" id="orgaosTableCI">
+                            <thead>
+                                <tr>
+                                    <th>Órgão</th>
+                                    <th>Sigla</th>
+                                    <th class="text-center">Grau de Sigilo</th>
+                                    <th class="text-center">Categoria</th>
+                                    <th class="text-center">Situação</th>
+                                    <th class="text-center">Data Atualização</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orgaosTableBodyCI"></tbody>
+                        </table>
+                    </div>
+                    <div class="pagination-container" id="paginacaoContainerCI"></div>
                 </div>
             `;
+            
+            aplicarFiltrosCI();
+            setTimeout(iframeUpdateHeight, 300);
         }
 
+        function gerarListaComDuplicatas(orgaos) {
+            const lista = [];
+            
+            orgaos.forEach(orgao => {
+                const temClassificados = verificarTemClassificados(orgao.sigla);
+                const temDesclassificados = verificarTemDesclassificados(orgao.sigla);
+                
+                if (temClassificados) {
+                    lista.push({
+                        ...orgao,
+                        situacaoItem: 'classificada'
+                    });
+                }
+                
+                if (temDesclassificados) {
+                    lista.push({
+                        ...orgao,
+                        situacaoItem: 'desclassificada'
+                    });
+                }
+                
+                if (!temClassificados && !temDesclassificados) {
+                    lista.push({
+                        ...orgao,
+                        situacaoItem: 'nenhuma'
+                    });
+                }
+            });
+            
+            return lista;
+        }
+
+        function gerarLinhasTabelaOrgaosCI(orgaos) {
+            return orgaos.map(item => {
+                let grauSigilo = '-';
+                let categoria = '-';
+                let dataAtualizacao = '-';
+                
+                // Filtrar documentos de acordo com a situação do item
+                let documentosFiltrados = [];
+                if (item.situacaoItem === 'classificada') {
+                    documentosFiltrados = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                } else if (item.situacaoItem === 'desclassificada') {
+                    documentosFiltrados = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                }
+                
+                if (documentosFiltrados.length > 0) {
+                    const doc = documentosFiltrados[0];
+                    grauSigilo = doc.grau_sigilo || '-';
+                    categoria = doc.categoria || '-';
+                    dataAtualizacao = formatarData(doc.data_atualizacao) || '-';
+                } else if (item.situacaoItem === 'nenhuma') {
+                    const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === item.sigla);
+                    dataAtualizacao = formatarData(semInfo?.data_atualizacao) || '-';
+                }
+                
+                return `<tr>
+                    <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${item.sigla}')">${item.orgao}</a></td>
+                    <td><strong>${item.sigla}</strong></td>
+                    <td class="text-center">${grauSigilo !== '-' ? `<span class="badge-classificacao ${getBadgeGrauSigilo(grauSigilo)}">${grauSigilo}</span>` : '-'}</td>
+                    <td class="text-center">${categoria}</td>
+                    <td class="text-center">${getBadgeSituacao(item.situacaoItem)}</td>
+                    <td class="text-center">${dataAtualizacao}</td>
+                    <td class="text-center">
+                        <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
+                            <i class="material-icons">visibility</i>
+                        </button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        window.aplicarFiltrosCI = function() {
+            const orgao = document.getElementById('filtroOrgaoCI')?.value;
+            const tipo = document.getElementById('filtroTipoCI')?.value;
+            const situacao = document.getElementById('filtroSituacaoCI')?.value;
+            const buscaNome = (document.getElementById('buscaOrgaoCI')?.value || '').toLowerCase();
+            
+            // Primeiro gera a lista base com duplicatas
+            let listaBase = gerarListaComDuplicatas(todosOrgaos);
+            
+            // Depois aplica os filtros
+            orgaosFiltrados = listaBase.filter(item => {
+                if (orgao && item.sigla !== orgao) return false;
+                
+                if (tipo) {
+                    let temDocumentosComGrau = false;
+                    if (item.situacaoItem === 'classificada') {
+                        const docsClassificados = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                        temDocumentosComGrau = docsClassificados.some(d => d.grau_sigilo === tipo);
+                    } else if (item.situacaoItem === 'desclassificada') {
+                        const docsDesclassificados = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                        temDocumentosComGrau = docsDesclassificados.some(d => d.grau_sigilo === tipo);
+                    }
+                    if (!temDocumentosComGrau) return false;
+                }
+                
+                if (situacao && item.situacaoItem !== situacao) return false;
+                
+                if (buscaNome && !item.orgao.toLowerCase().includes(buscaNome) && !item.sigla.toLowerCase().includes(buscaNome)) return false;
+                
+                return true;
+            });
+            
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
+        window.limparFiltrosCI = function() {
+            document.getElementById('filtroOrgaoCI').value = '';
+            document.getElementById('filtroTipoCI').value = '';
+            document.getElementById('filtroSituacaoCI').value = '';
+            document.getElementById('buscaOrgaoCI').value = '';
+            orgaosFiltrados = gerarListaComDuplicatas(todosOrgaos);
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
+        window.alterarItensPorPaginaCI = function() {
+            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
+
+        function atualizarTabelaConsulta() {
+            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
+            const fim = Math.min(inicio + itensPorPaginaCI, orgaosFiltrados.length);
+            const dadosPagina = orgaosFiltrados.slice(inicio, fim);
+            
+            document.getElementById('orgaosTableBodyCI').innerHTML = gerarLinhasTabelaOrgaosCI(dadosPagina);
+            document.getElementById('totalOrgaosBadgeCI').innerText = orgaosFiltrados.length + ' registros';
+            
+            totalPaginasCI = Math.ceil(orgaosFiltrados.length / itensPorPaginaCI);
+            renderizarPaginacaoCI();
+            setTimeout(iframeUpdateHeight, 100);
+        }
+
+        function renderizarPaginacaoCI() {
+            const container = document.getElementById('paginacaoContainerCI');
+            if (!container) return;
+            
+            if (orgaosFiltrados.length === 0) {
+                container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
+                return;
+            }
+            
+            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
+            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, orgaosFiltrados.length);
+            
+            let html = `
+                <div class="pagination-info">
+                    Mostrando ${inicio}-${fim} de ${orgaosFiltrados.length.toLocaleString('pt-BR')} registros
+                </div>
+                <nav>
+                    <ul class="pagination mb-0">
+            `;
+            
+            html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
+            </li>`;
+            
+            let inicioPaginas = Math.max(1, paginaAtualCI - 2);
+            let fimPaginas = Math.min(totalPaginasCI, inicioPaginas + 4);
+            if (fimPaginas - inicioPaginas < 4) {
+                inicioPaginas = Math.max(1, fimPaginas - 4);
+            }
+            
+            for (let i = inicioPaginas; i <= fimPaginas; i++) {
+                html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
+                    <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
+                </li>`;
+            }
+            
+            html += `<li class="page-item ${paginaAtualCI === totalPaginasCI ? 'disabled' : ''}">
+                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
+            </li>`;
+            
+            html += '</ul></nav>';
+            container.innerHTML = html;
+        }
+
+        window.mudarPaginaCI = function(pagina) {
+            if (pagina < 1 || pagina > totalPaginasCI) return;
+            paginaAtualCI = pagina;
+            atualizarTabelaConsulta();
+        };
+
+        // ============================================
+        // GRÁFICOS
+        // ============================================
         function criarGraficoGrauSigilo(dados) {
             const ctx = document.getElementById('chartGrauSigilo')?.getContext('2d');
             if (!ctx) return;
             
-            // Destruir gráfico existente se houver
             Chart.getChart(ctx)?.destroy();
             
             new Chart(ctx, {
@@ -1297,7 +1578,6 @@
             const ctx = document.getElementById('chartOrgaos')?.getContext('2d');
             if (!ctx) return;
             
-            // Destruir gráfico existente se houver
             Chart.getChart(ctx)?.destroy();
             
             new Chart(ctx, {
@@ -1328,265 +1608,30 @@
         }
 
         // ============================================
-        // RENDERIZAÇÃO CONSULTA INDIVIDUAL
-        // ============================================
-        function renderizarConsulta() {
-            const opcoes = obterOpcoesFiltro();
-            todosOrgaos = agruparOrgaosCompletos();
-            orgaosFiltrados = [...todosOrgaos];
-            
-            const container = document.getElementById('consulta-content');
-            container.innerHTML = `
-                <!-- Filtros -->
-                <div class="filter-container">
-                    <div class="row g-3">
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">business</i>Órgão</label>
-                            <select class="form-select" id="filtroOrgaoCI">
-                                <option value="">Todos</option>
-                                ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">security</i>Grau de Sigilo</label>
-                            <select class="form-select" id="filtroTipoCI">
-                                <option value="">Todos</option>
-                                ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <label class="filter-label"><i class="material-icons">lock</i>Situação</label>
-                            <select class="form-select" id="filtroSituacaoCI">
-                                <option value="">Todas</option>
-                                <option value="classificada">Classificadas</option>
-                                <option value="desclassificada">Desclassificadas</option>
-                                <option value="sem-info">Não possui inf. classificada ou desclassificada</option>
-                            </select>
-                        </div>
-                        <div class="col-md-3">
-                            <!-- Espaço vazio para alinhamento -->
-                        </div>
-                    </div>
-                    
-                    <div class="row mt-3">
-                        <div class="col-md-6">
-                            <input type="text" class="search-box" id="buscaOrgaoCI" placeholder="Buscar por nome do órgão...">
-                        </div>
-                        <div class="col-md-6 d-flex justify-content-end gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <div class="d-flex gap-2">
-                        <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-2">description</i>CSV</button>
-                        <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-2">print</i>PDF</button>
-                        <div class="share-dropdown">
-                            <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-2">share</i>Compartilhar</button>
-                            <div class="share-options" id="shareOptions2">
-                                <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
-                                <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
-                                <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                                <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-3">
-                        <span class="table-badge" id="totalOrgaosBadgeCI">${todosOrgaos.length} órgãos</span>
-                        <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
-                            <option value="25">25</option>
-                            <option value="50" selected>50</option>
-                            <option value="100">100</option>
-                            <option value="${todosOrgaos.length}">Todos</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <div class="table-fixed-header-container">
-                        <table class="table" id="orgaosTableCI">
-                            <thead>
-                                <tr>
-                                    <th>Órgão</th>
-                                    <th>Sigla</th>
-                                    <th class="text-center">Classificação</th>
-                                    <th class="text-center">Classificados</th>
-                                    <th class="text-center">Desclassificados</th>
-                                    <th class="text-center">Total</th>
-                                    <th class="text-center">Data Atualização</th>
-                                    <th class="text-center">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orgaosTableBodyCI"></tbody>
-                        </table>
-                    </div>
-                    <div class="pagination-container" id="paginacaoContainerCI"></div>
-                </div>
-            `;
-            
-            aplicarFiltrosCI();
-            setTimeout(iframeUpdateHeight, 300);
-        }
-
-        function gerarLinhasTabelaOrgaosCI(orgaos) {
-            return orgaos.map(s => {
-                const dataAtualizacao = s.documentos?.[0]?.data_atualizacao || 
-                                       dadosOrgaosSemInfo.find(d => d.sigla === s.sigla)?.data_atualizacao || 
-                                       '-';
-                return `<tr>
-                    <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${s.sigla}')">${s.orgao}</a></td>
-                    <td><strong>${s.sigla}</strong></td>
-                    <td class="text-center">${getBadgeClassificacao(s.sigla)}</td>
-                    <td class="text-center">${s.documentosClassificados || 0}</td>
-                    <td class="text-center">${s.documentosDesclassificados || 0}</td>
-                    <td class="text-center">${s.totalDocumentos}</td>
-                    <td class="text-center">${formatarData(dataAtualizacao)}</td>
-                    <td class="text-center">
-                        ${s.totalDocumentos > 0 ? 
-                            `<button class="btn-action" onclick="verDetalhesOrgao('${s.sigla}')" title="Ver documentos">
-                                <i class="material-icons">visibility</i>
-                            </button>` : 
-                            `<a href="${dadosOrgaosSemInfo.find(d => d.sigla === s.sigla)?.link || '#'}" target="_blank" class="btn-action" title="Acessar portal">
-                                <i class="material-icons">open_in_new</i>
-                            </a>`
-                        }
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        window.aplicarFiltrosCI = function() {
-            const orgao = document.getElementById('filtroOrgaoCI')?.value;
-            const tipo = document.getElementById('filtroTipoCI')?.value;
-            const situacao = document.getElementById('filtroSituacaoCI')?.value;
-            const buscaNome = (document.getElementById('buscaOrgaoCI')?.value || '').toLowerCase();
-            
-            orgaosFiltrados = todosOrgaos.filter(o => {
-                if (orgao && o.sigla !== orgao) return false;
-                
-                if (tipo) {
-                    const temDocumentosComGrau = o.documentos?.some(d => d.grau_sigilo === tipo);
-                    if (!temDocumentosComGrau) return false;
-                }
-                
-                if (situacao) {
-                    const tipoOrgao = getClassificacaoOrgao(o.sigla);
-                    if (tipoOrgao !== situacao) return false;
-                }
-                
-                if (buscaNome && !o.orgao.toLowerCase().includes(buscaNome) && !o.sigla.toLowerCase().includes(buscaNome)) return false;
-                
-                return true;
-            });
-            
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        window.limparFiltrosCI = function() {
-            document.getElementById('filtroOrgaoCI').value = '';
-            document.getElementById('filtroTipoCI').value = '';
-            document.getElementById('filtroSituacaoCI').value = '';
-            document.getElementById('buscaOrgaoCI').value = '';
-            orgaosFiltrados = [...todosOrgaos];
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        window.alterarItensPorPaginaCI = function() {
-            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        function atualizarTabelaConsulta() {
-            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
-            const fim = Math.min(inicio + itensPorPaginaCI, orgaosFiltrados.length);
-            const dadosPagina = orgaosFiltrados.slice(inicio, fim);
-            
-            document.getElementById('orgaosTableBodyCI').innerHTML = gerarLinhasTabelaOrgaosCI(dadosPagina);
-            document.getElementById('totalOrgaosBadgeCI').innerText = orgaosFiltrados.length + ' órgãos';
-            
-            totalPaginasCI = Math.ceil(orgaosFiltrados.length / itensPorPaginaCI);
-            renderizarPaginacaoCI();
-            setTimeout(iframeUpdateHeight, 100);
-        }
-
-        function renderizarPaginacaoCI() {
-            const container = document.getElementById('paginacaoContainerCI');
-            if (!container) return;
-            
-            if (orgaosFiltrados.length === 0) {
-                container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
-                return;
-            }
-            
-            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
-            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, orgaosFiltrados.length);
-            
-            let html = `
-                <div class="pagination-info">
-                    Mostrando ${inicio}-${fim} de ${orgaosFiltrados.length.toLocaleString('pt-BR')} registros
-                </div>
-                <nav>
-                    <ul class="pagination mb-0">
-            `;
-            
-            // Botão anterior
-            html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
-            </li>`;
-            
-            // Páginas
-            let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-            let fimPaginas = Math.min(totalPaginasCI, inicioPaginas + 4);
-            if (fimPaginas - inicioPaginas < 4) {
-                inicioPaginas = Math.max(1, fimPaginas - 4);
-            }
-            
-            for (let i = inicioPaginas; i <= fimPaginas; i++) {
-                html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-                    <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
-                </li>`;
-            }
-            
-            // Botão próximo
-            html += `<li class="page-item ${paginaAtualCI === totalPaginasCI ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
-            </li>`;
-            
-            html += '</ul></nav>';
-            container.innerHTML = html;
-        }
-
-        window.mudarPaginaCI = function(pagina) {
-            if (pagina < 1 || pagina > totalPaginasCI) return;
-            paginaAtualCI = pagina;
-            atualizarTabelaConsulta();
-        };
-
-        // ============================================
         // EXPORTAÇÕES
         // ============================================
         window.exportarTabelaVisaoGeralCSV = function() {
             const orgaosParaExportar = orgaosFiltradosVG.length ? orgaosFiltradosVG : orgaosVisaoGeral;
             
             const linhas = orgaosParaExportar.map(o => {
-                const tipo = getClassificacaoOrgao(o.sigla);
+                const temClassificados = verificarTemClassificados(o.sigla);
+                const temDesclassificados = verificarTemDesclassificados(o.sigla);
+                
+                let sitTexto = '';
+                if (temClassificados && temDesclassificados) sitTexto = 'Classificada e Desclassificada';
+                else if (temClassificados) sitTexto = 'Classificada';
+                else if (temDesclassificados) sitTexto = 'Desclassificada';
+                else sitTexto = 'Não possui inf. classificada ou desclassificada';
+                
                 return [
                     o.orgao,
                     o.sigla,
-                    tipo,
-                    o.documentosClassificados || 0,
-                    o.documentosDesclassificados || 0,
-                    o.totalDocumentos
+                    sitTexto,
+                    o.documentos?.length || 0
                 ].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';');
             });
             
-            const csv = ['Órgão;Sigla;Classificação;Documentos Classificados;Documentos Desclassificados;Total Documentos', ...linhas].join('\n');
+            const csv = ['Órgão;Sigla;Classificação;Total Documentos', ...linhas].join('\n');
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -1601,49 +1646,76 @@
             const orgaosParaExportar = orgaosFiltradosVG.length ? orgaosFiltradosVG : orgaosVisaoGeral;
             
             const dados = orgaosParaExportar.map(o => {
-                const tipo = getClassificacaoOrgao(o.sigla);
+                const temClassificados = verificarTemClassificados(o.sigla);
+                const temDesclassificados = verificarTemDesclassificados(o.sigla);
+                
+                let sitTexto = '';
+                if (temClassificados && temDesclassificados) sitTexto = 'Classif. e Desclassif.';
+                else if (temClassificados) sitTexto = 'Classificada';
+                else if (temDesclassificados) sitTexto = 'Desclassificada';
+                else sitTexto = 'Sem informação';
+                
                 return [
                     o.orgao,
                     o.sigla,
-                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Não possui inf. classificada ou desclassificada'),
-                    (o.documentosClassificados || 0).toString(),
-                    (o.documentosDesclassificados || 0).toString(),
-                    o.totalDocumentos.toString()
+                    sitTexto,
+                    (o.documentos?.length || 0).toString()
                 ];
             });
             
             doc.autoTable({
-                head: [['Órgão', 'Sigla', 'Classificação', 'Classificados', 'Desclassificados', 'Total']],
+                head: [['Órgão', 'Sigla', 'Classificação', 'Total Documentos']],
                 body: dados,
                 didDrawPage: (data) => {
                     doc.setFontSize(10);
                     doc.text('Visão Geral - Informações Classificadas', 14, 10);
-                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')} - ${window.location.href}`, 14, doc.internal.pageSize.height - 5);
+                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
                 }
             });
             doc.save('visao_geral_classificacoes.pdf');
         };
 
         window.exportarTabelaConsultaCSV = function() {
-            const orgaosParaExportar = orgaosFiltrados.length ? orgaosFiltrados : todosOrgaos;
+            const orgaosParaExportar = orgaosFiltrados.length ? orgaosFiltrados : gerarListaComDuplicatas(todosOrgaos);
             
-            const linhas = orgaosParaExportar.map(o => {
-                const tipo = getClassificacaoOrgao(o.sigla);
-                const dataAtualizacao = o.documentos?.[0]?.data_atualizacao || 
-                                       dadosOrgaosSemInfo.find(d => d.sigla === o.sigla)?.data_atualizacao || 
-                                       '-';
+            const linhas = orgaosParaExportar.map(item => {
+                let grauSigilo = '-';
+                let categoria = '-';
+                let dataAtualizacao = '-';
+                
+                let documentosFiltrados = [];
+                if (item.situacaoItem === 'classificada') {
+                    documentosFiltrados = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                } else if (item.situacaoItem === 'desclassificada') {
+                    documentosFiltrados = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                }
+                
+                if (documentosFiltrados.length > 0) {
+                    const doc = documentosFiltrados[0];
+                    grauSigilo = doc.grau_sigilo || '-';
+                    categoria = doc.categoria || '-';
+                    dataAtualizacao = formatarData(doc.data_atualizacao) || '-';
+                } else if (item.situacaoItem === 'nenhuma') {
+                    const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === item.sigla);
+                    dataAtualizacao = formatarData(semInfo?.data_atualizacao) || '-';
+                }
+                
+                let sitTexto = '';
+                if (item.situacaoItem === 'classificada') sitTexto = 'Classificada';
+                else if (item.situacaoItem === 'desclassificada') sitTexto = 'Desclassificada';
+                else sitTexto = 'Não possui inf. classificada ou desclassificada';
+                
                 return [
-                    o.orgao,
-                    o.sigla,
-                    tipo,
-                    o.documentosClassificados || 0,
-                    o.documentosDesclassificados || 0,
-                    o.totalDocumentos,
-                    formatarData(dataAtualizacao)
+                    item.orgao,
+                    item.sigla,
+                    grauSigilo,
+                    categoria,
+                    sitTexto,
+                    dataAtualizacao
                 ].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';');
             });
             
-            const csv = ['Órgão;Sigla;Classificação;Classificados;Desclassificados;Total;Data Atualização', ...linhas].join('\n');
+            const csv = ['Órgão;Sigla;Grau de Sigilo;Categoria;Classificação;Data Atualização', ...linhas].join('\n');
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -1655,34 +1727,139 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'landscape' });
             
-            const orgaosParaExportar = orgaosFiltrados.length ? orgaosFiltrados : todosOrgaos;
+            const orgaosParaExportar = orgaosFiltrados.length ? orgaosFiltrados : gerarListaComDuplicatas(todosOrgaos);
             
-            const dados = orgaosParaExportar.map(o => {
-                const tipo = getClassificacaoOrgao(o.sigla);
-                const dataAtualizacao = o.documentos?.[0]?.data_atualizacao || 
-                                       dadosOrgaosSemInfo.find(d => d.sigla === o.sigla)?.data_atualizacao || 
-                                       '-';
+            const dados = orgaosParaExportar.map(item => {
+                let grauSigilo = '-';
+                let categoria = '-';
+                let dataAtualizacao = '-';
+                
+                let documentosFiltrados = [];
+                if (item.situacaoItem === 'classificada') {
+                    documentosFiltrados = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                } else if (item.situacaoItem === 'desclassificada') {
+                    documentosFiltrados = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                }
+                
+                if (documentosFiltrados.length > 0) {
+                    const doc = documentosFiltrados[0];
+                    grauSigilo = doc.grau_sigilo || '-';
+                    categoria = doc.categoria || '-';
+                    dataAtualizacao = formatarData(doc.data_atualizacao) || '-';
+                } else if (item.situacaoItem === 'nenhuma') {
+                    const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === item.sigla);
+                    dataAtualizacao = formatarData(semInfo?.data_atualizacao) || '-';
+                }
+                
+                let sitTexto = '';
+                if (item.situacaoItem === 'classificada') sitTexto = 'Classificada';
+                else if (item.situacaoItem === 'desclassificada') sitTexto = 'Desclassificada';
+                else sitTexto = 'Sem informação';
+                
                 return [
-                    o.orgao,
-                    o.sigla,
-                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Não possui inf. classificada ou desclassificada'),
-                    (o.documentosClassificados || 0).toString(),
-                    (o.documentosDesclassificados || 0).toString(),
-                    o.totalDocumentos.toString(),
-                    formatarData(dataAtualizacao)
+                    item.orgao,
+                    item.sigla,
+                    grauSigilo,
+                    categoria,
+                    sitTexto,
+                    dataAtualizacao
                 ];
             });
             
             doc.autoTable({
-                head: [['Órgão', 'Sigla', 'Classificação', 'Classificados', 'Desclassificados', 'Total', 'Data Atualização']],
+                head: [['Órgão', 'Sigla', 'Grau de Sigilo', 'Categoria', 'Classificação', 'Data Atualização']],
                 body: dados,
                 didDrawPage: (data) => {
                     doc.setFontSize(10);
                     doc.text('Consulta por Órgão - Informações Classificadas', 14, 10);
-                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')} - ${window.location.href}`, 14, doc.internal.pageSize.height - 5);
+                    doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, doc.internal.pageSize.height - 5);
                 }
             });
             doc.save('consulta_orgaos.pdf');
+        };
+
+        window.exportarModalPDF = function() {
+            if (!currentModalData) return;
+            
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape' });
+            
+            const sigla = currentModalData.sigla;
+            const orgao = currentModalData.orgao;
+            const documentos = dadosClassificadas.filter(d => d.sigla === sigla);
+            
+            doc.setFontSize(16);
+            doc.text(`Documentos: ${orgao} (${sigla})`, 14, 15);
+            
+            doc.setFontSize(10);
+            doc.text(`Emitido em: ${new Date().toLocaleString('pt-BR')}`, 14, 22);
+            
+            const classificados = documentos.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00').length;
+            const desclassificados = documentos.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00').length;
+            
+            doc.setFontSize(11);
+            doc.text(`Total: ${documentos.length} (Classificados: ${classificados} | Desclassificados: ${desclassificados})`, 14, 30);
+            
+            const dados = documentos.map(d => [
+                d.codigo_indexacao || '-',
+                d.tipo_documento || '-',
+                d.categoria || '-',
+                d.grau_sigilo || '-',
+                formatarData(d.data_classificacao),
+                formatarData(d.data_desclassificacao) || '-',
+                d.prazo_classificacao || '-',
+                d.fundamento_legal || '-',
+                d.link || '-'
+            ]);
+            
+            doc.autoTable({
+                startY: 35,
+                head: [['Código', 'Tipo', 'Categoria', 'Grau', 'Classif.', 'Desclassif.', 'Prazo', 'Fundamento', 'Link']],
+                body: dados,
+                didDrawPage: (data) => {
+                    doc.setFontSize(8);
+                    doc.text(`Página ${data.pageNumber}`, 14, doc.internal.pageSize.height - 5);
+                }
+            });
+            
+            doc.save(`documentos_${sigla}.pdf`);
+        };
+
+        window.exportarModalCSV = function() {
+            if (!currentModalData) return;
+            
+            const sigla = currentModalData.sigla;
+            const orgao = currentModalData.orgao;
+            const documentos = dadosClassificadas.filter(d => d.sigla === sigla);
+            
+            const cabecalhos = ['Código', 'Tipo', 'Categoria', 'Grau Sigilo', 'Classificação', 'Desclassificação', 'Prazo', 'Fundamento', 'Link'];
+            
+            const linhas = documentos.map(d => [
+                d.codigo_indexacao || '-',
+                d.tipo_documento || '-',
+                d.categoria || '-',
+                d.grau_sigilo || '-',
+                formatarData(d.data_classificacao),
+                formatarData(d.data_desclassificacao) || '-',
+                d.prazo_classificacao || '-',
+                d.fundamento_legal || '-',
+                d.link || '-'
+            ].map(c => `"${String(c).replace(/"/g, '""')}"`).join(';'));
+            
+            const csv = [
+                `Órgão: ${orgao} (${sigla})`,
+                `Total: ${documentos.length}`,
+                `Data: ${new Date().toLocaleString('pt-BR')}`,
+                '',
+                cabecalhos.join(';'),
+                ...linhas
+            ].join('\n');
+            
+            const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = `documentos_${sigla}.csv`;
+            link.click();
         };
 
         // ============================================
@@ -1707,7 +1884,7 @@
         
         window.compartilharTwitter = function(e, id) {
             e.preventDefault();
-            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Informações Classificadas e Desclassificadas - MG')}`, '_blank');
+            window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent('Informações Classificadas - MG')}`, '_blank');
             document.getElementById(`shareOptions${id}`).classList.remove('show');
         };
         
@@ -1719,7 +1896,7 @@
         
         window.compartilharWhatsApp = function(e, id) {
             e.preventDefault();
-            window.open(`https://wa.me/?text=${encodeURIComponent('Informações Classificadas e Desclassificadas - MG ' + window.location.href)}`, '_blank');
+            window.open(`https://wa.me/?text=${encodeURIComponent('Informações Classificadas - MG ' + window.location.href)}`, '_blank');
             document.getElementById(`shareOptions${id}`).classList.remove('show');
         };
 
@@ -1733,15 +1910,13 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
-                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">cloud_download</i> Informações Classificadas</h4>
-                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
-                                    Arquivo CSV completo com todas as informações classificadas e desclassificadas dos órgãos do Estado de Minas Gerais.
+                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">cloud_download</i> Informações Completas</h4>
+                                <p class="text-muted" style="font-size: 13px;">
+                                    Arquivo CSV com todas as informações classificadas e desclassificadas.
                                 </p>
                                 <div class="mt-4 text-end">
-                                    <button onclick="baixarClassificadasCSV()" 
-                                            class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
-                                            style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease; cursor: pointer;">
-                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">download</i>Baixar CSV
+                                    <button onclick="baixarClassificadasCSV()" class="btn-export">
+                                        <i class="material-icons me-2">download</i>Baixar CSV
                                     </button>
                                 </div>
                             </div>
@@ -1749,53 +1924,28 @@
                         
                         <div class="col-md-6 mb-3">
                             <div class="card-stats p-4 bg-white rounded shadow-sm h-100">
-                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">cloud_download</i> Órgãos sem Classificação</h4>
-                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
-                                    Arquivo CSV com a relação de órgãos que não possuem informações classificadas ou possuem informações desclassificadas.
+                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">cloud_download</i> Órgãos sem Informação</h4>
+                                <p class="text-muted" style="font-size: 13px;">
+                                    Arquivo CSV com órgãos sem informações classificadas ou desclassificadas.
                                 </p>
                                 <div class="mt-4 text-end">
-                                    <button onclick="baixarOrgaosSemInfoCSV()" 
-                                            class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
-                                            style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease; cursor: pointer;">
-                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">download</i>Baixar CSV
+                                    <button onclick="baixarOrgaosSemInfoCSV()" class="btn-export">
+                                        <i class="material-icons me-2">download</i>Baixar CSV
                                     </button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="col-md-12 mb-3">
-                            <div class="card-stats p-4 bg-white rounded shadow-sm">
-                                <h4 class="fw-bold text-start mb-3"><i class="material-icons me-2">open_in_new</i> Portal de Dados Abertos</h4>
-                                <p class="text-muted text-justify" style="font-size: 13px; text-align: justify;">
-                                    Acesse o conjunto de dados de Informações Classificadas no Portal de Dados Abertos de Minas Gerais.
-                                </p>
-                                <div class="mt-4 text-end">
-                                    <a href="https://dados.mg.gov.br/dataset/informacoes-classificadas" 
-                                       target="_blank" 
-                                       class="btn-export text-decoration-none fw-bold d-inline-block px-4 py-2"
-                                       style="color: var(--primary-dark); background-color: white; border: 1px solid var(--primary-dark); border-radius: 4px; transition: all 0.3s ease;">
-                                        <i class="material-icons me-2" style="font-size: 16px; vertical-align: middle;">launch</i>Acessar Portal de Dados MG
-                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     
                     <div class="metadata-card mt-4">
-                        <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados da Tabela</h6>
-                        <div class="metadata-item"><strong>orgao_entidade:</strong> Nome completo do órgão ou entidade</div>
+                        <h6 class="fw-bold mb-3"><i class="material-icons me-2">info</i> Metadados</h6>
+                        <div class="metadata-item"><strong>orgao_entidade:</strong> Nome do órgão</div>
                         <div class="metadata-item"><strong>sigla:</strong> Sigla do órgão</div>
-                        <div class="metadata-item"><strong>codigo_indexacao:</strong> Código único de indexação do documento</div>
-                        <div class="metadata-item"><strong>tipo_documento:</strong> Tipo do documento classificado</div>
-                        <div class="metadata-item"><strong>grau_sigilo:</strong> Grau de sigilo (Ultrassecreto, Secreto, Reservado)</div>
+                        <div class="metadata-item"><strong>codigo_indexacao:</strong> Código de indexação</div>
+                        <div class="metadata-item"><strong>grau_sigilo:</strong> Grau de sigilo</div>
                         <div class="metadata-item"><strong>categoria:</strong> Categoria da informação</div>
-                        <div class="metadata-item"><strong>fundamento_legal:</strong> Base legal para classificação</div>
-                        <div class="metadata-item"><strong>data_producao:</strong> Data de produção do documento</div>
                         <div class="metadata-item"><strong>data_classificacao:</strong> Data da classificação</div>
-                        <div class="metadata-item"><strong>data_desclassificacao:</strong> Data da desclassificação (se aplicável)</div>
-                        <div class="metadata-item"><strong>prazo_classificacao:</strong> Prazo de classificação em anos</div>
-                        <div class="metadata-item"><strong>data_atualizacao:</strong> Data da última atualização do registro</div>
-                        <div class="metadata-item"><strong>link:</strong> Link para acesso à informação completa</div>
+                        <div class="metadata-item"><strong>data_desclassificacao:</strong> Data da desclassificação</div>
                     </div>
                 </div>
             `;
@@ -1832,7 +1982,7 @@
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
-            link.download = 'orgaos_sem_classificacao.csv';
+            link.download = 'orgaos_sem_informacao.csv';
             link.click();
         };
     </script>
