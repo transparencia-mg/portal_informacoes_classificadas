@@ -594,7 +594,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content modal-creative">
                 <div class="modal-header">
-                    <h5 class="modal-title"><i class="material-icons me-2">lock</i> Detalhes da Informação Classificada</h5>
+                    <h5 class="modal-title"><i class="material-icons me-2">lock</i> Detalhes da Informação</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="modalContent"></div>
@@ -622,7 +622,8 @@
         let dadosClassificadas = [];
         let dadosOrgaosSemInfo = [];
         let dadosCompletos = [];
-        let dadosFiltrados = [];
+        let orgaosVisaoGeral = []; // Array para os órgãos da visão geral
+        let orgaosFiltradosVG = []; // Array para os órgãos filtrados na visão geral
         let metricaGeral = {};
 
         // Variáveis de paginação para Consulta Individual
@@ -752,7 +753,7 @@
         // FUNÇÕES AUXILIARES
         // ============================================
         function formatarData(dataStr) {
-            if (!dataStr || dataStr === '') return '-';
+            if (!dataStr || dataStr === '' || dataStr === '0000-00-00 00:00:00') return '-';
             try {
                 const partes = dataStr.split(' ')[0].split('-');
                 if (partes.length < 3) return dataStr;
@@ -764,28 +765,44 @@
 
         function formatarPrazoClassificacao(prazo) {
             if (!prazo) return '-';
-            const anos = prazo.replace('anos', '').trim();
-            return `${anos} ano(s)`;
+            return prazo;
         }
 
         function getBadgeGrauSigilo(grau) {
             if (!grau) return 'badge-sem-info';
             grau = grau.toLowerCase();
-            if (grau.includes('ultrasecreto')) return 'badge-ultrasecreto';
+            if (grau.includes('ultrassecreto')) return 'badge-ultrasecreto';
             if (grau.includes('secreto')) return 'badge-secreto';
             if (grau.includes('reservado')) return 'badge-reservado';
             return 'badge-classificada';
         }
 
         function getClassificacaoOrgao(sigla) {
-            const temClassificada = dadosClassificadas.some(d => d.sigla === sigla);
-            if (temClassificada) return 'classificada';
+            // Verifica se há documentos com data de desclassificação preenchida
+            const documentosDesclassificados = dadosClassificadas.filter(d => 
+                d.sigla === sigla && d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00'
+            );
             
+            if (documentosDesclassificados.length > 0) {
+                return 'desclassificada';
+            }
+            
+            // Verifica se há documentos classificados (sem data de desclassificação)
+            const documentosClassificados = dadosClassificadas.filter(d => 
+                d.sigla === sigla && (!d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00')
+            );
+            
+            if (documentosClassificados.length > 0) {
+                return 'classificada';
+            }
+            
+            // Verifica no arquivo de órgãos sem informação
             const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === sigla);
             if (semInfo) {
-                if (semInfo.informacao_classificada === 'sim') return 'classificada';
                 if (semInfo.informacao_desclassificada === 'sim') return 'desclassificada';
+                if (semInfo.informacao_classificada === 'sim') return 'classificada';
             }
+            
             return 'sem-info';
         }
 
@@ -794,7 +811,7 @@
             switch(tipo) {
                 case 'classificada': return '<span class="badge-classificacao badge-classificada"><i class="material-icons" style="font-size: 12px;">lock</i> Classificada</span>';
                 case 'desclassificada': return '<span class="badge-classificacao badge-desclassificada"><i class="material-icons" style="font-size: 12px;">lock_open</i> Desclassificada</span>';
-                default: return '<span class="badge-classificacao badge-sem-info"><i class="material-icons" style="font-size: 12px;">info</i> Não possui informação classificada ou desclassificada</span>';
+                default: return '<span class="badge-classificacao badge-sem-info"><i class="material-icons" style="font-size: 12px;">info</i> Sem informação</span>';
             }
         }
 
@@ -816,26 +833,30 @@
 
         function calcularMetricas() {
             const orgaos = new Set();
-            const classificadas = new Set();
-            const desclassificadas = new Set();
+            let classificadas = 0;
+            let desclassificadas = 0;
             
+            // Contar documentos classificados e desclassificados
             dadosClassificadas.forEach(d => {
                 orgaos.add(d.sigla);
-                classificadas.add(d.sigla);
+                if (d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') {
+                    desclassificadas++;
+                } else {
+                    classificadas++;
+                }
             });
             
+            // Adicionar órgãos do arquivo sem informação
             dadosOrgaosSemInfo.forEach(d => {
                 orgaos.add(d.sigla);
-                if (d.informacao_desclassificada === 'sim') {
-                    desclassificadas.add(d.sigla);
-                }
             });
             
             return {
                 totalOrgaos: orgaos.size,
-                totalClassificadas: classificadas.size,
-                totalDesclassificadas: desclassificadas.size,
-                totalDocumentos: dadosClassificadas.length
+                totalDocumentosClassificados: classificadas,
+                totalDocumentosDesclassificados: desclassificadas,
+                totalDocumentos: dadosClassificadas.length,
+                orgaosComClassificacao: new Set(dadosClassificadas.map(d => d.sigla)).size
             };
         }
 
@@ -848,19 +869,28 @@
         function agruparOrgaosCompletos() {
             const mapa = new Map();
             
-            // Adiciona órgãos com informações classificadas
+            // Processa documentos classificados/desclassificados
             dadosClassificadas.forEach(item => {
                 if (!mapa.has(item.sigla)) {
+                    const isDesclassificado = item.data_desclassificacao && item.data_desclassificacao !== '' && item.data_desclassificacao !== '0000-00-00 00:00:00';
+                    
                     mapa.set(item.sigla, {
                         orgao: item.orgao_entidade,
                         sigla: item.sigla,
-                        possuiClassificada: true,
-                        possuiDesclassificada: false,
+                        documentosClassificados: isDesclassificado ? 0 : 1,
+                        documentosDesclassificados: isDesclassificado ? 1 : 0,
                         totalDocumentos: 1,
                         documentos: [item]
                     });
                 } else {
                     const o = mapa.get(item.sigla);
+                    const isDesclassificado = item.data_desclassificacao && item.data_desclassificacao !== '' && item.data_desclassificacao !== '0000-00-00 00:00:00';
+                    
+                    if (isDesclassificado) {
+                        o.documentosDesclassificados++;
+                    } else {
+                        o.documentosClassificados++;
+                    }
                     o.totalDocumentos++;
                     o.documentos.push(item);
                 }
@@ -872,14 +902,11 @@
                     mapa.set(item.sigla, {
                         orgao: item.orgao_entidade,
                         sigla: item.sigla,
-                        possuiClassificada: item.informacao_classificada === 'sim',
-                        possuiDesclassificada: item.informacao_desclassificada === 'sim',
+                        documentosClassificados: 0,
+                        documentosDesclassificados: 0,
                         totalDocumentos: 0,
                         documentos: []
                     });
-                } else {
-                    const o = mapa.get(item.sigla);
-                    o.possuiDesclassificada = o.possuiDesclassificada || item.informacao_desclassificada === 'sim';
                 }
             });
             
@@ -904,10 +931,10 @@
                 
                 // Combinar dados
                 dadosCompletos = [...dadosClassificadas, ...dadosOrgaosSemInfo];
-                dadosFiltrados = [...dadosCompletos];
                 metricaGeral = calcularMetricas();
                 todosOrgaos = agruparOrgaosCompletos();
-                orgaosFiltrados = [...todosOrgaos];
+                orgaosVisaoGeral = [...todosOrgaos];
+                orgaosFiltradosVG = [...todosOrgaos];
                 
                 renderizarVisaoGeral();
                 renderizarConsulta();
@@ -968,7 +995,7 @@
                                 <option value="">Todas</option>
                                 <option value="classificada">Classificadas</option>
                                 <option value="desclassificada">Desclassificadas</option>
-                                <option value="sem-info">Não possui informação classificada ou desclassificada</option>
+                                <option value="sem-info">Sem informação</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -977,7 +1004,10 @@
                     </div>
                     
                     <div class="row mt-3">
-                        <div class="col-12 d-flex justify-content-start gap-2">
+                        <div class="col-md-6">
+                            <input type="text" class="search-box" id="buscaOrgaoVG" placeholder="Buscar por nome do órgão...">
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end gap-2">
                             <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
                             <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                         </div>
@@ -987,15 +1017,15 @@
                 <!-- Cards -->
                 <div class="row mb-4">
                     <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Órgãos</div><div class="metric-value">${metricaGeral.totalOrgaos.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Documentos Classificados</div><div class="metric-value">${metricaGeral.totalDocumentos.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos com Classificação</div><div class="metric-value">${metricaGeral.totalClassificadas.toLocaleString('pt-BR')}</div></div></div>
-                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Órgãos com Desclassificação</div><div class="metric-value">${metricaGeral.totalDesclassificadas.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Documentos Classificados</div><div class="metric-value">${metricaGeral.totalDocumentosClassificados.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Documentos Desclassificados</div><div class="metric-value">${metricaGeral.totalDocumentosDesclassificados.toLocaleString('pt-BR')}</div></div></div>
+                    <div class="col-md-3 col-6"><div class="metric-card"><div class="metric-label">Total de Documentos</div><div class="metric-value">${metricaGeral.totalDocumentos.toLocaleString('pt-BR')}</div></div></div>
                 </div>
 
                 <!-- Gráficos -->
                 <div class="row mb-4">
                     <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Documentos por Grau de Sigilo</h4></div><div class="chart-wrapper"><canvas id="chartGrauSigilo"></canvas></div></div></div>
-                    <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Top 10 Órgãos com Documentos Classificados</h4></div><div class="chart-wrapper"><canvas id="chartOrgaos"></canvas></div></div></div>
+                    <div class="col-md-6"><div class="chart-container"><div class="chart-header"><h4 class="chart-title">Top 10 Órgãos com Documentos</h4></div><div class="chart-wrapper"><canvas id="chartOrgaos"></canvas></div></div></div>
                 </div>
 
                 <!-- Ações -->
@@ -1014,7 +1044,7 @@
                             </div>
                         </div>
                     </div>
-                    <span class="table-badge" id="totalOrgaosBadge">${todosOrgaos.length} órgãos</span>
+                    <span class="table-badge" id="totalOrgaosBadge">${orgaosVisaoGeral.length} órgãos</span>
                 </div>
 
                 <!-- Tabela -->
@@ -1026,12 +1056,14 @@
                                     <th>Órgão</th>
                                     <th>Sigla</th>
                                     <th class="text-center">Classificação</th>
-                                    <th class="text-center">Documentos</th>
+                                    <th class="text-center">Documentos Classificados</th>
+                                    <th class="text-center">Documentos Desclassificados</th>
+                                    <th class="text-center">Total</th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
                             <tbody id="orgaosTableBody">
-                                ${gerarLinhasTabelaOrgaos(todosOrgaos)}
+                                ${gerarLinhasTabelaOrgaos(orgaosVisaoGeral)}
                             </tbody>
                         </table>
                     </div>
@@ -1052,13 +1084,17 @@
                     <td><a href="#" class="orgao-link" onclick="irParaConsulta('${item.sigla}')">${item.orgao}</a></td>
                     <td><strong>${item.sigla}</strong></td>
                     <td class="text-center">${getBadgeClassificacao(item.sigla)}</td>
+                    <td class="text-center">${item.documentosClassificados || 0}</td>
+                    <td class="text-center">${item.documentosDesclassificados || 0}</td>
                     <td class="text-center">${item.totalDocumentos}</td>
                     <td class="text-center">
                         ${item.totalDocumentos > 0 ? 
-                            `<button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos classificados">
+                            `<button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
                                 <i class="material-icons">visibility</i>
                             </button>` : 
-                            '<span class="text-muted">-</span>'
+                            `<a href="${dadosOrgaosSemInfo.find(d => d.sigla === item.sigla)?.link || '#'}" target="_blank" class="btn-action" title="Acessar portal">
+                                <i class="material-icons">open_in_new</i>
+                            </a>`
                         }
                     </td>
                 </tr>
@@ -1069,28 +1105,42 @@
             const orgao = document.getElementById('filtroOrgaoVG')?.value;
             const tipo = document.getElementById('filtroTipoVG')?.value;
             const situacao = document.getElementById('filtroSituacaoVG')?.value;
+            const buscaNome = (document.getElementById('buscaOrgaoVG')?.value || '').toLowerCase();
             
-            orgaosFiltrados = todosOrgaos.filter(o => {
+            orgaosFiltradosVG = orgaosVisaoGeral.filter(o => {
+                // Filtro por órgão específico
                 if (orgao && o.sigla !== orgao) return false;
-                if (tipo && !o.documentos?.some(d => d.grau_sigilo === tipo)) return false;
+                
+                // Filtro por grau de sigilo
+                if (tipo) {
+                    const temDocumentosComGrau = o.documentos?.some(d => d.grau_sigilo === tipo);
+                    if (!temDocumentosComGrau) return false;
+                }
+                
+                // Filtro por situação (classificada/desclassificada/sem-info)
                 if (situacao) {
                     const tipoOrgao = getClassificacaoOrgao(o.sigla);
                     if (tipoOrgao !== situacao) return false;
                 }
+                
+                // Filtro por nome do órgão
+                if (buscaNome && !o.orgao.toLowerCase().includes(buscaNome) && !o.sigla.toLowerCase().includes(buscaNome)) return false;
+                
                 return true;
             });
             
-            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaos(orgaosFiltrados);
-            document.getElementById('totalOrgaosBadge').innerText = orgaosFiltrados.length + ' órgãos';
+            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaos(orgaosFiltradosVG);
+            document.getElementById('totalOrgaosBadge').innerText = orgaosFiltradosVG.length + ' órgãos';
         };
 
         window.limparFiltrosVG = function() {
             document.getElementById('filtroOrgaoVG').value = '';
             document.getElementById('filtroTipoVG').value = '';
             document.getElementById('filtroSituacaoVG').value = '';
-            orgaosFiltrados = [...todosOrgaos];
-            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaos(orgaosFiltrados);
-            document.getElementById('totalOrgaosBadge').innerText = orgaosFiltrados.length + ' órgãos';
+            document.getElementById('buscaOrgaoVG').value = '';
+            orgaosFiltradosVG = [...orgaosVisaoGeral];
+            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaos(orgaosFiltradosVG);
+            document.getElementById('totalOrgaosBadge').innerText = orgaosFiltradosVG.length + ' órgãos';
         };
 
         window.irParaConsulta = function(sigla) {
@@ -1109,83 +1159,114 @@
             if (!documentos.length) return;
             
             const orgao = documentos[0].orgao_entidade;
+            const classificados = documentos.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00');
+            const desclassificados = documentos.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00');
             
             let html = `
                 <div class="info-card classified mb-4">
                     <div class="info-label">Órgão</div>
                     <div class="info-value highlight">${orgao} (${sigla})</div>
-                    <div class="info-label mt-3">Total de Documentos Classificados</div>
-                    <div class="info-value">${documentos.length}</div>
+                    <div class="row mt-3">
+                        <div class="col-6">
+                            <div class="info-label">Documentos Classificados</div>
+                            <div class="info-value">${classificados.length}</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="info-label">Documentos Desclassificados</div>
+                            <div class="info-value">${desclassificados.length}</div>
+                        </div>
+                    </div>
                 </div>
-                <h6 class="fw-bold mb-3">Documentos Classificados</h6>
+                <h6 class="fw-bold mb-3">Documentos</h6>
             `;
             
-            documentos.forEach((doc, index) => {
-                html += `
-                    <div class="info-card mb-3">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="info-label">Código de Indexação</div>
-                                <div class="info-value">${doc.codigo_indexacao || '-'}</div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="info-label">Tipo de Documento</div>
-                                <div class="info-value">${doc.tipo_documento || '-'}</div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <div class="info-label">Grau de Sigilo</div>
-                                <div class="info-value"><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="info-label">Categoria</div>
-                                <div class="info-value">${doc.categoria || '-'}</div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="info-label">Fundamento Legal</div>
-                                <div class="info-value">${doc.fundamento_legal || '-'}</div>
-                            </div>
-                        </div>
-                        <div class="row mt-2">
-                            <div class="col-md-3">
-                                <div class="info-label">Data de Produção</div>
-                                <div class="info-value">${formatarData(doc.data_producao)}</div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="info-label">Data de Classificação</div>
-                                <div class="info-value">${formatarData(doc.data_classificacao)}</div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="info-label">Data de Desclassificação</div>
-                                <div class="info-value">${formatarData(doc.data_desclassificacao) || 'Não desclassificado'}</div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="info-label">Prazo de Classificação</div>
-                                <div class="info-value">${doc.prazo_classificacao || '-'}</div>
-                            </div>
-                        </div>
-                        ${doc.link ? `
-                        <div class="row mt-2">
-                            <div class="col-12">
-                                <div class="info-label">Link para mais informações</div>
-                                <div class="info-value">
-                                    <a href="${doc.link}" target="_blank" class="link-info">${doc.link}</a>
-                                </div>
-                            </div>
-                        </div>
-                        ` : ''}
-                    </div>
-                `;
-            });
+            // Primeiro mostrar documentos desclassificados (se houver)
+            if (desclassificados.length > 0) {
+                html += `<h6 class="fw-bold mt-3 text-success">Documentos Desclassificados</h6>`;
+                desclassificados.forEach((doc, index) => {
+                    html += gerarCardDocumento(doc, 'declassified');
+                });
+            }
+            
+            // Depois mostrar documentos classificados
+            if (classificados.length > 0) {
+                html += `<h6 class="fw-bold mt-3 text-danger">Documentos Classificados</h6>`;
+                classificados.forEach((doc, index) => {
+                    html += gerarCardDocumento(doc, 'classified');
+                });
+            }
             
             document.getElementById('modalContent').innerHTML = html;
             new bootstrap.Modal(document.getElementById('detailModal')).show();
         };
 
+        function gerarCardDocumento(doc, tipo) {
+            const isDesclassificado = tipo === 'declassified';
+            
+            return `
+                <div class="info-card ${tipo} mb-3">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-label">Código de Indexação</div>
+                            <div class="info-value">${doc.codigo_indexacao || '-'}</div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-label">Tipo de Documento</div>
+                            <div class="info-value">${doc.tipo_documento || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <div class="info-label">Grau de Sigilo</div>
+                            <div class="info-value"><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Categoria</div>
+                            <div class="info-value">${doc.categoria || '-'}</div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="info-label">Fundamento Legal</div>
+                            <div class="info-value">${doc.fundamento_legal || '-'}</div>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-3">
+                            <div class="info-label">Data de Produção</div>
+                            <div class="info-value">${formatarData(doc.data_producao)}</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-label">Data de Classificação</div>
+                            <div class="info-value">${formatarData(doc.data_classificacao)}</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-label">Data de Desclassificação</div>
+                            <div class="info-value">${formatarData(doc.data_desclassificacao) || 'Não desclassificado'}</div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-label">Prazo de Classificação</div>
+                            <div class="info-value">${doc.prazo_classificacao || '-'}</div>
+                        </div>
+                    </div>
+                    ${doc.link ? `
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            <div class="info-label">Link para mais informações</div>
+                            <div class="info-value">
+                                <a href="${doc.link}" target="_blank" class="link-info">${doc.link}</a>
+                            </div>
+                        </div>
+                    </div>
+                    ` : ''}
+                </div>
+            `;
+        }
+
         function criarGraficoGrauSigilo(dados) {
             const ctx = document.getElementById('chartGrauSigilo')?.getContext('2d');
             if (!ctx) return;
+            
+            // Destruir gráfico existente se houver
+            Chart.getChart(ctx)?.destroy();
             
             new Chart(ctx, {
                 type: 'doughnut',
@@ -1216,12 +1297,15 @@
             const ctx = document.getElementById('chartOrgaos')?.getContext('2d');
             if (!ctx) return;
             
+            // Destruir gráfico existente se houver
+            Chart.getChart(ctx)?.destroy();
+            
             new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: dados.map(i => i.sigla),
                     datasets: [{
-                        label: 'Documentos Classificados',
+                        label: 'Documentos',
                         data: dados.map(i => i.total),
                         backgroundColor: chartPalette,
                         borderRadius: 4
@@ -1276,7 +1360,7 @@
                                 <option value="">Todas</option>
                                 <option value="classificada">Classificadas</option>
                                 <option value="desclassificada">Desclassificadas</option>
-                                <option value="sem-info">Não possui informação classificada ou desclassificada</option>
+                                <option value="sem-info">Sem informação</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -1286,7 +1370,7 @@
                     
                     <div class="row mt-3">
                         <div class="col-md-6">
-                            <input type="text" class="search-box" id="buscaOrgaoCI" placeholder="Buscar por nome do órgão..." onkeyup="aplicarFiltrosCI()">
+                            <input type="text" class="search-box" id="buscaOrgaoCI" placeholder="Buscar por nome do órgão...">
                         </div>
                         <div class="col-md-6 d-flex justify-content-end gap-2">
                             <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
@@ -1329,7 +1413,9 @@
                                     <th>Órgão</th>
                                     <th>Sigla</th>
                                     <th class="text-center">Classificação</th>
-                                    <th class="text-center">Documentos</th>
+                                    <th class="text-center">Classificados</th>
+                                    <th class="text-center">Desclassificados</th>
+                                    <th class="text-center">Total</th>
                                     <th class="text-center">Data Atualização</th>
                                     <th class="text-center">Ações</th>
                                 </tr>
@@ -1351,14 +1437,16 @@
                                        dadosOrgaosSemInfo.find(d => d.sigla === s.sigla)?.data_atualizacao || 
                                        '-';
                 return `<tr>
-                    <td><a href="#" class="orgao-link" onclick="verDetalhesCompleto('${s.sigla}')">${s.orgao}</a></td>
+                    <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${s.sigla}')">${s.orgao}</a></td>
                     <td><strong>${s.sigla}</strong></td>
                     <td class="text-center">${getBadgeClassificacao(s.sigla)}</td>
+                    <td class="text-center">${s.documentosClassificados || 0}</td>
+                    <td class="text-center">${s.documentosDesclassificados || 0}</td>
                     <td class="text-center">${s.totalDocumentos}</td>
                     <td class="text-center">${formatarData(dataAtualizacao)}</td>
                     <td class="text-center">
                         ${s.totalDocumentos > 0 ? 
-                            `<button class="btn-action" onclick="verDetalhesCompleto('${s.sigla}')" title="Ver documentos classificados">
+                            `<button class="btn-action" onclick="verDetalhesOrgao('${s.sigla}')" title="Ver documentos">
                                 <i class="material-icons">visibility</i>
                             </button>` : 
                             `<a href="${dadosOrgaosSemInfo.find(d => d.sigla === s.sigla)?.link || '#'}" target="_blank" class="btn-action" title="Acessar portal">
@@ -1370,10 +1458,6 @@
             }).join('');
         }
 
-        window.verDetalhesCompleto = function(sigla) {
-            verDetalhesOrgao(sigla);
-        };
-
         window.aplicarFiltrosCI = function() {
             const orgao = document.getElementById('filtroOrgaoCI')?.value;
             const tipo = document.getElementById('filtroTipoCI')?.value;
@@ -1382,12 +1466,19 @@
             
             orgaosFiltrados = todosOrgaos.filter(o => {
                 if (orgao && o.sigla !== orgao) return false;
-                if (tipo && !o.documentos?.some(d => d.grau_sigilo === tipo)) return false;
+                
+                if (tipo) {
+                    const temDocumentosComGrau = o.documentos?.some(d => d.grau_sigilo === tipo);
+                    if (!temDocumentosComGrau) return false;
+                }
+                
                 if (situacao) {
                     const tipoOrgao = getClassificacaoOrgao(o.sigla);
                     if (tipoOrgao !== situacao) return false;
                 }
+                
                 if (buscaNome && !o.orgao.toLowerCase().includes(buscaNome) && !o.sigla.toLowerCase().includes(buscaNome)) return false;
+                
                 return true;
             });
             
@@ -1481,17 +1572,21 @@
         // EXPORTAÇÕES
         // ============================================
         window.exportarTabelaVisaoGeralCSV = function() {
-            const linhas = orgaosFiltrados.map(o => {
+            const orgaosParaExportar = orgaosFiltradosVG.length ? orgaosFiltradosVG : orgaosVisaoGeral;
+            
+            const linhas = orgaosParaExportar.map(o => {
                 const tipo = getClassificacaoOrgao(o.sigla);
                 return [
                     o.orgao,
                     o.sigla,
-                    tipo === 'classificada' ? 'Sim' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Não'),
+                    tipo,
+                    o.documentosClassificados || 0,
+                    o.documentosDesclassificados || 0,
                     o.totalDocumentos
                 ].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';');
             });
             
-            const csv = ['Órgão;Sigla;Possui Classificação;Total Documentos', ...linhas].join('\n');
+            const csv = ['Órgão;Sigla;Classificação;Documentos Classificados;Documentos Desclassificados;Total Documentos', ...linhas].join('\n');
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -1503,18 +1598,22 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'landscape' });
             
-            const dados = orgaosFiltrados.map(o => {
+            const orgaosParaExportar = orgaosFiltradosVG.length ? orgaosFiltradosVG : orgaosVisaoGeral;
+            
+            const dados = orgaosParaExportar.map(o => {
                 const tipo = getClassificacaoOrgao(o.sigla);
                 return [
                     o.orgao,
                     o.sigla,
-                    tipo === 'classificada' ? 'Sim' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Não'),
+                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Sem informação'),
+                    (o.documentosClassificados || 0).toString(),
+                    (o.documentosDesclassificados || 0).toString(),
                     o.totalDocumentos.toString()
                 ];
             });
             
             doc.autoTable({
-                head: [['Órgão', 'Sigla', 'Possui Classificação', 'Total Documentos']],
+                head: [['Órgão', 'Sigla', 'Classificação', 'Classificados', 'Desclassificados', 'Total']],
                 body: dados,
                 didDrawPage: (data) => {
                     doc.setFontSize(10);
@@ -1526,7 +1625,9 @@
         };
 
         window.exportarTabelaConsultaCSV = function() {
-            const linhas = orgaosFiltrados.map(o => {
+            const orgaosParaExportar = orgaosFiltrados.length ? orgaosFiltrados : todosOrgaos;
+            
+            const linhas = orgaosParaExportar.map(o => {
                 const tipo = getClassificacaoOrgao(o.sigla);
                 const dataAtualizacao = o.documentos?.[0]?.data_atualizacao || 
                                        dadosOrgaosSemInfo.find(d => d.sigla === o.sigla)?.data_atualizacao || 
@@ -1535,12 +1636,14 @@
                     o.orgao,
                     o.sigla,
                     tipo,
+                    o.documentosClassificados || 0,
+                    o.documentosDesclassificados || 0,
                     o.totalDocumentos,
                     formatarData(dataAtualizacao)
                 ].map(c => `"${String(c).replace(/"/g,'""')}"`).join(';');
             });
             
-            const csv = ['Órgão;Sigla;Classificação;Total Documentos;Data Atualização', ...linhas].join('\n');
+            const csv = ['Órgão;Sigla;Classificação;Classificados;Desclassificados;Total;Data Atualização', ...linhas].join('\n');
             const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
@@ -1552,7 +1655,9 @@
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'landscape' });
             
-            const dados = orgaosFiltrados.map(o => {
+            const orgaosParaExportar = orgaosFiltrados.length ? orgaosFiltrados : todosOrgaos;
+            
+            const dados = orgaosParaExportar.map(o => {
                 const tipo = getClassificacaoOrgao(o.sigla);
                 const dataAtualizacao = o.documentos?.[0]?.data_atualizacao || 
                                        dadosOrgaosSemInfo.find(d => d.sigla === o.sigla)?.data_atualizacao || 
@@ -1560,14 +1665,16 @@
                 return [
                     o.orgao,
                     o.sigla,
-                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Não possui informação classificada ou desclassificada'),
+                    tipo === 'classificada' ? 'Classificada' : (tipo === 'desclassificada' ? 'Desclassificada' : 'Sem informação'),
+                    (o.documentosClassificados || 0).toString(),
+                    (o.documentosDesclassificados || 0).toString(),
                     o.totalDocumentos.toString(),
                     formatarData(dataAtualizacao)
                 ];
             });
             
             doc.autoTable({
-                head: [['Órgão', 'Sigla', 'Classificação', 'Total Documentos', 'Data Atualização']],
+                head: [['Órgão', 'Sigla', 'Classificação', 'Classificados', 'Desclassificados', 'Total', 'Data Atualização']],
                 body: dados,
                 didDrawPage: (data) => {
                     doc.setFontSize(10);
