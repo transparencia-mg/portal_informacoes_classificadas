@@ -294,6 +294,35 @@
             text-transform: uppercase;
             white-space: nowrap;
             border: 1px solid #d6dee6;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.2s ease;
+        }
+        
+        .table-fixed-header-container table thead th:hover {
+            background-color: #3a4e62 !important;
+        }
+        
+        .table-fixed-header-container table thead th .sort-icon {
+            display: inline-block;
+            margin-left: 6px;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+        
+        .table-fixed-header-container table thead th.asc .sort-icon::before {
+            content: "▲";
+            opacity: 1;
+        }
+        
+        .table-fixed-header-container table thead th.desc .sort-icon::before {
+            content: "▼";
+            opacity: 1;
+        }
+        
+        .table-fixed-header-container table thead th .sort-icon::before {
+            content: "⇅";
+            opacity: 0.4;
         }
         
         .table {
@@ -846,9 +875,155 @@
         let totalPaginasCI = 1;
         let todosOrgaos = []; // Array com órgãos únicos
         let orgaosFiltrados = []; // Array com órgãos podendo ter duplicatas (classificada/desclassificada)
+        
+        // Variáveis de ordenação para Visão Geral
+        let vgSortColumn = null;
+        let vgSortDirection = 'asc'; // 'asc' ou 'desc'
+        
+        // Variáveis de ordenação para Consulta
+        let ciSortColumn = null;
+        let ciSortDirection = 'asc';
 
         const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
         const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae60'];
+
+        // ============================================
+        // FUNÇÕES DE ORDENAÇÃO
+        // ============================================
+        
+        // Função para ordenar órgãos da Visão Geral
+        function ordenarOrgaosVG(orgaos, column, direction) {
+            if (!column) return [...orgaos];
+            
+            return [...orgaos].sort((a, b) => {
+                let valA, valB;
+                
+                switch(column) {
+                    case 'orgao':
+                        valA = a.orgao || '';
+                        valB = b.orgao || '';
+                        break;
+                    case 'sigla':
+                        valA = a.sigla || '';
+                        valB = b.sigla || '';
+                        break;
+                    case 'situacao':
+                        const getSituacaoVal = (o) => {
+                            const temClass = verificarTemClassificados(o.sigla);
+                            const temDesclass = verificarTemDesclassificados(o.sigla);
+                            if (temClass && temDesclass) return 3;
+                            if (temClass) return 2;
+                            if (temDesclass) return 1;
+                            return 0;
+                        };
+                        valA = getSituacaoVal(a);
+                        valB = getSituacaoVal(b);
+                        break;
+                    case 'totalDocumentos':
+                        valA = a.documentos?.length || 0;
+                        valB = b.documentos?.length || 0;
+                        break;
+                    default:
+                        return 0;
+                }
+                
+                // Comparação para strings
+                if (typeof valA === 'string') {
+                    const compare = valA.localeCompare(valB, 'pt-BR');
+                    return direction === 'asc' ? compare : -compare;
+                }
+                // Comparação para números
+                if (direction === 'asc') {
+                    return valA - valB;
+                } else {
+                    return valB - valA;
+                }
+            });
+        }
+        
+        // Função para ordenar itens da Consulta
+        function ordenarItensCI(itens, column, direction) {
+            if (!column) return [...itens];
+            
+            return [...itens].sort((a, b) => {
+                let valA, valB;
+                
+                switch(column) {
+                    case 'orgao':
+                        valA = a.orgao || '';
+                        valB = b.orgao || '';
+                        break;
+                    case 'sigla':
+                        valA = a.sigla || '';
+                        valB = b.sigla || '';
+                        break;
+                    case 'grauSigilo': {
+                        const getGrauVal = (item) => {
+                            if (item.situacaoItem === 'classificada') {
+                                const docs = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                                return docs[0]?.grau_sigilo || '';
+                            } else if (item.situacaoItem === 'desclassificada') {
+                                const docs = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                                return docs[0]?.grau_sigilo || '';
+                            }
+                            return '';
+                        };
+                        valA = getGrauVal(a);
+                        valB = getGrauVal(b);
+                        break;
+                    }
+                    case 'categoria': {
+                        const getCategoriaVal = (item) => {
+                            if (item.situacaoItem === 'classificada') {
+                                const docs = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                                return docs[0]?.categoria || '';
+                            } else if (item.situacaoItem === 'desclassificada') {
+                                const docs = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                                return docs[0]?.categoria || '';
+                            }
+                            return '';
+                        };
+                        valA = getCategoriaVal(a);
+                        valB = getCategoriaVal(b);
+                        break;
+                    }
+                    case 'situacao':
+                        const situacaoOrder = { 'classificada': 2, 'desclassificada': 1, 'nenhuma': 0 };
+                        valA = situacaoOrder[a.situacaoItem] || 0;
+                        valB = situacaoOrder[b.situacaoItem] || 0;
+                        break;
+                    case 'dataAtualizacao': {
+                        const getDataVal = (item) => {
+                            if (item.situacaoItem === 'classificada') {
+                                const docs = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
+                                return docs[0]?.data_atualizacao || '';
+                            } else if (item.situacaoItem === 'desclassificada') {
+                                const docs = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
+                                return docs[0]?.data_atualizacao || '';
+                            } else {
+                                const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === item.sigla);
+                                return semInfo?.data_atualizacao || '';
+                            }
+                        };
+                        valA = getDataVal(a);
+                        valB = getDataVal(b);
+                        break;
+                    }
+                    default:
+                        return 0;
+                }
+                
+                if (typeof valA === 'string') {
+                    const compare = valA.localeCompare(valB, 'pt-BR');
+                    return direction === 'asc' ? compare : -compare;
+                }
+                if (direction === 'asc') {
+                    return valA - valB;
+                } else {
+                    return valB - valA;
+                }
+            });
+        }
 
         // ============================================
         // FUNÇÕES DE INICIALIZAÇÃO
@@ -1121,21 +1296,21 @@
                 <div class="filter-container">
                     <div class="filters-row">
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">business</i>Órgão</label>
+                            <label class="filter-label"><i class="material-icons"></i>Órgão</label>
                             <select class="form-select" id="filtroOrgaoVG">
                                 <option value="">Todos</option>
                                 ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">security</i>Grau de Sigilo</label>
+                            <label class="filter-label"><i class="material-icons"></i>Grau de Sigilo</label>
                             <select class="form-select" id="filtroTipoVG">
                                 <option value="">Todos</option>
                                 ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">info</i>Situação</label>
+                            <label class="filter-label"><i class="material-icons"></i>Situação</label>
                             <select class="form-select" id="filtroSituacaoVG">
                                 <option value="">Todas</option>
                                 <option value="classificada">Classificada</option>
@@ -1256,10 +1431,10 @@
                         <table class="table" id="orgaosTable">
                             <thead>
                                 <tr>
-                                    <th>Órgão</th>
-                                    <th>Sigla</th>
-                                    <th class="text-center">Situação</th>
-                                    <th class="text-center">Total Documentos</th>
+                                    <th onclick="ordenarTabelaVG('orgao')">Órgão <span class="sort-icon"></span></th>
+                                    <th onclick="ordenarTabelaVG('sigla')">Sigla <span class="sort-icon"></span></th>
+                                    <th class="text-center" onclick="ordenarTabelaVG('situacao')">Situação <span class="sort-icon"></span></th>
+                                    <th class="text-center" onclick="ordenarTabelaVG('totalDocumentos')">Total Documentos <span class="sort-icon"></span></th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -1289,14 +1464,38 @@
             
             setTimeout(iframeUpdateHeight, 300);
         }
+        
+        // Função para ordenar a tabela da Visão Geral
+        window.ordenarTabelaVG = function(column) {
+            if (vgSortColumn === column) {
+                vgSortDirection = vgSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                vgSortColumn = column;
+                vgSortDirection = 'asc';
+            }
+            
+            // Atualizar ícones de ordenação
+            document.querySelectorAll('#orgaosTable thead th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
+            const thElement = document.querySelector(`#orgaosTable thead th[onclick="ordenarTabelaVG('${column}')"]`);
+            if (thElement) {
+                thElement.classList.add(vgSortDirection);
+            }
+            
+            // Ordenar os dados
+            const dadosOrdenados = ordenarOrgaosVG(orgaosFiltradosVG, vgSortColumn, vgSortDirection);
+            
+            // Atualizar a tabela
+            document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaosVG(dadosOrdenados);
+        };
 
         function gerarLinhasTabelaOrgaosVG(orgaos) {
             return orgaos.map(item => {
                 const temClassificados = verificarTemClassificados(item.sigla);
                 const temDesclassificados = verificarTemDesclassificados(item.sigla);
                 
-
-	                if (temClassificados && temDesclassificados) {
+                if (temClassificados && temDesclassificados) {
                     return `<tr>
                         <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${item.sigla}')">${item.orgao}</a></td>
                         <td><strong>${item.sigla}</strong></td>
@@ -1376,8 +1575,17 @@
                 return true;
             });
             
+            // Resetar ordenação após filtrar
+            vgSortColumn = null;
+            vgSortDirection = 'asc';
+            
             document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaosVG(orgaosFiltradosVG);
             document.getElementById('totalOrgaosBadge').innerText = orgaosFiltradosVG.length + ' órgãos';
+            
+            // Limpar ícones de ordenação
+            document.querySelectorAll('#orgaosTable thead th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
         };
 
         window.limparFiltrosVG = function() {
@@ -1386,8 +1594,14 @@
             document.getElementById('filtroSituacaoVG').value = '';
             document.getElementById('buscaOrgaoVG').value = '';
             orgaosFiltradosVG = [...orgaosVisaoGeral];
+            vgSortColumn = null;
+            vgSortDirection = 'asc';
             document.getElementById('orgaosTableBody').innerHTML = gerarLinhasTabelaOrgaosVG(orgaosFiltradosVG);
             document.getElementById('totalOrgaosBadge').innerText = orgaosFiltradosVG.length + ' órgãos';
+            
+            document.querySelectorAll('#orgaosTable thead th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
         };
 
         window.filtrarTabelaVG = function(valor) {
@@ -1505,15 +1719,15 @@
                     html += `
                         <tr class="table-danger">
                             <td>${doc.codigo_indexacao || '-'}</td>
-                            <td>${doc.tipo_documento || '-'}</td>
-                            <td>${doc.categoria || '-'}</td>
-                            <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
-                            <td>${formatarData(doc.data_classificacao)}</td>
-                            <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
-                            <td>${doc.prazo_classificacao || '-'}</td>
-                            <td>${doc.fundamento_legal || '-'}</td>
-                            <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
-                        </tr>
+                                                         <td>${doc.tipo_documento || '-'}</td>
+                             <td>${doc.categoria || '-'}</td>
+                             <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                             <td>${formatarData(doc.data_classificacao)}</td>
+                             <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
+                             <td>${doc.prazo_classificacao || '-'}</td>
+                             <td>${doc.fundamento_legal || '-'}</td>
+                             <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
+                         </tr>
                     `;
                 });
             }
@@ -1541,21 +1755,21 @@
                 <div class="filter-container">
                     <div class="filters-row">
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">business</i>Órgão</label>
+                            <label class="filter-label"><i class="material-icons"></i>Órgão</label>
                             <select class="form-select" id="filtroOrgaoCI">
                                 <option value="">Todos</option>
                                 ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">security</i>Grau de Sigilo</label>
+                            <label class="filter-label"><i class="material-icons"></i>Grau de Sigilo</label>
                             <select class="form-select" id="filtroTipoCI">
                                 <option value="">Todos</option>
                                 ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
                             </select>
                         </div>
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">info</i>Situação</label>
+                            <label class="filter-label"><i class="material-icons"></i>Situação</label>
                             <select class="form-select" id="filtroSituacaoCI">
                                 <option value="">Todas</option>
                                 <option value="classificada">Classificada</option>
@@ -1607,12 +1821,12 @@
                         <table class="table" id="orgaosTableCI">
                             <thead>
                                 <tr>
-                                    <th>Órgão</th>
-                                    <th>Sigla</th>
-                                    <th class="text-center">Grau de Sigilo</th>
-                                    <th class="text-center">Categoria</th>
-                                    <th class="text-center">Situação</th>
-                                    <th class="text-center">Data Atualização</th>
+                                    <th onclick="ordenarTabelaCI('orgao')">Órgão <span class="sort-icon"></span></th>
+                                    <th onclick="ordenarTabelaCI('sigla')">Sigla <span class="sort-icon"></span></th>
+                                    <th class="text-center" onclick="ordenarTabelaCI('grauSigilo')">Grau de Sigilo <span class="sort-icon"></span></th>
+                                    <th class="text-center" onclick="ordenarTabelaCI('categoria')">Categoria <span class="sort-icon"></span></th>
+                                    <th class="text-center" onclick="ordenarTabelaCI('situacao')">Situação <span class="sort-icon"></span></th>
+                                    <th class="text-center" onclick="ordenarTabelaCI('dataAtualizacao')">Data Atualização <span class="sort-icon"></span></th>
                                     <th class="text-center">Ações</th>
                                 </tr>
                             </thead>
@@ -1633,6 +1847,33 @@
             aplicarFiltrosCI();
             setTimeout(iframeUpdateHeight, 300);
         }
+        
+        // Função para ordenar a tabela da Consulta
+        window.ordenarTabelaCI = function(column) {
+            if (ciSortColumn === column) {
+                ciSortDirection = ciSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                ciSortColumn = column;
+                ciSortDirection = 'asc';
+            }
+            
+            // Atualizar ícones de ordenação
+            document.querySelectorAll('#orgaosTableCI thead th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
+            const thElement = document.querySelector(`#orgaosTableCI thead th[onclick="ordenarTabelaCI('${column}')"]`);
+            if (thElement) {
+                thElement.classList.add(ciSortDirection);
+            }
+            
+            // Ordenar os dados filtrados
+            const dadosOrdenados = ordenarItensCI(orgaosFiltrados, ciSortColumn, ciSortDirection);
+            orgaosFiltrados = dadosOrdenados;
+            
+            // Resetar para primeira página e atualizar
+            paginaAtualCI = 1;
+            atualizarTabelaConsulta();
+        };
 
         function gerarListaComDuplicatas(orgaos) {
             const lista = [];
@@ -1735,8 +1976,16 @@
                 return true;
             });
             
+            // Resetar ordenação após filtrar
+            ciSortColumn = null;
+            ciSortDirection = 'asc';
             paginaAtualCI = 1;
             atualizarTabelaConsulta();
+            
+            // Limpar ícones de ordenação
+            document.querySelectorAll('#orgaosTableCI thead th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
         };
 
         window.limparFiltrosCI = function() {
@@ -1745,8 +1994,14 @@
             document.getElementById('filtroSituacaoCI').value = '';
             document.getElementById('buscaOrgaoCI').value = '';
             orgaosFiltrados = gerarListaComDuplicatas(todosOrgaos);
+            ciSortColumn = null;
+            ciSortDirection = 'asc';
             paginaAtualCI = 1;
             atualizarTabelaConsulta();
+            
+            document.querySelectorAll('#orgaosTableCI thead th').forEach(th => {
+                th.classList.remove('asc', 'desc');
+            });
         };
 
         window.alterarItensPorPaginaCI = function() {
