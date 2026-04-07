@@ -1120,6 +1120,51 @@
         // ============================================
         // FUNÇÕES AUXILIARES
         // ============================================
+
+        // Processa e preenche data_desclassificacao automaticamente quando vazia
+        // e a data de classificação + prazo já expirou
+        function processarDesclassificacaoAutomatica(dados) {
+            const hoje = new Date();
+            hoje.setHours(0, 0, 0, 0);
+
+            return dados.map(item => {
+                const jaTemDesclassificacao = item.data_desclassificacao &&
+                    item.data_desclassificacao.trim() !== '' &&
+                    item.data_desclassificacao !== '0000-00-00 00:00:00';
+
+                if (jaTemDesclassificacao) return item;
+
+                if (item.data_classificacao && item.prazo_classificacao_anos) {
+                    const partes = item.data_classificacao.split(' ')[0].split('-');
+                    if (partes.length < 3) return item;
+                    const dataClassif = new Date(parseInt(partes[0]), parseInt(partes[1]) - 1, parseInt(partes[2]));
+                    if (isNaN(dataClassif.getTime())) return item;
+
+                    const anos = parseInt(item.prazo_classificacao_anos, 10);
+                    if (isNaN(anos)) return item;
+
+                    const dataExpiracao = new Date(dataClassif);
+                    dataExpiracao.setFullYear(dataExpiracao.getFullYear() + anos);
+
+                    if (dataExpiracao <= hoje) {
+                        const ano = dataExpiracao.getFullYear();
+                        const mes = String(dataExpiracao.getMonth() + 1).padStart(2, '0');
+                        const dia = String(dataExpiracao.getDate()).padStart(2, '0');
+                        item = { ...item, data_desclassificacao: `${ano}-${mes}-${dia}`, _desclassificacao_calculada: true };
+                    }
+                }
+                return item;
+            });
+        }
+
+        // Extrai o ano de uma string de data no formato YYYY-MM-DD
+        function extrairAno(dataStr) {
+            if (!dataStr || dataStr === '' || dataStr === '0000-00-00 00:00:00') return null;
+            const partes = dataStr.split(' ')[0].split('-');
+            if (partes.length >= 1 && partes[0].length === 4) return partes[0];
+            return null;
+        }
+
         function formatarData(dataStr) {
             if (!dataStr || dataStr === '' || dataStr === '0000-00-00 00:00:00') return '-';
             try {
@@ -1182,11 +1227,13 @@
             const orgaos = new Set();
             let orgaosClassificadas = new Set();
             let orgaosDesclassificadas = new Set();
+            let autoCalculados = 0;
             
             dadosClassificadas.forEach(d => {
                 orgaos.add(d.sigla);
                 if (d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') {
                     orgaosDesclassificadas.add(d.sigla);
+                    if (d._desclassificacao_calculada) autoCalculados++;
                 } else {
                     orgaosClassificadas.add(d.sigla);
                 }
@@ -1200,7 +1247,8 @@
                 totalOrgaos: orgaos.size,
                 totalClassificadas: orgaosClassificadas.size,
                 totalDesclassificadas: orgaosDesclassificadas.size,
-                totalDocumentos: dadosClassificadas.length
+                totalDocumentos: dadosClassificadas.length,
+                autoCalculados
             };
         }
 
@@ -1247,7 +1295,7 @@
             try {
                 const respostaClassificadas = await fetch(CLASSIFICADAS_URL);
                 const textoClassificadas = await respostaClassificadas.text();
-                dadosClassificadas = parseCSV(textoClassificadas);
+                dadosClassificadas = processarDesclassificacaoAutomatica(parseCSV(textoClassificadas));
                 
                 const respostaOrgaos = await fetch(ORGAOS_SEM_INFO_URL);
                 const textoOrgaos = await respostaOrgaos.text();
@@ -1318,6 +1366,16 @@
                                 <option value="nenhuma">Não possui inf. classificada ou desclassificada</option>
                             </select>
                         </div>
+                        <div class="filter-group">
+                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
+                            <select class="form-select" id="filtroAnoVG">
+                                <option value="">Todos os anos</option>
+                                <option value="2026">2026</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
                     </div>
                     
                     <div class="botoes-abaixo">
@@ -1379,7 +1437,7 @@
                 </div>
 
                 <div class="row mb-4">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h4 class="chart-title">Documentos por Grau de Sigilo</h4>
@@ -1389,13 +1447,23 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <div class="chart-container">
                             <div class="chart-header">
                                 <h4 class="chart-title">Top 10 Órgãos com Documentos</h4>
                             </div>
                             <div class="chart-wrapper">
                                 <canvas id="chartOrgaos"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="chart-container">
+                            <div class="chart-header">
+                                <h4 class="chart-title">Classificações por Ano</h4>
+                            </div>
+                            <div class="chart-wrapper">
+                                <canvas id="chartAno"></canvas>
                             </div>
                         </div>
                     </div>
@@ -1456,6 +1524,14 @@
             
             criarGraficoGrauSigilo(docsPorGrau);
             criarGraficoOrgaos(topOrgaos);
+            
+            // Gráfico por ano
+            const docsPorAno = {};
+            dadosClassificadas.forEach(d => {
+                const ano = extrairAno(d.data_classificacao);
+                if (ano) docsPorAno[ano] = (docsPorAno[ano] || 0) + 1;
+            });
+            criarGraficoAnos(docsPorAno);
             
             setTimeout(() => {
                 const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
@@ -1551,6 +1627,7 @@
             const orgao = document.getElementById('filtroOrgaoVG')?.value;
             const tipo = document.getElementById('filtroTipoVG')?.value;
             const situacao = document.getElementById('filtroSituacaoVG')?.value;
+            const anoSelecionado = document.getElementById('filtroAnoVG')?.value;
             const buscaNome = (document.getElementById('buscaOrgaoVG')?.value || '').toLowerCase();
             
             orgaosFiltradosVG = orgaosVisaoGeral.filter(o => {
@@ -1568,6 +1645,13 @@
                     if (situacao === 'classificada' && !temClassificados) return false;
                     if (situacao === 'desclassificada' && !temDesclassificados) return false;
                     if (situacao === 'nenhuma' && (temClassificados || temDesclassificados)) return false;
+                }
+
+                // Filtro por ano
+                if (anoSelecionado) {
+                    const temDocNessAno = o.documentos?.some(d => extrairAno(d.data_classificacao) === anoSelecionado);
+                    const temSemInfoNessAno = dadosOrgaosSemInfo.some(d => d.sigla === o.sigla && d.ano === anoSelecionado);
+                    if (!temDocNessAno && !temSemInfoNessAno) return false;
                 }
                 
                 if (buscaNome && !o.orgao.toLowerCase().includes(buscaNome) && !o.sigla.toLowerCase().includes(buscaNome)) return false;
@@ -1592,6 +1676,7 @@
             document.getElementById('filtroOrgaoVG').value = '';
             document.getElementById('filtroTipoVG').value = '';
             document.getElementById('filtroSituacaoVG').value = '';
+            document.getElementById('filtroAnoVG').value = '';
             document.getElementById('buscaOrgaoVG').value = '';
             orgaosFiltradosVG = [...orgaosVisaoGeral];
             vgSortColumn = null;
@@ -1700,6 +1785,10 @@
                 html += `<tr><td colspan="9" class="text-center">Nenhum documento encontrado</td></tr>`;
             } else {
                 desclassificados.forEach(doc => {
+                    const dataDesclassifExibida = formatarData(doc.data_desclassificacao) || '-';
+                    const indicadorCalculado = doc._desclassificacao_calculada
+                        ? ` <span title="Data calculada automaticamente com base no prazo de classificação" style="font-size:10px;color:#856404;background:#fff3cd;border-radius:4px;padding:1px 5px;vertical-align:middle;">calculado</span>`
+                        : '';
                     html += `
                         <tr class="table-success">
                             <td>${doc.codigo_indexacao || '-'}</td>
@@ -1707,8 +1796,8 @@
                             <td>${doc.categoria || '-'}</td>
                             <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
                             <td>${formatarData(doc.data_classificacao)}</td>
-                            <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
-                            <td>${doc.prazo_classificacao || '-'}</td>
+                            <td>${dataDesclassifExibida}${indicadorCalculado}</td>
+                            <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
                             <td>${doc.fundamento_legal || '-'}</td>
                             <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
                         </tr>
@@ -1775,6 +1864,16 @@
                                 <option value="classificada">Classificada</option>
                                 <option value="desclassificada">Desclassificada</option>
                                 <option value="nenhuma">Não possui inf. classificada ou desclassificada</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
+                            <select class="form-select" id="filtroAnoCI">
+                                <option value="">Todos os anos</option>
+                                <option value="2026">2026</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
                             </select>
                         </div>
                     </div>
@@ -1950,6 +2049,7 @@
             const orgao = document.getElementById('filtroOrgaoCI')?.value;
             const tipo = document.getElementById('filtroTipoCI')?.value;
             const situacao = document.getElementById('filtroSituacaoCI')?.value;
+            const anoSelecionado = document.getElementById('filtroAnoCI')?.value;
             const buscaNome = (document.getElementById('buscaOrgaoCI')?.value || '').toLowerCase();
             
             let listaBase = gerarListaComDuplicatas(todosOrgaos);
@@ -1970,6 +2070,17 @@
                 }
                 
                 if (situacao && item.situacaoItem !== situacao) return false;
+
+                // Filtro por ano
+                if (anoSelecionado) {
+                    if (item.situacaoItem === 'nenhuma') {
+                        const temSemInfoNessAno = dadosOrgaosSemInfo.some(d => d.sigla === item.sigla && d.ano === anoSelecionado);
+                        if (!temSemInfoNessAno) return false;
+                    } else {
+                        const temDocNessAno = item.documentos?.some(d => extrairAno(d.data_classificacao) === anoSelecionado);
+                        if (!temDocNessAno) return false;
+                    }
+                }
                 
                 if (buscaNome && !item.orgao.toLowerCase().includes(buscaNome) && !item.sigla.toLowerCase().includes(buscaNome)) return false;
                 
@@ -1992,6 +2103,7 @@
             document.getElementById('filtroOrgaoCI').value = '';
             document.getElementById('filtroTipoCI').value = '';
             document.getElementById('filtroSituacaoCI').value = '';
+            document.getElementById('filtroAnoCI').value = '';
             document.getElementById('buscaOrgaoCI').value = '';
             orgaosFiltrados = gerarListaComDuplicatas(todosOrgaos);
             ciSortColumn = null;
@@ -2135,6 +2247,37 @@
                             beginAtZero: true,
                             ticks: { stepSize: 1 }
                         }
+                    }
+                }
+            });
+        }
+
+        function criarGraficoAnos(dados) {
+            const ctx = document.getElementById('chartAno')?.getContext('2d');
+            if (!ctx) return;
+            
+            if (window.anosChart) window.anosChart.destroy();
+            
+            const anos = Object.keys(dados).sort();
+            const valores = anos.map(a => dados[a]);
+            
+            window.anosChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: anos,
+                    datasets: [{
+                        label: 'Documentos',
+                        data: valores,
+                        backgroundColor: ['#1a3a5c', '#2c5f8a', '#b93c42', '#fd7e14'],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, ticks: { stepSize: 1 } }
                     }
                 }
             });
@@ -2521,7 +2664,7 @@
         window.baixarOrgaosSemInfoCSV = function() {
             if (!dadosOrgaosSemInfo.length) return;
             
-            const cabecalhos = ['orgao_entidade','sigla','informacao_classificada','informacao_desclassificada','data_atualizacao','link'];
+            const cabecalhos = ['ano','orgao_entidade','sigla','informacao_classificada','informacao_desclassificada','data_atualizacao','link'];
             
             const linhas = dadosOrgaosSemInfo.map(item => 
                 cabecalhos.map(cab => `"${(item[cab]||'').toString().replace(/"/g,'""')}"`).join(';')
