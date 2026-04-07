@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 0.077,
+  "time": 0.087,
   "errors": [],
   "tasks": [
     {
@@ -51,15 +51,15 @@
             },
             {
               "name": "data_classificacao",
-              "type": "string"
+              "type": "date"
             },
             {
               "name": "data_desclassificacao",
               "type": "date"
             },
             {
-              "name": "prazo_classificacao",
-              "type": "string"
+              "name": "prazo_classificacao_anos",
+              "type": "integer"
             },
             {
               "name": "data_atualizacao",
@@ -74,13 +74,13 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "0b9c6b67b77f49b04af0ff4f3541437c",
-          "bytes": 71783,
+          "hash": "576009d5fa3a1e956326483f8cee789c",
+          "bytes": 68694,
           "fields": 13,
-          "rows": 168
+          "rows": 169
         }
       },
-      "time": 0.03,
+      "time": 0.036,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -123,6 +123,10 @@
         "schema": {
           "fields": [
             {
+              "name": "ano",
+              "type": "integer"
+            },
+            {
               "name": "orgao_entidade",
               "type": "string"
             },
@@ -151,13 +155,13 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "6d6fd559e74752e27afe9a503bf8f3f0",
-          "bytes": 33111,
-          "fields": 6,
-          "rows": 52
+          "hash": "299a377dbfa66ec324e965ed3ba7160f",
+          "bytes": 99345,
+          "fields": 7,
+          "rows": 155
         }
       },
-      "time": 0.019,
+      "time": 0.026,
       "scope": [
         "hash-count-error",
         "byte-count-error",
