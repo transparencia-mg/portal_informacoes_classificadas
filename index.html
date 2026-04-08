@@ -799,7 +799,7 @@
             <div class="nav-tabs-container">
                 <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
                     <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">bar_chart</i>Visão Geral</button></li>
-                    <li class="nav-item"><button class="nav-link" id="consulta-tab" data-bs-toggle="tab" data-bs-target="#consulta"><i class="material-icons">search</i>Consulta por Órgão</button></li>
+                    <li class="nav-item"><button class="nav-link" id="rol-tab" data-bs-toggle="tab" data-bs-target="#rol"><i class="material-icons">list_alt</i>Rol de Classificação</button></li>
                     <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
                 </ul>
             </div>
@@ -817,11 +817,11 @@
                 <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
                     <div id="visao-geral-content"></div>
                 </div>
-                <!-- ABA 2: CONSULTA POR ÓRGÃO -->
-                <div class="tab-pane fade" id="consulta" role="tabpanel">
-                    <div id="consulta-content"></div>
+                <!-- ABA 2: ROL DE CLASSIFICAÇÃO -->
+                <div class="tab-pane fade" id="rol" role="tabpanel">
+                    <div id="rol-content"></div>
                 </div>
-                <!-- ABA 3: DOWNLOADS -->
+                <!-- ABA 4: DOWNLOADS -->
                 <div class="tab-pane fade" id="downloads" role="tabpanel">
                     <div id="downloads-content"></div>
                 </div>
@@ -923,6 +923,20 @@
                         valA = a.documentos?.length || 0;
                         valB = b.documentos?.length || 0;
                         break;
+                    case 'dataAtualizacao': {
+                        const getDataAtual = (o) => {
+                            const docsO = o.documentos || [];
+                            if (docsO.length > 0) {
+                                const docData = docsO.find(d => d.data_atualizacao);
+                                return docData?.data_atualizacao || '';
+                            }
+                            const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === o.sigla);
+                            return semInfo?.data_atualizacao || '';
+                        };
+                        valA = getDataAtual(a);
+                        valB = getDataAtual(b);
+                        break;
+                    }
                     default:
                         return 0;
                 }
@@ -1308,7 +1322,7 @@
                 orgaosFiltradosVG = [...todosOrgaos];
                 
                 renderizarVisaoGeral();
-                renderizarConsulta();
+                renderizarRol();
                 renderizarDownloads();
                 
                 setTimeout(iframeUpdateHeight, 500);
@@ -1344,17 +1358,20 @@
                 <div class="filter-container">
                     <div class="filters-row">
                         <div class="filter-group">
+                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
+                            <select class="form-select" id="filtroAnoVG">
+                                <option value="">Todos os anos</option>
+                                <option value="2026">2026</option>
+                                <option value="2025">2025</option>
+                                <option value="2024">2024</option>
+                                <option value="2023">2023</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
                             <label class="filter-label"><i class="material-icons"></i>Órgão</label>
                             <select class="form-select" id="filtroOrgaoVG">
                                 <option value="">Todos</option>
                                 ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons"></i>Grau de Sigilo</label>
-                            <select class="form-select" id="filtroTipoVG">
-                                <option value="">Todos</option>
-                                ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
                             </select>
                         </div>
                         <div class="filter-group">
@@ -1364,16 +1381,6 @@
                                 <option value="classificada">Classificada</option>
                                 <option value="desclassificada">Desclassificada</option>
                                 <option value="nenhuma">Não possui inf. classificada ou desclassificada</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
-                            <select class="form-select" id="filtroAnoVG">
-                                <option value="">Todos os anos</option>
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
                             </select>
                         </div>
                     </div>
@@ -1503,7 +1510,7 @@
                                     <th onclick="ordenarTabelaVG('sigla')">Sigla <span class="sort-icon"></span></th>
                                     <th class="text-center" onclick="ordenarTabelaVG('situacao')">Situação <span class="sort-icon"></span></th>
                                     <th class="text-center" onclick="ordenarTabelaVG('totalDocumentos')">Total Documentos <span class="sort-icon"></span></th>
-                                    <th class="text-center">Ações</th>
+                                    <th class="text-center" onclick="ordenarTabelaVG('dataAtualizacao')">Data Atualização <span class="sort-icon"></span></th>
                                 </tr>
                             </thead>
                             <tbody id="orgaosTableBody">
@@ -1571,17 +1578,24 @@
                 const temClassificados = verificarTemClassificados(item.sigla);
                 const temDesclassificados = verificarTemDesclassificados(item.sigla);
                 
+                // Obter data de atualização do órgão
+                const docsOrgao = item.documentos || [];
+                let dataAtualizacao = '-';
+                if (docsOrgao.length > 0) {
+                    const docComData = docsOrgao.find(d => d.data_atualizacao);
+                    dataAtualizacao = docComData ? formatarData(docComData.data_atualizacao) : '-';
+                } else {
+                    const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === item.sigla);
+                    dataAtualizacao = semInfo?.data_atualizacao ? formatarData(semInfo.data_atualizacao) : '-';
+                }
+                
                 if (temClassificados && temDesclassificados) {
                     return `<tr>
                         <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${item.sigla}')">${item.orgao}</a></td>
                         <td><strong>${item.sigla}</strong></td>
                         <td class="text-center"><span class="badge-classificacao" style="background-color: #cce5ff; color: #004085;"><i class="material-icons" style="font-size: 12px;">lock</i> Classificada e Desclassificada</span></td>
                         <td class="text-center">${item.documentos?.length || 0}</td>
-                        <td class="text-center">
-                            <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
-                                <i class="material-icons">visibility</i>
-                            </button>
-                        </td>
+                        <td class="text-center">${dataAtualizacao}</td>
                     </tr>`;
                 } else if (temClassificados) {
                     return `<tr>
@@ -1589,11 +1603,7 @@
                         <td><strong>${item.sigla}</strong></td>
                         <td class="text-center">${getBadgeSituacao('classificada')}</td>
                         <td class="text-center">${item.documentos?.length || 0}</td>
-                        <td class="text-center">
-                            <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
-                                <i class="material-icons">visibility</i>
-                            </button>
-                        </td>
+                        <td class="text-center">${dataAtualizacao}</td>
                     </tr>`;
                 } else if (temDesclassificados) {
                     return `<tr>
@@ -1601,11 +1611,7 @@
                         <td><strong>${item.sigla}</strong></td>
                         <td class="text-center">${getBadgeSituacao('desclassificada')}</td>
                         <td class="text-center">${item.documentos?.length || 0}</td>
-                        <td class="text-center">
-                            <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
-                                <i class="material-icons">visibility</i>
-                            </button>
-                        </td>
+                        <td class="text-center">${dataAtualizacao}</td>
                     </tr>`;
                 } else {
                     return `<tr>
@@ -1613,11 +1619,7 @@
                         <td><strong>${item.sigla}</strong></td>
                         <td class="text-center">${getBadgeSituacao('nenhuma')}</td>
                         <td class="text-center">${item.documentos?.length || 0}</td>
-                        <td class="text-center">
-                            <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
-                                <i class="material-icons">visibility</i>
-                            </button>
-                        </td>
+                        <td class="text-center">${dataAtualizacao}</td>
                     </tr>`;
                 }
             }).join('');
@@ -1625,18 +1627,12 @@
 
         window.aplicarFiltrosVG = function() {
             const orgao = document.getElementById('filtroOrgaoVG')?.value;
-            const tipo = document.getElementById('filtroTipoVG')?.value;
             const situacao = document.getElementById('filtroSituacaoVG')?.value;
             const anoSelecionado = document.getElementById('filtroAnoVG')?.value;
             const buscaNome = (document.getElementById('buscaOrgaoVG')?.value || '').toLowerCase();
             
             orgaosFiltradosVG = orgaosVisaoGeral.filter(o => {
                 if (orgao && o.sigla !== orgao) return false;
-                
-                if (tipo) {
-                    const temDocumentosComGrau = o.documentos?.some(d => d.grau_sigilo === tipo);
-                    if (!temDocumentosComGrau) return false;
-                }
                 
                 if (situacao) {
                     const temClassificados = verificarTemClassificados(o.sigla);
@@ -1674,7 +1670,6 @@
 
         window.limparFiltrosVG = function() {
             document.getElementById('filtroOrgaoVG').value = '';
-            document.getElementById('filtroTipoVG').value = '';
             document.getElementById('filtroSituacaoVG').value = '';
             document.getElementById('filtroAnoVG').value = '';
             document.getElementById('buscaOrgaoVG').value = '';
@@ -1771,11 +1766,11 @@
                                 <th>Tipo</th>
                                 <th>Categoria</th>
                                 <th>Grau Sigilo</th>
+                                <th>Data Produção</th>
                                 <th>Data Classif.</th>
                                 <th>Data Desclassif.</th>
                                 <th>Prazo</th>
                                 <th>Fundamento Legal</th>
-                                <th>Link</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -1795,11 +1790,11 @@
                             <td>${doc.tipo_documento || '-'}</td>
                             <td>${doc.categoria || '-'}</td>
                             <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                            <td>${formatarData(doc.data_producao) || '-'}</td>
                             <td>${formatarData(doc.data_classificacao)}</td>
                             <td>${dataDesclassifExibida}${indicadorCalculado}</td>
                             <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
                             <td>${doc.fundamento_legal || '-'}</td>
-                            <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
                         </tr>
                     `;
                 });
@@ -1808,15 +1803,15 @@
                     html += `
                         <tr class="table-danger">
                             <td>${doc.codigo_indexacao || '-'}</td>
-                                                         <td>${doc.tipo_documento || '-'}</td>
-                             <td>${doc.categoria || '-'}</td>
-                             <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
-                             <td>${formatarData(doc.data_classificacao)}</td>
-                             <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
-                             <td>${doc.prazo_classificacao || '-'}</td>
-                             <td>${doc.fundamento_legal || '-'}</td>
-                             <td>${doc.link ? `<a href="${doc.link}" target="_blank" class="link-info">Link</a>` : '-'}</td>
-                         </tr>
+                            <td>${doc.tipo_documento || '-'}</td>
+                            <td>${doc.categoria || '-'}</td>
+                            <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                            <td>${formatarData(doc.data_producao) || '-'}</td>
+                            <td>${formatarData(doc.data_classificacao)}</td>
+                            <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
+                            <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
+                            <td>${doc.fundamento_legal || '-'}</td>
+                        </tr>
                     `;
                 });
             }
@@ -1831,359 +1826,7 @@
             new bootstrap.Modal(document.getElementById('detailModal')).show();
         };
 
-        // ============================================
-        // RENDERIZAÇÃO CONSULTA POR ÓRGÃO (COM DUPLICATAS)
-        // ============================================
-        function renderizarConsulta() {
-            const opcoes = obterOpcoesFiltro();
-            todosOrgaos = agruparOrgaosCompletos();
-            orgaosFiltrados = gerarListaComDuplicatas(todosOrgaos);
-            
-            const container = document.getElementById('consulta-content');
-            container.innerHTML = `
-                <div class="filter-container">
-                    <div class="filters-row">
-                        <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons"></i>Órgão</label>
-                            <select class="form-select" id="filtroOrgaoCI">
-                                <option value="">Todos</option>
-                                ${opcoes.orgaos.map(o => `<option value="${o}">${o}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons"></i>Grau de Sigilo</label>
-                            <select class="form-select" id="filtroTipoCI">
-                                <option value="">Todos</option>
-                                ${opcoes.tipos.map(t => `<option value="${t}">${t}</option>`).join('')}
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons"></i>Situação</label>
-                            <select class="form-select" id="filtroSituacaoCI">
-                                <option value="">Todas</option>
-                                <option value="classificada">Classificada</option>
-                                <option value="desclassificada">Desclassificada</option>
-                                <option value="nenhuma">Não possui inf. classificada ou desclassificada</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
-                            <select class="form-select" id="filtroAnoCI">
-                                <option value="">Todos os anos</option>
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                            </select>
-                        </div>
-                    </div>
-                    
-                    <div class="botoes-abaixo">
-                        <div class="filter-group">
-                            <input type="text" class="search-box" id="buscaOrgaoCI" placeholder="Buscar por nome do órgão..." style="width: 100%;">
-                        </div>
-                        <div class="d-flex gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosCI()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosCI()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
-                    <div class="d-flex gap-2">
-                        <button class="btn-export" onclick="exportarTabelaConsultaCSV()"><i class="material-icons me-1">description</i>CSV</button>
-                        <button class="btn-export" onclick="exportarTabelaConsultaPDF()"><i class="material-icons me-1">print</i>PDF</button>
-                        <div class="share-dropdown">
-                            <button class="btn-export" onclick="toggleShare(2)"><i class="material-icons me-1">share</i>Compartilhar</button>
-                            <div class="share-options" id="shareOptions2">
-                                <a href="#" onclick="copiarLink(event,2)"><i class="fas fa-link"></i> Copiar Link</a>
-                                <a href="#" onclick="compartilharFacebook(event,2)"><i class="fab fa-facebook-f"></i> Facebook</a>
-                                <a href="#" onclick="compartilharTwitter(event,2)"><i class="fab fa-twitter"></i> Twitter</a>
-                                <a href="#" onclick="compartilharLinkedIn(event,2)"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
-                                <a href="#" onclick="compartilharWhatsApp(event,2)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="d-flex align-items-center gap-2">
-                        <span class="table-badge" id="totalOrgaosBadgeCI">${orgaosFiltrados.length} registros</span>
-                        <select class="items-per-page" id="itensPorPaginaCI" onchange="alterarItensPorPaginaCI()">
-                            <option value="25">25</option>
-                            <option value="50" selected>50</option>
-                            <option value="100">100</option>
-                            <option value="${orgaosFiltrados.length}">Todos</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="table-container">
-                    <div class="table-fixed-header-container">
-                        <table class="table" id="orgaosTableCI">
-                            <thead>
-                                <tr>
-                                    <th onclick="ordenarTabelaCI('orgao')">Órgão <span class="sort-icon"></span></th>
-                                    <th onclick="ordenarTabelaCI('sigla')">Sigla <span class="sort-icon"></span></th>
-                                    <th class="text-center" onclick="ordenarTabelaCI('grauSigilo')">Grau de Sigilo <span class="sort-icon"></span></th>
-                                    <th class="text-center" onclick="ordenarTabelaCI('categoria')">Categoria <span class="sort-icon"></span></th>
-                                    <th class="text-center" onclick="ordenarTabelaCI('situacao')">Situação <span class="sort-icon"></span></th>
-                                    <th class="text-center" onclick="ordenarTabelaCI('dataAtualizacao')">Data Atualização <span class="sort-icon"></span></th>
-                                    <th class="text-center">Ações</th>
-                                </tr>
-                            </thead>
-                            <tbody id="orgaosTableBodyCI"></tbody>
-                        </table>
-                    </div>
-                    <div class="pagination-container" id="paginacaoContainerCI"></div>
-                </div>
-                
-                <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
-                    <div id="btnTopo" onclick="voltarAoTopo()">
-                        <i class="material-icons">arrow_upward</i>
-                        Voltar ao topo
-                    </div>
-                </div>
-            `;
-            
-            aplicarFiltrosCI();
-            setTimeout(iframeUpdateHeight, 300);
-        }
-        
-        // Função para ordenar a tabela da Consulta
-        window.ordenarTabelaCI = function(column) {
-            if (ciSortColumn === column) {
-                ciSortDirection = ciSortDirection === 'asc' ? 'desc' : 'asc';
-            } else {
-                ciSortColumn = column;
-                ciSortDirection = 'asc';
-            }
-            
-            // Atualizar ícones de ordenação
-            document.querySelectorAll('#orgaosTableCI thead th').forEach(th => {
-                th.classList.remove('asc', 'desc');
-            });
-            const thElement = document.querySelector(`#orgaosTableCI thead th[onclick="ordenarTabelaCI('${column}')"]`);
-            if (thElement) {
-                thElement.classList.add(ciSortDirection);
-            }
-            
-            // Ordenar os dados filtrados
-            const dadosOrdenados = ordenarItensCI(orgaosFiltrados, ciSortColumn, ciSortDirection);
-            orgaosFiltrados = dadosOrdenados;
-            
-            // Resetar para primeira página e atualizar
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        function gerarListaComDuplicatas(orgaos) {
-            const lista = [];
-            
-            orgaos.forEach(orgao => {
-                const temClassificados = verificarTemClassificados(orgao.sigla);
-                const temDesclassificados = verificarTemDesclassificados(orgao.sigla);
-                
-                if (temClassificados) {
-                    lista.push({
-                        ...orgao,
-                        situacaoItem: 'classificada'
-                    });
-                }
-                
-                if (temDesclassificados) {
-                    lista.push({
-                        ...orgao,
-                        situacaoItem: 'desclassificada'
-                    });
-                }
-                
-                if (!temClassificados && !temDesclassificados) {
-                    lista.push({
-                        ...orgao,
-                        situacaoItem: 'nenhuma'
-                    });
-                }
-            });
-            
-            return lista;
-        }
-
-        function gerarLinhasTabelaOrgaosCI(orgaos) {
-            return orgaos.map(item => {
-                let grauSigilo = '-';
-                let categoria = '-';
-                let dataAtualizacao = '-';
-                
-                let documentosFiltrados = [];
-                if (item.situacaoItem === 'classificada') {
-                    documentosFiltrados = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
-                } else if (item.situacaoItem === 'desclassificada') {
-                    documentosFiltrados = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
-                }
-                
-                if (documentosFiltrados.length > 0) {
-                    const doc = documentosFiltrados[0];
-                    grauSigilo = doc.grau_sigilo || '-';
-                    categoria = doc.categoria || '-';
-                    dataAtualizacao = formatarData(doc.data_atualizacao) || '-';
-                } else if (item.situacaoItem === 'nenhuma') {
-                    const semInfo = dadosOrgaosSemInfo.find(d => d.sigla === item.sigla);
-                    dataAtualizacao = formatarData(semInfo?.data_atualizacao) || '-';
-                }
-                
-                return `<tr>
-                    <td><a href="#" class="orgao-link" onclick="verDetalhesOrgao('${item.sigla}')">${item.orgao}</a></td>
-                    <td><strong>${item.sigla}</strong></td>
-                    <td class="text-center">${grauSigilo !== '-' ? `<span class="badge-classificacao ${getBadgeGrauSigilo(grauSigilo)}">${grauSigilo}</span>` : '-'}</td>
-                    <td class="text-center">${categoria}</td>
-                    <td class="text-center">${getBadgeSituacao(item.situacaoItem)}</td>
-                    <td class="text-center">${dataAtualizacao}</td>
-                    <td class="text-center">
-                        <button class="btn-action" onclick="verDetalhesOrgao('${item.sigla}')" title="Ver documentos">
-                            <i class="material-icons">visibility</i>
-                        </button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        window.aplicarFiltrosCI = function() {
-            const orgao = document.getElementById('filtroOrgaoCI')?.value;
-            const tipo = document.getElementById('filtroTipoCI')?.value;
-            const situacao = document.getElementById('filtroSituacaoCI')?.value;
-            const anoSelecionado = document.getElementById('filtroAnoCI')?.value;
-            const buscaNome = (document.getElementById('buscaOrgaoCI')?.value || '').toLowerCase();
-            
-            let listaBase = gerarListaComDuplicatas(todosOrgaos);
-            
-            orgaosFiltrados = listaBase.filter(item => {
-                if (orgao && item.sigla !== orgao) return false;
-                
-                if (tipo) {
-                    let temDocumentosComGrau = false;
-                    if (item.situacaoItem === 'classificada') {
-                        const docsClassificados = item.documentos?.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00') || [];
-                        temDocumentosComGrau = docsClassificados.some(d => d.grau_sigilo === tipo);
-                    } else if (item.situacaoItem === 'desclassificada') {
-                        const docsDesclassificados = item.documentos?.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00') || [];
-                        temDocumentosComGrau = docsDesclassificados.some(d => d.grau_sigilo === tipo);
-                    }
-                    if (!temDocumentosComGrau) return false;
-                }
-                
-                if (situacao && item.situacaoItem !== situacao) return false;
-
-                // Filtro por ano
-                if (anoSelecionado) {
-                    if (item.situacaoItem === 'nenhuma') {
-                        const temSemInfoNessAno = dadosOrgaosSemInfo.some(d => d.sigla === item.sigla && d.ano === anoSelecionado);
-                        if (!temSemInfoNessAno) return false;
-                    } else {
-                        const temDocNessAno = item.documentos?.some(d => extrairAno(d.data_classificacao) === anoSelecionado);
-                        if (!temDocNessAno) return false;
-                    }
-                }
-                
-                if (buscaNome && !item.orgao.toLowerCase().includes(buscaNome) && !item.sigla.toLowerCase().includes(buscaNome)) return false;
-                
-                return true;
-            });
-            
-            // Resetar ordenação após filtrar
-            ciSortColumn = null;
-            ciSortDirection = 'asc';
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-            
-            // Limpar ícones de ordenação
-            document.querySelectorAll('#orgaosTableCI thead th').forEach(th => {
-                th.classList.remove('asc', 'desc');
-            });
-        };
-
-        window.limparFiltrosCI = function() {
-            document.getElementById('filtroOrgaoCI').value = '';
-            document.getElementById('filtroTipoCI').value = '';
-            document.getElementById('filtroSituacaoCI').value = '';
-            document.getElementById('filtroAnoCI').value = '';
-            document.getElementById('buscaOrgaoCI').value = '';
-            orgaosFiltrados = gerarListaComDuplicatas(todosOrgaos);
-            ciSortColumn = null;
-            ciSortDirection = 'asc';
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-            
-            document.querySelectorAll('#orgaosTableCI thead th').forEach(th => {
-                th.classList.remove('asc', 'desc');
-            });
-        };
-
-        window.alterarItensPorPaginaCI = function() {
-            itensPorPaginaCI = parseInt(document.getElementById('itensPorPaginaCI').value);
-            paginaAtualCI = 1;
-            atualizarTabelaConsulta();
-        };
-
-        function atualizarTabelaConsulta() {
-            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI;
-            const fim = Math.min(inicio + itensPorPaginaCI, orgaosFiltrados.length);
-            const dadosPagina = orgaosFiltrados.slice(inicio, fim);
-            
-            document.getElementById('orgaosTableBodyCI').innerHTML = gerarLinhasTabelaOrgaosCI(dadosPagina);
-            document.getElementById('totalOrgaosBadgeCI').innerText = orgaosFiltrados.length + ' registros';
-            
-            totalPaginasCI = Math.ceil(orgaosFiltrados.length / itensPorPaginaCI);
-            renderizarPaginacaoCI();
-            setTimeout(iframeUpdateHeight, 100);
-        }
-
-        function renderizarPaginacaoCI() {
-            const container = document.getElementById('paginacaoContainerCI');
-            if (!container) return;
-            
-            if (orgaosFiltrados.length === 0) {
-                container.innerHTML = '<div class="pagination-info">Nenhum registro encontrado</div>';
-                return;
-            }
-            
-            const inicio = (paginaAtualCI - 1) * itensPorPaginaCI + 1;
-            const fim = Math.min(paginaAtualCI * itensPorPaginaCI, orgaosFiltrados.length);
-            
-            let html = `
-                <div class="pagination-info">
-                    Mostrando ${inicio}-${fim} de ${orgaosFiltrados.length.toLocaleString('pt-BR')} registros
-                </div>
-                <nav>
-                    <ul class="pagination mb-0">
-            `;
-            
-            html += `<li class="page-item ${paginaAtualCI === 1 ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI - 1}); return false;">&laquo;</a>
-            </li>`;
-            
-            let inicioPaginas = Math.max(1, paginaAtualCI - 2);
-            let fimPaginas = Math.min(totalPaginasCI, inicioPaginas + 4);
-            if (fimPaginas - inicioPaginas < 4) {
-                inicioPaginas = Math.max(1, fimPaginas - 4);
-            }
-            
-            for (let i = inicioPaginas; i <= fimPaginas; i++) {
-                html += `<li class="page-item ${i === paginaAtualCI ? 'active' : ''}">
-                    <a class="page-link" href="#" onclick="mudarPaginaCI(${i}); return false;">${i}</a>
-                </li>`;
-            }
-            
-            html += `<li class="page-item ${paginaAtualCI === totalPaginasCI ? 'disabled' : ''}">
-                <a class="page-link" href="#" onclick="mudarPaginaCI(${paginaAtualCI + 1}); return false;">&raquo;</a>
-            </li>`;
-            
-            html += '</ul></nav>';
-            container.innerHTML = html;
-        }
-
-        window.mudarPaginaCI = function(pagina) {
-            if (pagina < 1 || pagina > totalPaginasCI) return;
-            paginaAtualCI = pagina;
-            atualizarTabelaConsulta();
-        };
 
         // ============================================
         // GRÁFICOS
@@ -2508,18 +2151,18 @@
             const orgao = currentModalData.orgao;
             const documentos = dadosClassificadas.filter(d => d.sigla === sigla);
             
-            const cabecalhos = ['Código', 'Tipo', 'Categoria', 'Grau Sigilo', 'Classificação', 'Desclassificação', 'Prazo', 'Fundamento', 'Link'];
+            const cabecalhos = ['Código', 'Tipo', 'Categoria', 'Grau Sigilo', 'Produção', 'Classificação', 'Desclassificação', 'Prazo', 'Fundamento'];
             
             const linhas = documentos.map(d => [
                 d.codigo_indexacao || '-',
                 d.tipo_documento || '-',
                 d.categoria || '-',
                 d.grau_sigilo || '-',
+                formatarData(d.data_producao) || '-',
                 formatarData(d.data_classificacao),
                 formatarData(d.data_desclassificacao) || '-',
-                d.prazo_classificacao || '-',
-                d.fundamento_legal || '-',
-                d.link || '-'
+                d.prazo_classificacao || d.prazo_classificacao_anos || '-',
+                d.fundamento_legal || '-'
             ].map(c => `"${String(c).replace(/"/g, '""')}"`).join(';'));
             
             const csv = [
@@ -2574,6 +2217,408 @@
             e.preventDefault();
             window.open(`https://wa.me/?text=${encodeURIComponent('Informações Classificadas - MG ' + window.location.href)}`, '_blank');
             document.getElementById(`shareOptions${id}`).classList.remove('show');
+        };
+
+        // ============================================
+        // ROL DE CLASSIFICAÇÃO
+        // ============================================
+
+        // Variáveis de estado do Rol
+        let rolDadosFiltrados = [];
+        let rolPaginaAtual = 1;
+        let rolItensPorPagina = 50;
+        let rolSortColumn = null;
+        let rolSortDirection = 'asc';
+        let rolColunasVisiveis = ['orgao','sigla','codigo','grau_sigilo','categoria','situacao','data_producao','data_classificacao','data_desclassificacao','prazo_classificacao','fundamento_legal','data_atualizacao'];
+        // Fixas: orgao, sigla, data_atualizacao, acoes — nunca removidas
+        const rolColunasFIXAS = ['orgao','sigla','data_atualizacao','acoes'];
+        const rolTodasColunas = [
+            { key: 'orgao',               label: 'Órgão',                  fixa: true },
+            { key: 'sigla',               label: 'Sigla',                  fixa: true },
+            { key: 'codigo',              label: 'Código',                 fixa: false },
+            { key: 'grau_sigilo',         label: 'Grau de Sigilo',         fixa: false },
+            { key: 'categoria',           label: 'Categoria',              fixa: false },
+            { key: 'situacao',            label: 'Situação',               fixa: false },
+            { key: 'data_producao',       label: 'Data de Produção',       fixa: false },
+            { key: 'data_classificacao',  label: 'Data de Classificação',  fixa: false },
+            { key: 'data_desclassificacao',label:'Data de Desclassificação',fixa: false },
+            { key: 'prazo_classificacao', label: 'Prazo de Classificação', fixa: false },
+            { key: 'fundamento_legal',    label: 'Fundamento Legal',       fixa: false },
+            { key: 'data_atualizacao',    label: 'Data Atualização',       fixa: true },
+            { key: 'acoes',               label: 'Ações',                  fixa: true },
+        ];
+
+        function obterDadosRol() {
+            // Retorna todos os registros de dadosClassificadas enriquecidos
+            return dadosClassificadas.map(d => {
+                const temDesclass = d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00';
+                return {
+                    ...d,
+                    _tipoClass: temDesclass ? 'desclassificada' : 'classificada'
+                };
+            });
+        }
+
+        function renderizarRol() {
+            const container = document.getElementById('rol-content');
+            if (!container) return;
+
+            // Obter opções de filtro
+            const anosDisp = [...new Set(dadosClassificadas.map(d => extrairAno(d.data_classificacao)).filter(Boolean))].sort().reverse();
+            const orgaosDisp = [...new Set(dadosClassificadas.map(d => d.sigla))].filter(Boolean).sort();
+            const grausDisp  = [...new Set(dadosClassificadas.map(d => d.grau_sigilo))].filter(Boolean).sort();
+            const codigosDisp = [...new Set(dadosClassificadas.map(d => d.codigo_indexacao))].filter(Boolean).sort();
+            const categoriasDisp = [...new Set(dadosClassificadas.map(d => d.categoria))].filter(Boolean).sort();
+
+            rolDadosFiltrados = obterDadosRol();
+
+            container.innerHTML = `
+                <div class="filter-container">
+                    <div class="filters-row flex-wrap" style="gap:12px;">
+                        <div class="filter-group" style="min-width:120px;">
+                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
+                            <select class="form-select" id="rolFiltroAno">
+                                <option value="">Todos</option>
+                                ${anosDisp.map(a => `<option value="${a}">${a}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="filter-group" style="min-width:160px;">
+                            <label class="filter-label"><i class="material-icons"></i>Nome do Órgão</label>
+                            <select class="form-select" id="rolFiltroOrgao">
+                                <option value="">Todos</option>
+                                ${orgaosDisp.map(o => `<option value="${o}">${o}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="filter-group" style="min-width:140px;">
+                            <label class="filter-label"><i class="material-icons"></i>Grau de Sigilo</label>
+                            <select class="form-select" id="rolFiltroGrau">
+                                <option value="">Todos</option>
+                                ${grausDisp.map(g => `<option value="${g}">${g}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="filter-group" style="min-width:130px;">
+                            <label class="filter-label"><i class="material-icons"></i>Código</label>
+                            <select class="form-select" id="rolFiltroCodigo">
+                                <option value="">Todos</option>
+                                ${codigosDisp.map(c => `<option value="${c}">${c}</option>`).join('')}
+                            </select>
+                        </div>
+                        <div class="filter-group" style="min-width:140px;">
+                            <label class="filter-label"><i class="material-icons"></i>Situação</label>
+                            <select class="form-select" id="rolFiltroSituacao">
+                                <option value="">Todas</option>
+                                <option value="classificada">Classificada</option>
+                                <option value="desclassificada">Desclassificada</option>
+                            </select>
+                        </div>
+                        <div class="filter-group" style="min-width:140px;">
+                            <label class="filter-label"><i class="material-icons"></i>Categoria</label>
+                            <select class="form-select" id="rolFiltroCategoria">
+                                <option value="">Todas</option>
+                                ${categoriasDisp.map(c => `<option value="${c}">${c}</option>`).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="botoes-abaixo">
+                        <div class="filter-group">
+                            <input type="text" class="search-box" id="rolBusca" placeholder="Buscar por órgão, código, fundamento..." style="width:100%;">
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn-pesquisa" onclick="aplicarFiltrosRol()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                            <button class="btn-secondary-custom" onclick="limparFiltrosRol()"><i class="material-icons me-2">clear</i>Limpar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                    <div class="d-flex gap-2 flex-wrap align-items-center">
+                        <button class="btn-export" onclick="exportarRolCSV()"><i class="material-icons me-1">description</i>CSV</button>
+                        <button class="btn-export" onclick="exportarRolPDF()"><i class="material-icons me-1">print</i>PDF</button>
+                        <div class="share-dropdown">
+                            <button class="btn-export" onclick="toggleShare(3)"><i class="material-icons me-1">share</i>Compartilhar</button>
+                            <div class="share-options" id="shareOptions3">
+                                <a href="#" onclick="copiarLink(event,3)"><i class="fas fa-link"></i> Copiar Link</a>
+                                <a href="#" onclick="compartilharWhatsApp(event,3)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                            </div>
+                        </div>
+                        <button class="btn-export" onclick="abrirGerenciarColunas()" title="Adicionar/remover colunas">
+                            <i class="material-icons me-1">view_column</i>Colunas
+                        </button>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="table-badge" id="rolTotalBadge">0 registros</span>
+                        <select class="items-per-page" id="rolItensPorPagina" onchange="rolAlterarItensPorPagina()">
+                            <option value="25">25</option>
+                            <option value="50" selected>50</option>
+                            <option value="100">100</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- TABELA UNIFICADA -->
+                <div id="secaoRolUnificada">
+                    <div class="table-header mb-0" style="border-radius:8px 8px 0 0; display:flex; align-items:center; gap:10px;">
+                        <i class="material-icons" style="color:#cfe2ff;">list_alt</i>
+                        <span class="table-title">Rol de Classificação</span>
+                        <span class="table-badge" id="badgeClassificadas" style="background:#bd2130;" title="Classificadas">0 classificadas</span>
+                        <span class="table-badge" id="badgeDesclassificadas" style="background:#155724;" title="Desclassificadas">0 desclassificadas</span>
+                    </div>
+                    <div class="table-container mb-3" style="border-radius:0 0 8px 8px; border-top:none;">
+                        <div class="table-fixed-header-container">
+                            <table class="table" id="rolTableUnificada">
+                                <thead id="rolTheadUnificada"><tr></tr></thead>
+                                <tbody id="rolBodyUnificada"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAGINAÇÃO -->
+                <div class="pagination-container" id="rolPaginacao"></div>
+
+                <div style="display:flex;justify-content:flex-end;margin-top:10px;">
+                    <div id="btnTopoRol" onclick="voltarAoTopo()" style="background:#eeeff5;color:#1a3a5c;border:1px solid #d6dee6;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                        <i class="material-icons">arrow_upward</i>Voltar ao topo
+                    </div>
+                </div>
+
+                <!-- MODAL GERENCIAR COLUNAS -->
+                <div class="modal fade" id="modalColunas" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content modal-creative">
+                            <div class="modal-header">
+                                <h5 class="modal-title"><i class="material-icons me-2">view_column</i>Gerenciar Colunas</h5>
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body" style="background:#f8fafc;padding:20px;">
+                                <p style="font-size:13px;color:#6c757d;margin-bottom:15px;">As colunas <strong>Órgão, Sigla, Data Atualização e Ações</strong> são fixas e não podem ser removidas.</p>
+                                <div id="colunasCheckList" style="display:flex;flex-direction:column;gap:10px;"></div>
+                            </div>
+                            <div class="modal-footer">
+                                <button class="btn-primary-custom" onclick="aplicarGerenciarColunas()" data-bs-dismiss="modal"><i class="material-icons me-2">check</i>Aplicar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            aplicarFiltrosRol();
+        }
+
+        window.abrirGerenciarColunas = function() {
+            const lista = document.getElementById('colunasCheckList');
+            if (!lista) return;
+            lista.innerHTML = rolTodasColunas
+                .filter(c => !rolColunasFIXAS.includes(c.key))
+                .map(c => `
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:500;color:#1a3a5c;">
+                        <input type="checkbox" value="${c.key}" ${rolColunasVisiveis.includes(c.key) ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
+                        ${c.label}
+                    </label>
+                `).join('');
+            new bootstrap.Modal(document.getElementById('modalColunas')).show();
+        };
+
+        window.aplicarGerenciarColunas = function() {
+            const checks = document.querySelectorAll('#colunasCheckList input[type=checkbox]');
+            const selecionadas = [...checks].filter(c => c.checked).map(c => c.value);
+            // Manter fixas + selecionadas (na ordem original de rolTodasColunas)
+            rolColunasVisiveis = rolTodasColunas
+                .map(c => c.key)
+                .filter(k => rolColunasFIXAS.includes(k) || selecionadas.includes(k));
+            renderizarTabelasRol(rolDadosFiltrados);
+        };
+
+        function renderizarTabelasRol(dados) {
+            const classificadas = dados.filter(d => d._tipoClass === 'classificada');
+            const desclassificadas = dados.filter(d => d._tipoClass === 'desclassificada');
+
+            document.getElementById('badgeClassificadas').textContent = classificadas.length + ' classificadas';
+            document.getElementById('badgeDesclassificadas').textContent = desclassificadas.length + ' desclassificadas';
+            document.getElementById('rolTotalBadge').textContent = dados.length + ' registros';
+
+            const thead = document.querySelector('#rolTheadUnificada tr');
+            if (thead) {
+                thead.innerHTML = rolTodasColunas
+                    .filter(c => rolColunasVisiveis.includes(c.key))
+                    .map(c => {
+                        const sortKey = c.key === 'codigo' ? 'codigo' : c.key;
+                        return `<th onclick="rolOrdenar('${sortKey}','rolTableUnificada')" style="cursor:pointer;white-space:nowrap;">
+                            ${c.label} <span class="sort-icon"></span>
+                        </th>`;
+                    }).join('');
+            }
+
+            const gerarLinhas = (lista) => lista.map(doc => {
+                const colunas = rolTodasColunas
+                    .filter(c => rolColunasVisiveis.includes(c.key))
+                    .map(c => {
+                        switch(c.key) {
+                            case 'orgao':    return `<td>${doc.orgao_entidade || '-'}</td>`;
+                            case 'sigla':    return `<td><strong>${doc.sigla || '-'}</strong></td>`;
+                            case 'codigo':   return `<td>${doc.codigo_indexacao || '-'}</td>`;
+                            case 'grau_sigilo': return `<td class="text-center">${doc.grau_sigilo ? `<span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo}</span>` : '-'}</td>`;
+                            case 'categoria': return `<td>${doc.categoria || '-'}</td>`;
+                            case 'situacao':  return `<td class="text-center">${getBadgeSituacao(doc._tipoClass)}</td>`;
+                            case 'data_producao': return `<td class="text-center">${formatarData(doc.data_producao) || '-'}</td>`;
+                            case 'data_classificacao': return `<td class="text-center">${formatarData(doc.data_classificacao)}</td>`;
+                            case 'data_desclassificacao': {
+                                const val = formatarData(doc.data_desclassificacao) || '-';
+                                const ind = doc._desclassificacao_calculada ? ` <span title="Calculado automaticamente" style="font-size:10px;color:#856404;background:#fff3cd;border-radius:3px;padding:1px 4px;">calc.</span>` : '';
+                                return `<td class="text-center">${val}${ind}</td>`;
+                            }
+                            case 'prazo_classificacao': return `<td class="text-center">${doc.prazo_classificacao_anos || doc.prazo_classificacao || '-'}</td>`;
+                            case 'fundamento_legal': return `<td>${doc.fundamento_legal || '-'}</td>`;
+                            case 'data_atualizacao': return `<td class="text-center">${formatarData(doc.data_atualizacao) || '-'}</td>`;
+                            case 'acoes': return `<td class="text-center">
+                                <button class="btn-action" onclick="verDetalhesOrgao('${doc.sigla}')" title="Ver detalhes do órgão">
+                                    <i class="material-icons">visibility</i>
+                                </button>
+                            </td>`;
+                            default: return '<td>-</td>';
+                        }
+                    }).join('');
+                return `<tr>${colunas}</tr>`;
+            }).join('');
+
+            const bodyUnificado = document.getElementById('rolBodyUnificada');
+            const colCount = rolColunasVisiveis.length;
+
+            bodyUnificado.innerHTML = dados.length > 0
+                ? gerarLinhas(dados)
+                : `<tr><td colspan="${colCount}" class="text-center text-muted py-3">Nenhum registro encontrado</td></tr>`;
+
+            setTimeout(iframeUpdateHeight, 100);
+        }
+
+        window.aplicarFiltrosRol = function() {
+            const ano       = document.getElementById('rolFiltroAno')?.value || '';
+            const orgao     = document.getElementById('rolFiltroOrgao')?.value || '';
+            const grau      = document.getElementById('rolFiltroGrau')?.value || '';
+            const codigo    = document.getElementById('rolFiltroCodigo')?.value || '';
+            const categoria = document.getElementById('rolFiltroCategoria')?.value || '';
+            const situacao  = document.getElementById('rolFiltroSituacao')?.value || '';
+            const busca     = (document.getElementById('rolBusca')?.value || '').toLowerCase();
+
+            rolDadosFiltrados = obterDadosRol().filter(d => {
+                if (ano && extrairAno(d.data_classificacao) !== ano) return false;
+                if (orgao && d.sigla !== orgao) return false;
+                if (grau && d.grau_sigilo !== grau) return false;
+                if (codigo && d.codigo_indexacao !== codigo) return false;
+                if (categoria && d.categoria !== categoria) return false;
+                if (situacao && d._tipoClass !== situacao) return false;
+                if (busca) {
+                    const texto = `${d.orgao_entidade} ${d.sigla} ${d.codigo_indexacao} ${d.fundamento_legal} ${d.categoria}`.toLowerCase();
+                    if (!texto.includes(busca)) return false;
+                }
+                return true;
+            });
+
+            rolSortColumn = null;
+            rolSortDirection = 'asc';
+            renderizarTabelasRol(rolDadosFiltrados);
+        };
+
+        window.limparFiltrosRol = function() {
+            ['rolFiltroAno','rolFiltroOrgao','rolFiltroGrau','rolFiltroCodigo','rolFiltroCategoria','rolFiltroSituacao'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+            const busca = document.getElementById('rolBusca');
+            if (busca) busca.value = '';
+            rolDadosFiltrados = obterDadosRol();
+            rolSortColumn = null;
+            rolSortDirection = 'asc';
+            renderizarTabelasRol(rolDadosFiltrados);
+        };
+
+        window.rolOrdenar = function(coluna, tabelaId) {
+            if (rolSortColumn === coluna) {
+                rolSortDirection = rolSortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                rolSortColumn = coluna;
+                rolSortDirection = 'asc';
+            }
+
+            rolDadosFiltrados = [...rolDadosFiltrados].sort((a, b) => {
+                let va, vb;
+                switch(coluna) {
+                    case 'orgao':                va = a.orgao_entidade || ''; vb = b.orgao_entidade || ''; break;
+                    case 'sigla':                va = a.sigla || ''; vb = b.sigla || ''; break;
+                    case 'codigo':               va = a.codigo_indexacao || ''; vb = b.codigo_indexacao || ''; break;
+                    case 'grau_sigilo':          va = a.grau_sigilo || ''; vb = b.grau_sigilo || ''; break;
+                    case 'categoria':            va = a.categoria || ''; vb = b.categoria || ''; break;
+                    case 'data_producao':        va = a.data_producao || ''; vb = b.data_producao || ''; break;
+                    case 'data_classificacao':   va = a.data_classificacao || ''; vb = b.data_classificacao || ''; break;
+                    case 'data_desclassificacao':va = a.data_desclassificacao || ''; vb = b.data_desclassificacao || ''; break;
+                    case 'prazo_classificacao':  va = parseInt(a.prazo_classificacao_anos)||0; vb = parseInt(b.prazo_classificacao_anos)||0; break;
+                    case 'data_atualizacao':     va = a.data_atualizacao || ''; vb = b.data_atualizacao || ''; break;
+                    default: return 0;
+                }
+                if (typeof va === 'number') return rolSortDirection === 'asc' ? va - vb : vb - va;
+                const cmp = va.localeCompare(vb, 'pt-BR');
+                return rolSortDirection === 'asc' ? cmp : -cmp;
+            });
+
+            renderizarTabelasRol(rolDadosFiltrados);
+        };
+
+        window.rolAlterarItensPorPagina = function() {
+            rolItensPorPagina = parseInt(document.getElementById('rolItensPorPagina').value);
+            renderizarTabelasRol(rolDadosFiltrados);
+        };
+
+        window.exportarRolCSV = function() {
+            if (!rolDadosFiltrados.length) return;
+            const cabs = ['orgao_entidade','sigla','codigo_indexacao','grau_sigilo','categoria','tipo_classificacao','data_producao','data_classificacao','data_desclassificacao','prazo_classificacao_anos','fundamento_legal','data_atualizacao'];
+            const labls = ['Órgão','Sigla','Código','Grau Sigilo','Categoria','Situação','Data Produção','Data Classificação','Data Desclassificação','Prazo (anos)','Fundamento Legal','Data Atualização'];
+            const linhas = rolDadosFiltrados.map(d =>
+                cabs.map((c,i) => {
+                    let val;
+                    if (c === 'tipo_classificacao') val = d._tipoClass || '-';
+                    else if (c.startsWith('data_')) val = formatarData(d[c]) || '-';
+                    else val = d[c] || '-';
+                    return `"${String(val).replace(/"/g,'""')}"`;
+                }).join(';')
+            );
+            const csv = [labls.join(';'), ...linhas].join('\n');
+            const blob = new Blob(['\uFEFF'+csv], {type:'text/csv;charset=utf-8;'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'rol_classificacao.csv';
+            link.click();
+        };
+
+        window.exportarRolPDF = function() {
+            if (!rolDadosFiltrados.length) return;
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape' });
+            doc.setFontSize(14);
+            doc.text('Rol de Classificação', 14, 15);
+            doc.setFontSize(9);
+            doc.text(`Gerado em: ${new Date().toLocaleString('pt-BR')}`, 14, 22);
+            const cols = rolTodasColunas.filter(c => rolColunasVisiveis.includes(c.key) && c.key !== 'acoes').map(c => c.label);
+            const rows = rolDadosFiltrados.map(d =>
+                rolTodasColunas.filter(c => rolColunasVisiveis.includes(c.key) && c.key !== 'acoes').map(c => {
+                    switch(c.key) {
+                        case 'orgao': return d.orgao_entidade || '-';
+                        case 'sigla': return d.sigla || '-';
+                        case 'codigo': return d.codigo_indexacao || '-';
+                        case 'grau_sigilo': return d.grau_sigilo || '-';
+                        case 'categoria': return d.categoria || '-';
+                        case 'situacao': return d._tipoClass || '-';
+                        case 'data_producao': return formatarData(d.data_producao) || '-';
+                        case 'data_classificacao': return formatarData(d.data_classificacao);
+                        case 'data_desclassificacao': return formatarData(d.data_desclassificacao) || '-';
+                        case 'prazo_classificacao': return d.prazo_classificacao_anos || '-';
+                        case 'fundamento_legal': return d.fundamento_legal || '-';
+                        case 'data_atualizacao': return formatarData(d.data_atualizacao) || '-';
+                        default: return '-';
+                    }
+                })
+            );
+            doc.autoTable({ head: [cols], body: rows, startY: 28, styles: { fontSize: 7 }, headStyles: { fillColor: [26,58,92] } });
+            doc.save('rol_classificacao.pdf');
         };
 
         // ============================================
