@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 0.087,
+  "time": 0.102,
   "errors": [],
   "tasks": [
     {
@@ -58,6 +58,10 @@
               "type": "date"
             },
             {
+              "name": "tipo_classificacao",
+              "type": "string"
+            },
+            {
               "name": "prazo_classificacao_anos",
               "type": "integer"
             },
@@ -74,13 +78,13 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "576009d5fa3a1e956326483f8cee789c",
-          "bytes": 68694,
-          "fields": 13,
+          "hash": "b0f79e271f4d727f253d1ae06b0b44b2",
+          "bytes": 71078,
+          "fields": 14,
           "rows": 169
         }
       },
-      "time": 0.036,
+      "time": 0.042,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -161,7 +165,7 @@
           "rows": 155
         }
       },
-      "time": 0.026,
+      "time": 0.029,
       "scope": [
         "hash-count-error",
         "byte-count-error",
