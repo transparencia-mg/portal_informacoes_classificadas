@@ -1358,16 +1358,6 @@
                 <div class="filter-container">
                     <div class="filters-row">
                         <div class="filter-group">
-                            <label class="filter-label"><i class="material-icons">calendar_today</i> Ano</label>
-                            <select class="form-select" id="filtroAnoVG">
-                                <option value="">Todos os anos</option>
-                                <option value="2026">2026</option>
-                                <option value="2025">2025</option>
-                                <option value="2024">2024</option>
-                                <option value="2023">2023</option>
-                            </select>
-                        </div>
-                        <div class="filter-group">
                             <label class="filter-label"><i class="material-icons"></i>Órgão</label>
                             <select class="form-select" id="filtroOrgaoVG">
                                 <option value="">Todos</option>
@@ -1628,7 +1618,6 @@
         window.aplicarFiltrosVG = function() {
             const orgao = document.getElementById('filtroOrgaoVG')?.value;
             const situacao = document.getElementById('filtroSituacaoVG')?.value;
-            const anoSelecionado = document.getElementById('filtroAnoVG')?.value;
             const buscaNome = (document.getElementById('buscaOrgaoVG')?.value || '').toLowerCase();
             
             orgaosFiltradosVG = orgaosVisaoGeral.filter(o => {
@@ -1641,13 +1630,6 @@
                     if (situacao === 'classificada' && !temClassificados) return false;
                     if (situacao === 'desclassificada' && !temDesclassificados) return false;
                     if (situacao === 'nenhuma' && (temClassificados || temDesclassificados)) return false;
-                }
-
-                // Filtro por ano
-                if (anoSelecionado) {
-                    const temDocNessAno = o.documentos?.some(d => extrairAno(d.data_classificacao) === anoSelecionado);
-                    const temSemInfoNessAno = dadosOrgaosSemInfo.some(d => d.sigla === o.sigla && d.ano === anoSelecionado);
-                    if (!temDocNessAno && !temSemInfoNessAno) return false;
                 }
                 
                 if (buscaNome && !o.orgao.toLowerCase().includes(buscaNome) && !o.sigla.toLowerCase().includes(buscaNome)) return false;
@@ -1671,7 +1653,6 @@
         window.limparFiltrosVG = function() {
             document.getElementById('filtroOrgaoVG').value = '';
             document.getElementById('filtroSituacaoVG').value = '';
-            document.getElementById('filtroAnoVG').value = '';
             document.getElementById('buscaOrgaoVG').value = '';
             orgaosFiltradosVG = [...orgaosVisaoGeral];
             vgSortColumn = null;
@@ -1735,92 +1716,146 @@
             currentModalData = orgao;
             
             const documentos = dadosClassificadas.filter(d => d.sigla === sigla);
-            const classificados = documentos.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00');
-            const desclassificados = documentos.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00');
-            
-            let html = `
-                <div class="info-card mb-4">
-                    <div class="info-label">Órgão</div>
-                    <div class="info-value highlight">${orgao.orgao} (${sigla})</div>
-                    <div class="row mt-3">
-                        <div class="col-4">
-                            <div class="info-label">Classificados</div>
-                            <div class="info-value">${classificados.length}</div>
-                        </div>
-                        <div class="col-4">
-                            <div class="info-label">Desclassificados</div>
-                            <div class="info-value">${desclassificados.length}</div>
-                        </div>
-                        <div class="col-4">
-                            <div class="info-label">Total</div>
-                            <div class="info-value">${documentos.length}</div>
+            const temClassificacao = documentos.length > 0;
+
+            let html = '';
+
+            if (!temClassificacao) {
+                // Modal para órgãos SEM informação classificada: histórico por ano
+                const registrosSemInfo = dadosOrgaosSemInfo.filter(d => d.sigla === sigla)
+                    .sort((a, b) => (b.ano || '').localeCompare(a.ano || ''));
+
+                html = `
+                    <div class="info-card mb-4">
+                        <div class="info-label">Órgão</div>
+                        <div class="info-value highlight">${orgao.orgao} (${sigla})</div>
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <div class="info-label">Situação</div>
+                                <div class="info-value">${getBadgeSituacao('nenhuma')}</div>
+                            </div>
                         </div>
                     </div>
-                </div>
-                
-                <div class="modal-table-container">
-                    <table class="table table-modal table-striped">
-                        <thead>
+
+                    <div class="modal-table-container">
+                        <table class="table table-modal table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Ano</th>
+                                    <th>Situação</th>
+                                    <th>Informação</th>
+                                    <th>Data de Atualização</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+
+                if (registrosSemInfo.length === 0) {
+                    html += `<tr><td colspan="4" class="text-center">Nenhum registro encontrado</td></tr>`;
+                } else {
+                    registrosSemInfo.forEach(reg => {
+                        const textoInfo = reg.informacao_classificada || reg.informacao_desclassificada || 'Não possui informação classificada ou desclassificada';
+                        html += `
                             <tr>
-                                <th>Código</th>
-                                <th>Tipo</th>
-                                <th>Categoria</th>
-                                <th>Grau Sigilo</th>
-                                <th>Data Produção</th>
-                                <th>Data Classif.</th>
-                                <th>Data Desclassif.</th>
-                                <th>Prazo</th>
-                                <th>Fundamento Legal</th>
+                                <td class="text-center"><strong>${reg.ano || '-'}</strong></td>
+                                <td class="text-center">${getBadgeSituacao('nenhuma')}</td>
+                                <td>${textoInfo}</td>
+                                <td class="text-center">${formatarData(reg.data_atualizacao) || '-'}</td>
                             </tr>
-                        </thead>
-                        <tbody>
-            `;
-            
-            if (documentos.length === 0) {
-                html += `<tr><td colspan="9" class="text-center">Nenhum documento encontrado</td></tr>`;
+                        `;
+                    });
+                }
+
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
             } else {
-                desclassificados.forEach(doc => {
-                    const dataDesclassifExibida = formatarData(doc.data_desclassificacao) || '-';
-                    const indicadorCalculado = doc._desclassificacao_calculada
-                        ? ` <span title="Data calculada automaticamente com base no prazo de classificação" style="font-size:10px;color:#856404;background:#fff3cd;border-radius:4px;padding:1px 5px;vertical-align:middle;">calculado</span>`
-                        : '';
-                    html += `
-                        <tr class="table-success">
-                            <td>${doc.codigo_indexacao || '-'}</td>
-                            <td>${doc.tipo_documento || '-'}</td>
-                            <td>${doc.categoria || '-'}</td>
-                            <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
-                            <td>${formatarData(doc.data_producao) || '-'}</td>
-                            <td>${formatarData(doc.data_classificacao)}</td>
-                            <td>${dataDesclassifExibida}${indicadorCalculado}</td>
-                            <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
-                            <td>${doc.fundamento_legal || '-'}</td>
-                        </tr>
-                    `;
-                });
+                // Modal original para órgãos COM informação classificada
+                const classificados = documentos.filter(d => !d.data_desclassificacao || d.data_desclassificacao === '' || d.data_desclassificacao === '0000-00-00 00:00:00');
+                const desclassificados = documentos.filter(d => d.data_desclassificacao && d.data_desclassificacao !== '' && d.data_desclassificacao !== '0000-00-00 00:00:00');
                 
-                classificados.forEach(doc => {
-                    html += `
-                        <tr class="table-danger">
-                            <td>${doc.codigo_indexacao || '-'}</td>
-                            <td>${doc.tipo_documento || '-'}</td>
-                            <td>${doc.categoria || '-'}</td>
-                            <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
-                            <td>${formatarData(doc.data_producao) || '-'}</td>
-                            <td>${formatarData(doc.data_classificacao)}</td>
-                            <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
-                            <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
-                            <td>${doc.fundamento_legal || '-'}</td>
-                        </tr>
-                    `;
-                });
+                html = `
+                    <div class="info-card mb-4">
+                        <div class="info-label">Órgão</div>
+                        <div class="info-value highlight">${orgao.orgao} (${sigla})</div>
+                        <div class="row mt-3">
+                            <div class="col-4">
+                                <div class="info-label">Classificados</div>
+                                <div class="info-value">${classificados.length}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="info-label">Desclassificados</div>
+                                <div class="info-value">${desclassificados.length}</div>
+                            </div>
+                            <div class="col-4">
+                                <div class="info-label">Total</div>
+                                <div class="info-value">${documentos.length}</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal-table-container">
+                        <table class="table table-modal table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Tipo</th>
+                                    <th>Categoria</th>
+                                    <th>Grau Sigilo</th>
+                                    <th>Data Produção</th>
+                                    <th>Data Classif.</th>
+                                    <th>Data Desclassif.</th>
+                                    <th>Prazo</th>
+                                    <th>Fundamento Legal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                `;
+                
+                if (documentos.length === 0) {
+                    html += `<tr><td colspan="9" class="text-center">Nenhum documento encontrado</td></tr>`;
+                } else {
+                    desclassificados.forEach(doc => {
+                        html += `
+                            <tr class="table-success">
+                                <td>${doc.codigo_indexacao || '-'}</td>
+                                <td>${doc.tipo_documento || '-'}</td>
+                                <td>${doc.categoria || '-'}</td>
+                                <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                                <td>${formatarData(doc.data_producao) || '-'}</td>
+                                <td>${formatarData(doc.data_classificacao)}</td>
+                                <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
+                                <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
+                                <td>${doc.fundamento_legal || '-'}</td>
+                            </tr>
+                        `;
+                    });
+                    
+                    classificados.forEach(doc => {
+                        html += `
+                            <tr class="table-danger">
+                                <td>${doc.codigo_indexacao || '-'}</td>
+                                <td>${doc.tipo_documento || '-'}</td>
+                                <td>${doc.categoria || '-'}</td>
+                                <td><span class="badge-classificacao ${getBadgeGrauSigilo(doc.grau_sigilo)}">${doc.grau_sigilo || '-'}</span></td>
+                                <td>${formatarData(doc.data_producao) || '-'}</td>
+                                <td>${formatarData(doc.data_classificacao)}</td>
+                                <td>${formatarData(doc.data_desclassificacao) || '-'}</td>
+                                <td>${doc.prazo_classificacao || doc.prazo_classificacao_anos || '-'}</td>
+                                <td>${doc.fundamento_legal || '-'}</td>
+                            </tr>
+                        `;
+                    });
+                }
+                
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
             }
-            
-            html += `
-                        </tbody>
-                    </table>
-                </div>
-            `;
             
             document.getElementById('modalContent').innerHTML = html;
             new bootstrap.Modal(document.getElementById('detailModal')).show();
@@ -2464,8 +2499,7 @@
                             case 'data_classificacao': return `<td class="text-center">${formatarData(doc.data_classificacao)}</td>`;
                             case 'data_desclassificacao': {
                                 const val = formatarData(doc.data_desclassificacao) || '-';
-                                const ind = doc._desclassificacao_calculada ? ` <span title="Calculado automaticamente" style="font-size:10px;color:#856404;background:#fff3cd;border-radius:3px;padding:1px 4px;">calc.</span>` : '';
-                                return `<td class="text-center">${val}${ind}</td>`;
+                                return `<td class="text-center">${val}</td>`;
                             }
                             case 'prazo_classificacao': return `<td class="text-center">${doc.prazo_classificacao_anos || doc.prazo_classificacao || '-'}</td>`;
                             case 'fundamento_legal': return `<td>${doc.fundamento_legal || '-'}</td>`;
