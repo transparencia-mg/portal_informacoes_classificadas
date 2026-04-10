@@ -23,11 +23,11 @@
     <style>
         /* ==================== VARIÁVEIS DE CORES ==================== */
         :root {
-            --primary-dark: #1a3a5c;
-            --primary-darker: #0f2a44;
+            --primary-dark: #14a5a2;
+            --primary-darker: #0d8a87;
             --accent-red: #b93c42;
             --accent-bright: #db233f;
-            --background-light: #f5f7fa;
+            --background-light: #efeded;
             --success-green: #28a745;
             --warning-yellow: #ffc107;
             --info-blue: #17a2b8;
@@ -55,7 +55,7 @@
 
         body {
             font-family: 'Montserrat', 'Open Sans', sans-serif;
-            background-color: var(--background-light);
+            background-color: #efeded;
             padding-bottom: 15px;
             overflow-x: hidden;
             min-height: auto;
@@ -135,7 +135,7 @@
         .filter-label {
             font-size: 16px;
             font-weight: 600;
-            color: #1a3a5c;
+            color: #14a5a2;
             margin-bottom: 6px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -178,14 +178,17 @@
         }
 
         .metric-header {
-            background: #20445d;
+            background: #14a5a2;
             color: white;
-            font-size: 18px;
+            font-size: 12px;
             font-weight: 600;
             padding: 10px 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .metric-body {
@@ -219,7 +222,7 @@
         }
         
         .chart-header {
-            background: #20445d;
+            background: #14a5a2;
             color: white;
             padding: 10px 15px;
             margin: 0;
@@ -267,7 +270,7 @@
         }
         
         .table-badge {
-            background: #1a3a5c;
+            background: #14a5a2;
             color: white;
             padding: 5px 12px;
             border-radius: 12px;
@@ -283,7 +286,7 @@
         }
         
         .table-fixed-header-container table thead th {
-            background-color: #54697b !important;
+            background-color: #0f9996 !important;
             color: white !important;
             position: sticky;
             top: 0;
@@ -300,7 +303,7 @@
         }
         
         .table-fixed-header-container table thead th:hover {
-            background-color: #3a4e62 !important;
+            background-color: #14a5a2 !important;
         }
         
         .table-fixed-header-container table thead th .sort-icon {
@@ -342,7 +345,7 @@
         }
         
         .table tbody tr:hover {
-            background-color: #f0f4f8;
+            background-color: #e5e0e0;
         }
 
         .orgao-link {
@@ -375,7 +378,7 @@
 
         /* ==================== BOTÕES ==================== */
         .btn-primary-custom, .btn-pesquisa {
-            background: #20445d;
+            background: #14a5a2;
             border: none;
             padding: 10px 20px;
             font-weight: 600;
@@ -414,17 +417,17 @@
             white-space: nowrap;
         }
         .btn-secondary-custom:hover {
-            background-color: #132837 !important;
+            background-color: #0d8a87 !important;
             color: white !important;
-            border-color: #132837 !important;
+            border-color: #0d8a87 !important;
         }
         
         .btn-export {
             appearance: none;
             -webkit-appearance: none;
-            background: #eeeff5;
+            background: #efeded;
             border: 1px solid #d6dee6;
-            color: #1a3a5c;
+            color: #14a5a2;
             padding: 2px 10px;
             border-radius: 6px;
             font-size: 13px;
@@ -440,17 +443,17 @@
             font-size: 14px !important;
         }
         button.btn-export:hover {
-            background-color: #1a3a5c !important;
-            border-color: #1a3a5c !important;
+            background-color: #14a5a2 !important;
+            border-color: #14a5a2 !important;
             color: #ffffff !important;
         }
 
         .btn-action {
             padding: 6px;
             border-radius: 8px;
-            border: 1.5px solid #1a3a5c;
+            border: 1.5px solid #14a5a2;
             background-color: #ffffff;
-            color: #1a3a5c;
+            color: #14a5a2;
             width: 34px;
             height: 34px;
             display: inline-flex;
@@ -459,7 +462,7 @@
             transition: all 0.2s ease;
         }
         .btn-action:hover {
-            background-color: #1a3a5c;
+            background-color: #14a5a2;
             color: #ffffff;
         }
 
@@ -498,7 +501,7 @@
             cursor: pointer;
             text-decoration: none;
         }
-        .share-options a:hover { background-color: var(--background-light); color: var(--accent-red); }
+        .share-options a:hover { background-color: #efeded; color: var(--accent-red); }
         .share-options a i { font-size: 18px; width: 20px; text-align: center; }
 
         /* ==================== NAVEGAÇÃO ==================== */
@@ -518,12 +521,12 @@
 
         .nav-tabs .nav-link {
             border: none !important;
-            background: #ffffff !important;
+            background: #efeded !important;
             border-radius: 10px !important;
             padding: 8px 18px !important;
             font-weight: 500;
             font-size: 18px;
-            color: #1a3a5c !important;
+            color: #14a5a2 !important;
             display: inline-flex !important;
             align-items: center;
             gap: 6px;
@@ -535,7 +538,7 @@
         }
 
         .nav-tabs .nav-link.active {
-            background: #234c63 !important;
+            background: #14a5a2 !important;
             color: #fff !important;
             box-shadow: 0 4px 10px rgba(0,0,0,0.15);
         }
@@ -557,7 +560,7 @@
         .modal-creative .modal-header .btn-close {
             filter: brightness(0) invert(1);
         }
-        .modal-creative .modal-body { padding: 30px; background: #f8fafc; }
+        .modal-creative .modal-body { padding: 30px; background: #efeded; }
         .modal-creative .modal-footer {
             background: white;
             padding: 15px 30px;
@@ -616,7 +619,7 @@
             padding: 6px 30px 6px 10px;
             font-size: 14px;
             font-weight: 600;
-            color: #1a3a5c;
+            color: #14a5a2;
             background-color: #ffffff;
             appearance: none;
             -webkit-appearance: none;
@@ -628,7 +631,7 @@
         }
         
         .search-box {
-            border: 2px solid var(--primary-dark) !important;
+            border: 2px solid #14a5a2 !important;
             border-radius: 6px !important;
             padding: 8px 12px !important;
             font-size: 13px !important;
@@ -733,7 +736,7 @@
             background: transparent;
             font-size: 13px;
             width: 160px;
-            color: #1a3a5c;
+            color: #14a5a2;
         }
         
         .clear-icon {
@@ -744,7 +747,7 @@
         }
         
         .clear-icon:hover {
-            color: #1a3a5c;
+            color: #14a5a2;
         }
 
         @media (max-width: 768px) {
@@ -765,8 +768,8 @@
         }
 
         #btnTopo {
-            background: #eeeff5;
-            color: #1a3a5c;
+            background: #efeded;
+            color: #14a5a2;
             border: 1px solid #d6dee6;
             border-radius: 12px;
             padding: 10px 16px;
@@ -781,9 +784,9 @@
         }
 
         #btnTopo:hover {
-            background-color: #1a3a5c;
+            background-color: #14a5a2;
             color: #ffffff;
-            border-color: #1a3a5c;
+            border-color: #14a5a2;
         }
         
         .loading-indicator {
@@ -885,7 +888,7 @@
         let ciSortDirection = 'asc';
 
         const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-        const chartPalette = ['#1a3a5c','#2c5f8a','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae60'];
+        const chartPalette = ['#14a5a2','#0d8a87','#3a7cb8','#5a9fd4','#7ab8e0','#9dd1ec','#bde4f5','#d4a017','#c0392b','#27ae60'];
 
         // ============================================
         // FUNÇÕES DE ORDENAÇÃO
@@ -1387,7 +1390,7 @@
                 </div>
 
                 <div class="row mb-4">
-                    <div class="col-md-3 col-6">
+                    <div class="col-md-4 col-6">
                         <div class="metric-card">
                             <div class="metric-header">
                                 Total Órgãos
@@ -1398,10 +1401,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-6">
+                    <div class="col-md-4 col-6">
                         <div class="metric-card">
                             <div class="metric-header">
-                                Classificadas
+                                Órgãos com Inf. Classificadas
                                 <i class="material-icons" data-bs-toggle="tooltip" title="Órgãos com informações classificadas ativas">info_outline</i>
                             </div>
                             <div class="metric-body">
@@ -1409,25 +1412,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-6">
+                    <div class="col-md-4 col-6">
                         <div class="metric-card">
                             <div class="metric-header">
-                                Desclassificadas
+                                Órgãos com Inf. Desclassificadas
                                 <i class="material-icons" data-bs-toggle="tooltip" title="Órgãos com informações já desclassificadas">info_outline</i>
                             </div>
                             <div class="metric-body">
                                 <div class="metric-value">${metricaGeral.totalDesclassificadas}</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <div class="metric-card">
-                            <div class="metric-header">
-                                Total Documentos
-                                <i class="material-icons" data-bs-toggle="tooltip" title="Quantidade total de documentos registrados">info_outline</i>
-                            </div>
-                            <div class="metric-body">
-                                <div class="metric-value">${metricaGeral.totalDocumentos}</div>
                             </div>
                         </div>
                     </div>
@@ -1878,7 +1870,7 @@
                     labels: Object.keys(dados),
                     datasets: [{
                         data: Object.values(dados),
-                        backgroundColor: ['#721c24', '#bd2130', '#fd7e14', '#1a3a5c', '#2c5f8a'],
+                        backgroundColor: ['#721c24', '#bd2130', '#fd7e14', '#14a5a2', '#0d8a87'],
                         borderWidth: 0
                     }]
                 },
@@ -1946,7 +1938,7 @@
                     datasets: [{
                         label: 'Documentos',
                         data: valores,
-                        backgroundColor: ['#1a3a5c', '#2c5f8a', '#b93c42', '#fd7e14'],
+                        backgroundColor: ['#14a5a2', '#0d8a87', '#b93c42', '#fd7e14'],
                         borderRadius: 4
                     }]
                 },
@@ -2412,7 +2404,7 @@
                 <div class="pagination-container" id="rolPaginacao"></div>
 
                 <div style="display:flex;justify-content:flex-end;margin-top:10px;">
-                    <div id="btnTopoRol" onclick="voltarAoTopo()" style="background:#eeeff5;color:#1a3a5c;border:1px solid #d6dee6;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
+                    <div id="btnTopoRol" onclick="voltarAoTopo()" style="background:#efeded;color:#14a5a2;border:1px solid #d6dee6;border-radius:12px;padding:10px 16px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:6px;cursor:pointer;box-shadow:0 2px 8px rgba(0,0,0,0.08);">
                         <i class="material-icons">arrow_upward</i>Voltar ao topo
                     </div>
                 </div>
@@ -2446,7 +2438,7 @@
             lista.innerHTML = rolTodasColunas
                 .filter(c => !rolColunasFIXAS.includes(c.key))
                 .map(c => `
-                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:500;color:#1a3a5c;">
+                    <label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:14px;font-weight:500;color:#14a5a2;">
                         <input type="checkbox" value="${c.key}" ${rolColunasVisiveis.includes(c.key) ? 'checked' : ''} style="width:16px;height:16px;cursor:pointer;">
                         ${c.label}
                     </label>
@@ -2651,7 +2643,7 @@
                     }
                 })
             );
-            doc.autoTable({ head: [cols], body: rows, startY: 28, styles: { fontSize: 7 }, headStyles: { fillColor: [26,58,92] } });
+            doc.autoTable({ head: [cols], body: rows, startY: 28, styles: { fontSize: 7 }, headStyles: { fillColor: [20,165,162] } });
             doc.save('rol_classificacao.pdf');
         };
 
