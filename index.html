@@ -1224,6 +1224,37 @@
             }
         }
 
+        async function setupAtualizacaoData() {
+    const el = document.getElementById('data-atualizacao-header');
+    if (!el) return;
+
+    try {
+        const resp = await fetch(
+            'https://api.github.com/repos/transparencia-mg/portal_informacoes_classificadas/commits?path=dataset/data/orgao_sem_informacoes_classificadas.csv&per_page=1'
+        );
+
+        if (!resp.ok) throw new Error('Erro ao buscar commit');
+
+        const commits = await resp.json();
+
+        if (commits && commits.length > 0) {
+            const data = commits[0].commit.committer.date;
+            const d = new Date(data);
+
+            el.textContent =
+                d.toLocaleDateString('pt-BR') + ' ' +
+                d.toLocaleTimeString('pt-BR');
+            return;
+        }
+
+        el.textContent = 'Não disponível';
+
+    } catch (e) {
+        console.error('Erro ao buscar data:', e);
+        el.textContent = 'Não disponível';
+    }
+}
+        
         function parseCSV(texto) {
             const linhas = texto.trim().split('\n');
             const cabecalhos = linhas[0].split(';').map(h => h.trim().replace(/^\uFEFF/, '').replace(/^"/, '').replace(/"$/, ''));
