@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Informações Classificadas e Desclassificadas - MG</title>
 
     <!-- ==================== ESTILOS E BIBLIOTECAS ==================== -->
@@ -44,63 +44,69 @@
             box-sizing: border-box;
         }
 
+        /*
+         * LAYOUT APP-SHELL — resolve o problema de scroll duplo no iframe.
+         * html/body = 100vh da janela do iframe, overflow hidden.
+         * Somente #content-scroll-area faz scroll. O iframe pai não precisa
+         * de nenhuma alteração.
+         */
         html, body {
             width: 100%;
-            overflow-x: hidden;
+            height: 100vh;
+            overflow: hidden;
             margin: 0;
             padding: 0;
-            height: auto;
-            min-height: auto;
         }
 
         body {
             font-family: 'Montserrat', 'Open Sans', sans-serif;
             background-color: #efeded;
-            padding-bottom: 15px;
-            overflow-x: hidden;
-            min-height: auto;
-            height: auto;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        .main-container {
-            height: auto;
-            min-height: auto;
-            overflow: visible;
-            position: relative;
+        /* Cabeçalho fixo com tabs e data de atualização */
+        #app-header {
+            flex: 0 0 auto;
+            background: #efeded;
+            padding: 6px 16px 0 16px;
+            border-bottom: 2px solid #d6dee6;
+            z-index: 100;
         }
+
+        /* ÚNICA área com scroll — tudo scrolla aqui, nunca no body/html */
+        #content-scroll-area {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 12px 16px 24px 16px;
+            width: 100%;
+        }
+
+        /* scrollbar customizada para ficar bonita */
+        #content-scroll-area::-webkit-scrollbar { width: 6px; }
+        #content-scroll-area::-webkit-scrollbar-track { background: #f0f0f0; }
+        #content-scroll-area::-webkit-scrollbar-thumb { background: #14a5a2; border-radius: 3px; }
+
+        .main-container { display: contents; }
 
         .container.dashboard-spacing {
-            width: 100%;
-            max-width: 88% !important;
-            padding: 0 40px;
-            margin: 0 auto;
-            height: auto;
-            min-height: auto;
-            overflow: visible;
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0;
+            margin: 0;
         }
 
-        .tab-content, 
-        .tab-pane {
-            width: 100%;
-            height: auto;
-            min-height: auto;
-            overflow: visible;
-        }
+        .tab-content, .tab-pane { width: 100%; }
 
-        .table-container { 
-            height: auto; 
-            min-height: auto; 
-            overflow: visible; 
-            position: relative; 
-        }
+        .table-container { overflow: visible; position: relative; }
 
         /* ==================== DATA ATUALIZAÇÃO ==================== */
         .data-atualizacao-container {
             display: flex;
-            justify-content: left;
+            justify-content: flex-end;
             align-items: center;
-            margin: 15px 0;
+            margin: 0;
         }
         
         .data-atualizacao-box {
@@ -280,9 +286,10 @@
         
         .table-fixed-header-container {
             position: relative;
-            overflow: auto;
+            overflow-x: auto;
+            overflow-y: visible;
             width: 100%;
-            max-height: 600px;
+            /* sem max-height: scroll gerenciado pelo #content-scroll-area */
         }
         
         .table-fixed-header-container table thead th {
@@ -507,9 +514,7 @@
         /* ==================== NAVEGAÇÃO ==================== */
         .nav-tabs-container {
             background: transparent;
-            padding: 10px 0;
-            margin-top: 15px;
-            margin-bottom: 15px;
+            padding: 4px 0;
             width: 100%;
         }
         
@@ -755,15 +760,18 @@
                 flex-direction: column;
                 align-items: stretch;
             }
-            .container.dashboard-spacing {
-                padding: 0 15px;
-                max-width: 100% !important;
-            }
             .botoes-abaixo {
                 flex-direction: column;
             }
             .botoes-abaixo button {
                 width: 100%;
+            }
+            .nav-tabs .nav-link {
+                font-size: 13px !important;
+                padding: 5px 10px !important;
+            }
+            .nav-tabs .nav-link .material-icons {
+                display: none;
             }
         }
 
@@ -796,37 +804,37 @@
 </head>
 <body>
 
-    <div class="main-container">
-        <div class="container dashboard-spacing">
-            <!-- ==================== MENU DE NAVEGAÇÃO ==================== -->
-            <div class="nav-tabs-container">
-                <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
-                    <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">bar_chart</i>Visão Geral</button></li>
-                    <li class="nav-item"><button class="nav-link" id="rol-tab" data-bs-toggle="tab" data-bs-target="#rol"><i class="material-icons">list_alt</i>Rol de Classificação</button></li>
-                    <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
-                </ul>
+    <!-- CABEÇALHO FIXO: tabs + data atualização -->
+    <div id="app-header">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px; padding-bottom:6px;">
+            <ul class="nav nav-tabs" id="dashboardTabs" role="tablist" style="margin:0; border:none; gap:6px;">
+                <li class="nav-item"><button class="nav-link active" id="visao-geral-tab" data-bs-toggle="tab" data-bs-target="#visao-geral"><i class="material-icons">bar_chart</i>Visão Geral</button></li>
+                <li class="nav-item"><button class="nav-link" id="rol-tab" data-bs-toggle="tab" data-bs-target="#rol"><i class="material-icons">list_alt</i>Rol de Classificação</button></li>
+                <li class="nav-item"><button class="nav-link" id="downloads-tab" data-bs-toggle="tab" data-bs-target="#downloads"><i class="material-icons">download</i>Downloads</button></li>
+            </ul>
+            <div class="data-atualizacao-box" style="margin:0;">
+                <i class="material-icons">update</i> Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
             </div>
+        </div>
+    </div>
 
-            <!-- ==================== DATA DE ATUALIZAÇÃO ==================== -->
-            <div class="data-atualizacao-container">
-                <div class="data-atualizacao-box">
-                    <i class="material-icons">update</i> Atualizado em: <span id="data-atualizacao-header">Carregando...</span>
-                </div>
-            </div>
-
-            <!-- ==================== CONTEÚDO DAS ABAS ==================== -->
-            <div class="tab-content" id="dashboardTabsContent">
-                <!-- ABA 1: VISÃO GERAL -->
-                <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
-                    <div id="visao-geral-content"></div>
-                </div>
-                <!-- ABA 2: ROL DE CLASSIFICAÇÃO -->
-                <div class="tab-pane fade" id="rol" role="tabpanel">
-                    <div id="rol-content"></div>
-                </div>
-                <!-- ABA 4: DOWNLOADS -->
-                <div class="tab-pane fade" id="downloads" role="tabpanel">
-                    <div id="downloads-content"></div>
+    <!-- ÁREA DE SCROLL: todo o conteúdo das abas fica aqui -->
+    <div id="content-scroll-area">
+        <div class="main-container">
+            <div class="container dashboard-spacing">
+                <div class="tab-content" id="dashboardTabsContent">
+                    <!-- ABA 1: VISÃO GERAL -->
+                    <div class="tab-pane fade show active" id="visao-geral" role="tabpanel">
+                        <div id="visao-geral-content"></div>
+                    </div>
+                    <!-- ABA 2: ROL DE CLASSIFICAÇÃO -->
+                    <div class="tab-pane fade" id="rol" role="tabpanel">
+                        <div id="rol-content"></div>
+                    </div>
+                    <!-- ABA 3: DOWNLOADS -->
+                    <div class="tab-pane fade" id="downloads" role="tabpanel">
+                        <div id="downloads-content"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1068,28 +1076,9 @@
         });
 
         function iframeUpdateHeight() {
-            const html = document.documentElement;
-            const body = document.body;
-            
-            const scrollHeight = Math.max(
-                body.scrollHeight,
-                html.scrollHeight,
-                body.offsetHeight,
-                html.offsetHeight,
-                document.querySelector('.main-container')?.scrollHeight || 0
-            );
-            
-            const finalHeight = scrollHeight + 10;
-            
-            try {
-                if (window.parent && window.parent !== window) {
-                    window.parent.postMessage({ iframeHeight: finalHeight }, '*');
-                }
-            } catch (error) {
-                // Ignora erros de cross-origin
-            }
-            
-            return finalHeight;
+            // Com o layout app-shell, o conteúdo scrolla internamente.
+            // Esta função mantida para compatibilidade com chamadas existentes.
+            return;
         }
 
         function setupAtualizacaoData() {
@@ -1410,11 +1399,8 @@
                     </div>
                     
                     <div class="botoes-abaixo">
-                        <div class="filter-group">
-                            <input type="text" class="search-box" id="buscaOrgaoVG" placeholder="Buscar por nome do órgão..." style="width: 100%;">
-                        </div>
                         <div class="d-flex gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Pesquisar</button>
+                            <button class="btn-pesquisa" onclick="aplicarFiltrosVG()"><i class="material-icons me-2">search</i>Atualizar Filtros</button>
                             <button class="btn-secondary-custom" onclick="limparFiltrosVG()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                         </div>
                     </div>
@@ -1722,7 +1708,7 @@
                     behavior: 'smooth'
                 });
             } else {
-                window.scrollTo({
+                document.getElementById('content-scroll-area').scrollTo({
                     top: 0,
                     behavior: 'smooth'
                 });
@@ -2382,8 +2368,8 @@
                             <input type="text" class="search-box" id="rolBusca" placeholder="Buscar por órgão, código, fundamento..." style="width:100%;">
                         </div>
                         <div class="d-flex gap-2">
-                            <button class="btn-pesquisa" onclick="aplicarFiltrosRol()"><i class="material-icons me-2">search</i>Pesquisar</button>
-                            <button class="btn-secondary-custom" onclick="limparFiltrosRol()"><i class="material-icons me-2">clear</i>Limpar</button>
+                            <button class="btn-pesquisa" onclick="aplicarFiltrosRol()"><i class="material-icons me-2">search</i>Atualizar Filtros</button>
+                            <button class="btn-secondary-custom" onclick="limparFiltrosRol()"><i class="material-icons me-2">clear</i>Limpar Filtros</button>
                         </div>
                     </div>
                 </div>
@@ -2396,7 +2382,6 @@
                             <button class="btn-export" onclick="toggleShare(3)"><i class="material-icons me-1">share</i>Compartilhar</button>
                             <div class="share-options" id="shareOptions3">
                                 <a href="#" onclick="copiarLink(event,3)"><i class="fas fa-link"></i> Copiar Link</a>
-                                <a href="#" onclick="compartilharWhatsApp(event,3)"><i class="fab fa-whatsapp"></i> WhatsApp</a>
                             </div>
                         </div>
                         <button class="btn-export" onclick="abrirGerenciarColunas()" title="Adicionar/remover colunas">
