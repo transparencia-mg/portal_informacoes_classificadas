@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 0.11,
+  "time": 0.067,
   "errors": [],
   "tasks": [
     {
@@ -84,7 +84,7 @@
           "rows": 238
         }
       },
-      "time": 0.041,
+      "time": 0.027,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -8252,13 +8252,13 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "45efb4fc8612a32efdf98da653469686",
-          "bytes": 129773,
+          "hash": "a88c62f20cc7d03e4560ab0a17cb8912",
+          "bytes": 130555,
           "fields": 7,
-          "rows": 201
+          "rows": 202
         }
       },
-      "time": 0.031,
+      "time": 0.021,
       "scope": [
         "hash-count-error",
         "byte-count-error",
