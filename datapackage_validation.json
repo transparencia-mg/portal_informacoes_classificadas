@@ -1,6 +1,6 @@
 {
   "version": "4.16.6",
-  "time": 0.067,
+  "time": 0.099,
   "errors": [],
   "tasks": [
     {
@@ -78,13 +78,13 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "892e581e14fb2d2a19af868554d43e48",
-          "bytes": 97875,
+          "hash": "504e1e7aa831a998cb7a01772a6ac85a",
+          "bytes": 98267,
           "fields": 14,
-          "rows": 238
+          "rows": 239
         }
       },
-      "time": 0.027,
+      "time": 0.041,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -1842,25 +1842,25 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2021-12-22 00:00:00",
+          "cell": "2026-07-30 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
-            "Fundação Estadual do Meio Ambiente - FEAM",
-            "FEAM",
-            "002.04.2091",
-            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
-            "Reservado",
-            "4 – Controle Interno",
-            "Art 23, caput da Lei Federal 12.527/2011",
-            "2021-12-22 00:00:00",
-            "2021-12-22",
+            "Corpo de Bombeiros Militar de Minas Gerais",
+            "CBMMG",
+            "001.06.1401",
+            "Unidade administrativa de lotação de servidores em exercício no CBMMG",
+            "Ultrassecreto",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, incisos III, VII e VIII, e art. 24 da Lei Federal no 12.527/2011",
+            "2026-07-30 00:00:00",
+            "2026-07-30",
             "",
             "Classificada",
-            "5",
-            "2026-04-16",
-            "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
+            "25",
+            "2026-08-03",
+            "https://drive.google.com/file/d/16oaMb_7pgyVlBwV_Uzux5faNpADj5KzV/view"
           ],
           "rowNumber": 52,
           "rowPosition": 53,
@@ -1872,7 +1872,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-12-22 00:00:00\" in row \"53\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2026-07-30 00:00:00\" in row \"53\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -1883,8 +1883,8 @@
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "003.04.2091",
-            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
+            "002.04.2091",
+            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
@@ -1910,20 +1910,20 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2022-08-07 00:00:00",
+          "cell": "2021-12-22 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "005.04.2091",
-            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
+            "003.04.2091",
+            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
-            "2022-08-07 00:00:00",
-            "2022-08-07",
+            "2021-12-22 00:00:00",
+            "2021-12-22",
             "",
             "Classificada",
             "5",
@@ -1940,7 +1940,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-08-07 00:00:00\" in row \"55\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2021-12-22 00:00:00\" in row \"55\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -1951,8 +1951,8 @@
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "006.04.2091",
-            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
+            "005.04.2091",
+            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
@@ -1978,20 +1978,20 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2023-04-05 00:00:00",
+          "cell": "2022-08-07 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "008.04.2091",
-            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
+            "006.04.2091",
+            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
-            "2023-04-05 00:00:00",
-            "2023-04-05",
+            "2022-08-07 00:00:00",
+            "2022-08-07",
             "",
             "Classificada",
             "5",
@@ -2008,7 +2008,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2023-04-05 00:00:00\" in row \"57\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-08-07 00:00:00\" in row \"57\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2019,8 +2019,8 @@
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "009.04.2091",
-            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
+            "008.04.2091",
+            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
@@ -2046,20 +2046,20 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2024-01-01 00:00:00",
+          "cell": "2023-04-05 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "011.04.2091",
-            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
+            "009.04.2091",
+            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
-            "2024-01-01 00:00:00",
-            "2024-01-01",
+            "2023-04-05 00:00:00",
+            "2023-04-05",
             "",
             "Classificada",
             "5",
@@ -2076,7 +2076,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2024-01-01 00:00:00\" in row \"59\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2023-04-05 00:00:00\" in row \"59\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2087,8 +2087,8 @@
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "012.04.2091",
-            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
+            "011.04.2091",
+            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
@@ -2114,20 +2114,20 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2025-01-01 00:00:00",
+          "cell": "2024-01-01 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "014.04.2091",
-            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
+            "012.04.2091",
+            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
-            "2025-01-01 00:00:00",
-            "2025-01-01",
+            "2024-01-01 00:00:00",
+            "2024-01-01",
             "",
             "Classificada",
             "5",
@@ -2144,7 +2144,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-01-01 00:00:00\" in row \"61\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2024-01-01 00:00:00\" in row \"61\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2155,8 +2155,8 @@
           "cells": [
             "Fundação Estadual do Meio Ambiente - FEAM",
             "FEAM",
-            "015.04.2091",
-            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
+            "014.04.2091",
+            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do Controlador Seccional",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
@@ -2182,6 +2182,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2025-01-01 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Fundação Estadual do Meio Ambiente - FEAM",
+            "FEAM",
+            "015.04.2091",
+            "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
+            "Reservado",
+            "4 – Controle Interno",
+            "Art 23, caput da Lei Federal 12.527/2011",
+            "2025-01-01 00:00:00",
+            "2025-01-01",
+            "",
+            "Classificada",
+            "5",
+            "2026-04-16",
+            "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
+          ],
+          "rowNumber": 62,
+          "rowPosition": 63,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2025-01-01 00:00:00\" in row \"63\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2020-12-29 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -2202,8 +2236,8 @@
             "2026-04-16",
             "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 62,
-          "rowPosition": 63,
+          "rowNumber": 63,
+          "rowPosition": 64,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2212,7 +2246,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-12-29 00:00:00\" in row \"63\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-12-29 00:00:00\" in row \"64\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2236,8 +2270,8 @@
             "2026-04-16",
             "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 63,
-          "rowPosition": 64,
+          "rowNumber": 64,
+          "rowPosition": 65,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2246,7 +2280,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-12-28 00:00:00\" in row \"64\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2021-12-28 00:00:00\" in row \"65\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2270,8 +2304,8 @@
             "2026-04-16",
             "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 64,
-          "rowPosition": 65,
+          "rowNumber": 65,
+          "rowPosition": 66,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2280,7 +2314,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-12-30 00:00:00\" in row \"65\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-12-30 00:00:00\" in row \"66\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2304,8 +2338,8 @@
             "2026-04-16",
             "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 65,
-          "rowPosition": 66,
+          "rowNumber": 66,
+          "rowPosition": 67,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2314,7 +2348,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2023-12-29 00:00:00\" in row \"66\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2023-12-29 00:00:00\" in row \"67\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2338,8 +2372,8 @@
             "2026-04-16",
             "https://www.feam.br/informa%C3%A7%C3%B5es-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 66,
-          "rowPosition": 67,
+          "rowNumber": 67,
+          "rowPosition": 68,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2348,7 +2382,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2024-12-30 00:00:00\" in row \"67\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2024-12-30 00:00:00\" in row \"68\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2372,8 +2406,8 @@
             "2026-02-19",
             "https://www.funed.mg.gov.br/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 67,
-          "rowPosition": 68,
+          "rowNumber": 68,
+          "rowPosition": 69,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2382,7 +2416,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-09-25 00:00:00\" in row \"68\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-09-25 00:00:00\" in row \"69\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2406,8 +2440,8 @@
             "2026-02-19",
             "https://www.funed.mg.gov.br/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 68,
-          "rowPosition": 69,
+          "rowNumber": 69,
+          "rowPosition": 70,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2416,7 +2450,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-09-16 00:00:00\" in row \"69\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-09-16 00:00:00\" in row \"70\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2429,40 +2463,6 @@
             "FUNED",
             "007.16.2261",
             "Ofícios, comunicados, expediente de exigências e demandas de autoridades sanitárias local, estadual ou federal.",
-            "Secreto",
-            "16 - Saúde",
-            "Art. 23, inciso VI da Lei Federal nº 12.527/2011",
-            "2025-09-25 00:00:00",
-            "2025-09-25",
-            "",
-            "Classificada",
-            "15",
-            "2026-02-19",
-            "https://www.funed.mg.gov.br/informacoes-classificadas-e-desclassificadas/"
-          ],
-          "rowNumber": 69,
-          "rowPosition": 70,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-09-25 00:00:00\" in row \"70\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2025-09-25 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Fundação Ezequiel Dias - FUNED",
-            "FUNED",
-            "008.16.2261",
-            "Relatórios de Auditoria Externa.",
             "Secreto",
             "16 - Saúde",
             "Art. 23, inciso VI da Lei Federal nº 12.527/2011",
@@ -2495,8 +2495,8 @@
           "cells": [
             "Fundação Ezequiel Dias - FUNED",
             "FUNED",
-            "009.16.2261",
-            "Relatórios de Auditoria Interna (ISO e BPF).",
+            "008.16.2261",
+            "Relatórios de Auditoria Externa.",
             "Secreto",
             "16 - Saúde",
             "Art. 23, inciso VI da Lei Federal nº 12.527/2011",
@@ -2522,23 +2522,23 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2025-10-02 00:00:00",
+          "cell": "2025-09-25 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
             "Fundação Ezequiel Dias - FUNED",
             "FUNED",
-            "004.16.2261",
-            "Resultados dos clientes do PEPFUNED nos ensaios de proficiência ofertados pelo IOM.",
-            "Reservado",
+            "009.16.2261",
+            "Relatórios de Auditoria Interna (ISO e BPF).",
+            "Secreto",
             "16 - Saúde",
-            "Art. 23, inciso VI, da Lei Federal nº 12.527/2011",
-            "2025-10-02 00:00:00",
-            "2025-10-02",
+            "Art. 23, inciso VI da Lei Federal nº 12.527/2011",
+            "2025-09-25 00:00:00",
+            "2025-09-25",
             "",
             "Classificada",
-            "5",
+            "15",
             "2026-02-19",
             "https://www.funed.mg.gov.br/informacoes-classificadas-e-desclassificadas/"
           ],
@@ -2552,7 +2552,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-10-02 00:00:00\" in row \"73\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-09-25 00:00:00\" in row \"73\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2563,11 +2563,11 @@
           "cells": [
             "Fundação Ezequiel Dias - FUNED",
             "FUNED",
-            "002.16.2261",
-            "Ofícios enviados ao Ministério Público, Polícia Civil, Federal ou congêneres, acompanhados de laudos analíticos ou fiscais, bem como aqueles contendo respostas a demandas judiciais",
+            "004.16.2261",
+            "Resultados dos clientes do PEPFUNED nos ensaios de proficiência ofertados pelo IOM.",
             "Reservado",
             "16 - Saúde",
-            "Art. 23, incisos III e IV, da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso VI, da Lei Federal nº 12.527/2011",
             "2025-10-02 00:00:00",
             "2025-10-02",
             "",
@@ -2597,8 +2597,8 @@
           "cells": [
             "Fundação Ezequiel Dias - FUNED",
             "FUNED",
-            "003.16.2261",
-            "Ofício externo - Documentos recebidos de órgãos externos como Polícia Civil, Federal, Ministério Público ou congênere, com finalidade de elucidação de crimes contra Saúde Pública ou Estado",
+            "002.16.2261",
+            "Ofícios enviados ao Ministério Público, Polícia Civil, Federal ou congêneres, acompanhados de laudos analíticos ou fiscais, bem como aqueles contendo respostas a demandas judiciais",
             "Reservado",
             "16 - Saúde",
             "Art. 23, incisos III e IV, da Lei Federal nº 12.527/2011",
@@ -2624,6 +2624,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2025-10-02 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Fundação Ezequiel Dias - FUNED",
+            "FUNED",
+            "003.16.2261",
+            "Ofício externo - Documentos recebidos de órgãos externos como Polícia Civil, Federal, Ministério Público ou congênere, com finalidade de elucidação de crimes contra Saúde Pública ou Estado",
+            "Reservado",
+            "16 - Saúde",
+            "Art. 23, incisos III e IV, da Lei Federal nº 12.527/2011",
+            "2025-10-02 00:00:00",
+            "2025-10-02",
+            "",
+            "Classificada",
+            "5",
+            "2026-02-19",
+            "https://www.funed.mg.gov.br/informacoes-classificadas-e-desclassificadas/"
+          ],
+          "rowNumber": 75,
+          "rowPosition": 76,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2025-10-02 00:00:00\" in row \"76\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2025-09-23 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -2644,8 +2678,8 @@
             "2026-02-19",
             "https://www.funed.mg.gov.br/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 75,
-          "rowPosition": 76,
+          "rowNumber": 76,
+          "rowPosition": 77,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2654,7 +2688,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-09-23 00:00:00\" in row \"76\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-09-23 00:00:00\" in row \"77\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2678,8 +2712,8 @@
             "2026-04-16",
             "https://www.mg.gov.br/gabinetemilitar/pagina/informacoes-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 76,
-          "rowPosition": 77,
+          "rowNumber": 77,
+          "rowPosition": 78,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2688,7 +2722,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-20 00:00:00\" in row \"77\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-20 00:00:00\" in row \"78\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2701,40 +2735,6 @@
             "GMG",
             "",
             "Relação de veículos disponibilizados para escoltas do Governador e do vice-Governador",
-            "Secreto",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
-            "2019-08-28 00:00:00",
-            "2019-08-28",
-            "",
-            "Classificada",
-            "15",
-            "2026-04-16",
-            "https://www.mg.gov.br/gabinetemilitar/pagina/informacoes-classificadas-e-desclassificadas"
-          ],
-          "rowNumber": 77,
-          "rowPosition": 78,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-28 00:00:00\" in row \"78\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-08-28 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Gabinete Militar do Governador do Estado de Minas Gerais - GMG",
-            "GMG",
-            "",
-            "Placas de segurança das viaturas do Gabinete Militar do Governador",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
@@ -2768,7 +2768,7 @@
             "Gabinete Militar do Governador do Estado de Minas Gerais - GMG",
             "GMG",
             "",
-            "Documentação relativa a distribuição dos cargos/funções (distribuição dos cargos, postos, graduações e funções militares e civis nas estruturas organizacionais e postos de trabalho do GMG)",
+            "Placas de segurança das viaturas do Gabinete Militar do Governador",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
@@ -2802,7 +2802,7 @@
             "Gabinete Militar do Governador do Estado de Minas Gerais - GMG",
             "GMG",
             "",
-            "Escalas de serviço da Superintendência de Segurança do Gabinete Militar do Governador",
+            "Documentação relativa a distribuição dos cargos/funções (distribuição dos cargos, postos, graduações e funções militares e civis nas estruturas organizacionais e postos de trabalho do GMG)",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
@@ -2836,7 +2836,7 @@
             "Gabinete Militar do Governador do Estado de Minas Gerais - GMG",
             "GMG",
             "",
-            "Ordens de Serviço da Superintendência de Segurançado Gabinete Militar do Governador",
+            "Escalas de serviço da Superintendência de Segurança do Gabinete Militar do Governador",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
@@ -2870,7 +2870,7 @@
             "Gabinete Militar do Governador do Estado de Minas Gerais - GMG",
             "GMG",
             "",
-            "Relação dos veículos disponibilizados para o escritório de representação em Brasília",
+            "Ordens de Serviço da Superintendência de Segurançado Gabinete Militar do Governador",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
@@ -2896,6 +2896,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2019-08-28 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Gabinete Militar do Governador do Estado de Minas Gerais - GMG",
+            "GMG",
+            "",
+            "Relação dos veículos disponibilizados para o escritório de representação em Brasília",
+            "Secreto",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VII, da Lei Federal nº 12.527/2011 e Art. 31, Decreto 45.969",
+            "2019-08-28 00:00:00",
+            "2019-08-28",
+            "",
+            "Classificada",
+            "15",
+            "2026-04-16",
+            "https://www.mg.gov.br/gabinetemilitar/pagina/informacoes-classificadas-e-desclassificadas"
+          ],
+          "rowNumber": 83,
+          "rowPosition": 84,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-28 00:00:00\" in row \"84\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2025-06-18 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -2916,8 +2950,8 @@
             "2026-04-16",
             "https://www.mg.gov.br/gabinetemilitar/pagina/informacoes-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 83,
-          "rowPosition": 84,
+          "rowNumber": 84,
+          "rowPosition": 85,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2926,7 +2960,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-06-18 00:00:00\" in row \"84\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-06-18 00:00:00\" in row \"85\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2950,8 +2984,8 @@
             "2026-04-16",
             "https://www.mg.gov.br/gabinetemilitar/pagina/informacoes-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 84,
-          "rowPosition": 85,
+          "rowNumber": 85,
+          "rowPosition": 86,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2960,7 +2994,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-06-25 00:00:00\" in row \"85\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-06-25 00:00:00\" in row \"86\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -2984,8 +3018,8 @@
             "2026-04-16",
             "https://www.mg.gov.br/gabinetemilitar/pagina/informacoes-classificadas-e-desclassificadas"
           ],
-          "rowNumber": 85,
-          "rowPosition": 86,
+          "rowNumber": 86,
+          "rowPosition": 87,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -2994,7 +3028,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-28 00:00:00\" in row \"86\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-28 00:00:00\" in row \"87\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3007,40 +3041,6 @@
             "InvestMinas",
             "001.11.5130",
             "Estudos regionais e setoriais (direcionados às empresas e investidores), quando encomendados",
-            "Reservado",
-            "11 - Indústria",
-            "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
-            "2024-01-12 00:00:00",
-            "2024-01-12",
-            "",
-            "Classificada",
-            "5",
-            "2026-05-29",
-            "https://investminas.mg.gov.br/sobre#transparencia"
-          ],
-          "rowNumber": 86,
-          "rowPosition": 87,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2024-01-12 00:00:00\" in row \"87\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2024-01-12 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
-            "InvestMinas",
-            "003.11.5130",
-            "Informações consolidadas em Notas Técnicas sobre detalhes de projetos empresariais, como valor do investimento, localização, descrição do projeto, produtos, geração de empregos, pleitos das empresas, necessidades de licenciamento ambiental e infraestrutura",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3073,8 +3073,8 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "006.11.5130",
-            "Íntegra de Acordos de cooperação técnica",
+            "003.11.5130",
+            "Informações consolidadas em Notas Técnicas sobre detalhes de projetos empresariais, como valor do investimento, localização, descrição do projeto, produtos, geração de empregos, pleitos das empresas, necessidades de licenciamento ambiental e infraestrutura",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3107,8 +3107,8 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "011.11.5130",
-            "Informações sobre portfólio de projetos em carteira na Invest Minas, onde constam dados sobre as atividades industriais e comerciais das empresas. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
+            "006.11.5130",
+            "Íntegra de Acordos de cooperação técnica",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3141,8 +3141,8 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "012.11.5130",
-            "Listagens de empresas atendidas pela Invest Minas que constem dados comerciais, contábeis, cambiais e financeiros, bem como dados cadastrais confidenciais. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
+            "011.11.5130",
+            "Informações sobre portfólio de projetos em carteira na Invest Minas, onde constam dados sobre as atividades industriais e comerciais das empresas. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3175,8 +3175,8 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "013.11.5130",
-            " Relatórios de Mapeamento de Imóveis",
+            "012.11.5130",
+            "Listagens de empresas atendidas pela Invest Minas que constem dados comerciais, contábeis, cambiais e financeiros, bem como dados cadastrais confidenciais. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3209,8 +3209,8 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "014.11.5130",
-            "Informações para caracterização dos empreendimentos das empresas atendidas pela Invest Minas consolidadas no formulário ICE ou IP. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
+            "013.11.5130",
+            " Relatórios de Mapeamento de Imóveis",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3243,8 +3243,8 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "015.11.5130",
-            "Projetos / estudos setoriais encomendados para utilização interna bem como as demandas  alusivas a investimento de empresas estrangeiras. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
+            "014.11.5130",
+            "Informações para caracterização dos empreendimentos das empresas atendidas pela Invest Minas consolidadas no formulário ICE ou IP. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
             "Reservado",
             "11 - Indústria",
             "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
@@ -3277,11 +3277,11 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "002.11.5130",
-            "Relatórios de investimentos e projetos ativos/inativos para os mantenedores",
+            "015.11.5130",
+            "Projetos / estudos setoriais encomendados para utilização interna bem como as demandas  alusivas a investimento de empresas estrangeiras. Resalvada a parte que tratar projeto que resulta em protocolo de intenção que deve obdecer a classificação de ultrassecreto",
             "Reservado",
             "11 - Indústria",
-            "Art. 23, inciso VI da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso II, da Lei Federal nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
             "",
@@ -3311,11 +3311,11 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "008.04.5130",
-            "Processos, informações e documentos de auditoria interna, como relatórios trimestrais e anuais enviados ao conselho superior ",
+            "002.11.5130",
+            "Relatórios de investimentos e projetos ativos/inativos para os mantenedores",
             "Reservado",
-            "4 – Controle Interno",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "11 - Indústria",
+            "Art. 23, inciso VI da Lei Federal nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
             "",
@@ -3345,16 +3345,16 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "005.11.5130",
-            "Acordos de confidencialidade",
-            "Secreto",
-            "11 - Indústria",
-            "Art. 23, incisos II e IV, da Lei Federal  nº 12.527/2011",
+            "008.04.5130",
+            "Processos, informações e documentos de auditoria interna, como relatórios trimestrais e anuais enviados ao conselho superior ",
+            "Reservado",
+            "4 – Controle Interno",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
             "",
             "Classificada",
-            "15",
+            "5",
             "2026-05-29",
             "https://investminas.mg.gov.br/sobre#transparencia"
           ],
@@ -3379,16 +3379,16 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "010.09.5130",
-            "Atas de reunião de Conselho Superior, na íntegra. Resalvada a parte que tratar de protocolo de intenção que deve obdecer a classificação de ultrassecreto",
-            "Reservado",
+            "005.11.5130",
+            "Acordos de confidencialidade",
+            "Secreto",
             "11 - Indústria",
             "Art. 23, incisos II e IV, da Lei Federal  nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
             "",
             "Classificada",
-            "5",
+            "15",
             "2026-05-29",
             "https://investminas.mg.gov.br/sobre#transparencia"
           ],
@@ -3413,10 +3413,10 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "007.12.5130",
-            "Pareceres jurídicos relacionados a assuntos estratégicos",
+            "010.09.5130",
+            "Atas de reunião de Conselho Superior, na íntegra. Resalvada a parte que tratar de protocolo de intenção que deve obdecer a classificação de ultrassecreto",
             "Reservado",
-            "12 - Justição e Legislação",
+            "11 - Indústria",
             "Art. 23, incisos II e IV, da Lei Federal  nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
@@ -3447,16 +3447,16 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "004.09.5130",
-            "Íntegra dos Protocolos de Intenções/Aditivos",
-            "Ultrassecreto",
-            "9 - Governo e Política",
+            "007.12.5130",
+            "Pareceres jurídicos relacionados a assuntos estratégicos",
+            "Reservado",
+            "12 - Justição e Legislação",
             "Art. 23, incisos II e IV, da Lei Federal  nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
             "",
             "Classificada",
-            "25",
+            "5",
             "2026-05-29",
             "https://investminas.mg.gov.br/sobre#transparencia"
           ],
@@ -3481,16 +3481,16 @@
           "cells": [
             "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
             "InvestMinas",
-            "009.09.5130",
-            "Atas de reunião de Diretoria Executiva, na íntegra. Resalvada a parte que tratar de protocolo de intenção que deve obdecer a classificação de ultrassecreto",
-            "Reservado",
+            "004.09.5130",
+            "Íntegra dos Protocolos de Intenções/Aditivos",
+            "Ultrassecreto",
             "9 - Governo e Política",
             "Art. 23, incisos II e IV, da Lei Federal  nº 12.527/2011",
             "2024-01-12 00:00:00",
             "2024-01-12",
             "",
             "Classificada",
-            "5",
+            "25",
             "2026-05-29",
             "https://investminas.mg.gov.br/sobre#transparencia"
           ],
@@ -3508,25 +3508,25 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
-          "cell": "2024-03-01 00:00:00",
+          "cell": "2024-01-12 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
           "fieldPosition": 8,
           "cells": [
-            "Instituto de Metrologia e Qualidade do Estado de Minas Gerais - IPEM",
-            "IPEM",
-            "001.03.2331",
-            "Planos e programas de verificação e fiscalização das áreas metrológica e avaliação da conformidade.",
+            "Instituto de Desenvolvimento Integrado de Minas Gerais - InvestMinas",
+            "InvestMinas",
+            "009.09.5130",
+            "Atas de reunião de Diretoria Executiva, na íntegra. Resalvada a parte que tratar de protocolo de intenção que deve obdecer a classificação de ultrassecreto",
             "Reservado",
-            "3 - Comércio, Serviços e Turismo",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2024-03-01 00:00:00",
-            "2024-03-01",
+            "9 - Governo e Política",
+            "Art. 23, incisos II e IV, da Lei Federal  nº 12.527/2011",
+            "2024-01-12 00:00:00",
+            "2024-01-12",
             "",
             "Classificada",
             "5",
-            "2026-05-14",
-            "https://ipem.mg.gov.br/2020-10-22-18-21-06/informacoes-classificadas"
+            "2026-05-29",
+            "https://investminas.mg.gov.br/sobre#transparencia"
           ],
           "rowNumber": 101,
           "rowPosition": 102,
@@ -3538,7 +3538,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2024-03-01 00:00:00\" in row \"102\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2024-01-12 00:00:00\" in row \"102\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3549,8 +3549,8 @@
           "cells": [
             "Instituto de Metrologia e Qualidade do Estado de Minas Gerais - IPEM",
             "IPEM",
-            "002.03.2331",
-            "Roteiros de verificação e fiscalização das áreas metrológica e avaliação da conformidade.",
+            "001.03.2331",
+            "Planos e programas de verificação e fiscalização das áreas metrológica e avaliação da conformidade.",
             "Reservado",
             "3 - Comércio, Serviços e Turismo",
             "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
@@ -3576,6 +3576,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2024-03-01 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Instituto de Metrologia e Qualidade do Estado de Minas Gerais - IPEM",
+            "IPEM",
+            "002.03.2331",
+            "Roteiros de verificação e fiscalização das áreas metrológica e avaliação da conformidade.",
+            "Reservado",
+            "3 - Comércio, Serviços e Turismo",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2024-03-01 00:00:00",
+            "2024-03-01",
+            "",
+            "Classificada",
+            "5",
+            "2026-05-14",
+            "https://ipem.mg.gov.br/2020-10-22-18-21-06/informacoes-classificadas"
+          ],
+          "rowNumber": 103,
+          "rowPosition": 104,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2024-03-01 00:00:00\" in row \"104\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2021-06-28 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -3596,8 +3630,8 @@
             "2026-04-10",
             "https://www.policiacivil.mg.gov.br/pagina/transparencia"
           ],
-          "rowNumber": 103,
-          "rowPosition": 104,
+          "rowNumber": 104,
+          "rowPosition": 105,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3606,7 +3640,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-06-28 00:00:00\" in row \"104\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2021-06-28 00:00:00\" in row \"105\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3630,8 +3664,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 104,
-          "rowPosition": 105,
+          "rowNumber": 105,
+          "rowPosition": 106,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3640,7 +3674,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-01-21 00:00:00\" in row \"105\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-01-21 00:00:00\" in row \"106\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3664,8 +3698,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 105,
-          "rowPosition": 106,
+          "rowNumber": 106,
+          "rowPosition": 107,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3674,7 +3708,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-05-02 00:00:00\" in row \"106\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-05-02 00:00:00\" in row \"107\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3698,8 +3732,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 106,
-          "rowPosition": 107,
+          "rowNumber": 107,
+          "rowPosition": 108,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3708,7 +3742,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-07 00:00:00\" in row \"107\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-07 00:00:00\" in row \"108\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3732,8 +3766,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 107,
-          "rowPosition": 108,
+          "rowNumber": 108,
+          "rowPosition": 109,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3742,7 +3776,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-06-13 00:00:00\" in row \"108\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-06-13 00:00:00\" in row \"109\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3766,8 +3800,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 108,
-          "rowPosition": 109,
+          "rowNumber": 109,
+          "rowPosition": 110,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3776,7 +3810,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-06-20 00:00:00\" in row \"109\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-06-20 00:00:00\" in row \"110\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3800,8 +3834,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 109,
-          "rowPosition": 110,
+          "rowNumber": 110,
+          "rowPosition": 111,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3810,7 +3844,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-07-13 00:00:00\" in row \"110\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-07-13 00:00:00\" in row \"111\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3834,8 +3868,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 110,
-          "rowPosition": 111,
+          "rowNumber": 111,
+          "rowPosition": 112,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3844,7 +3878,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-07-16 00:00:00\" in row \"111\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-07-16 00:00:00\" in row \"112\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3868,8 +3902,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 111,
-          "rowPosition": 112,
+          "rowNumber": 112,
+          "rowPosition": 113,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -3878,7 +3912,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-07-23 00:00:00\" in row \"112\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-07-23 00:00:00\" in row \"113\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -3894,40 +3928,6 @@
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2018-07-27 00:00:00",
-            "2018-07-27",
-            "2024-05-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 112,
-          "rowPosition": 113,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-07-27 00:00:00\" in row \"113\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2018-07-27 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112404/2018-85",
-            "Inserir o assunto sobre o qual versa a informação",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso(s) VIII, III, da Lei Federal nº 12.527/2011",
             "2018-07-27 00:00:00",
             "2018-07-27",
             "2024-05-16",
@@ -3957,11 +3957,11 @@
           "cells": [
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
-            "7460.112405/2018-85",
+            "7460.112404/2018-85",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso(s) VII, III, da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso(s) VIII, III, da Lei Federal nº 12.527/2011",
             "2018-07-27 00:00:00",
             "2018-07-27",
             "2024-05-16",
@@ -3981,6 +3981,40 @@
           ],
           "note": "type is \"date/default\"",
           "message": "Type error in the cell \"2018-07-27 00:00:00\" in row \"115\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "2018-07-27 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112405/2018-85",
+            "Inserir o assunto sobre o qual versa a informação",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso(s) VII, III, da Lei Federal nº 12.527/2011",
+            "2018-07-27 00:00:00",
+            "2018-07-27",
+            "2024-05-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 115,
+          "rowPosition": 116,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2018-07-27 00:00:00\" in row \"116\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4004,8 +4038,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 115,
-          "rowPosition": 116,
+          "rowNumber": 116,
+          "rowPosition": 117,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4014,7 +4048,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-08-13 00:00:00\" in row \"116\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-08-13 00:00:00\" in row \"117\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4026,40 +4060,6 @@
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
             "7460.112409/2018-74",
-            "Inserir o assunto sobre o qual versa a informação",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2018-08-16 00:00:00",
-            "2018-08-16",
-            "2024-05-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 116,
-          "rowPosition": 117,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-08-16 00:00:00\" in row \"117\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2018-08-16 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112410/2018-86",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
@@ -4086,6 +4086,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2018-08-16 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112410/2018-86",
+            "Inserir o assunto sobre o qual versa a informação",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2018-08-16 00:00:00",
+            "2018-08-16",
+            "2024-05-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 118,
+          "rowPosition": 119,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2018-08-16 00:00:00\" in row \"119\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2018-08-17 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -4106,8 +4140,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 118,
-          "rowPosition": 119,
+          "rowNumber": 119,
+          "rowPosition": 120,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4116,7 +4150,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-08-17 00:00:00\" in row \"119\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-08-17 00:00:00\" in row \"120\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4140,8 +4174,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 119,
-          "rowPosition": 120,
+          "rowNumber": 120,
+          "rowPosition": 121,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4150,7 +4184,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-08-27 00:00:00\" in row \"120\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-08-27 00:00:00\" in row \"121\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4174,8 +4208,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 120,
-          "rowPosition": 121,
+          "rowNumber": 121,
+          "rowPosition": 122,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4184,7 +4218,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-09-03 00:00:00\" in row \"121\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-09-03 00:00:00\" in row \"122\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4208,8 +4242,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 121,
-          "rowPosition": 122,
+          "rowNumber": 122,
+          "rowPosition": 123,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4218,7 +4252,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-09-10 00:00:00\" in row \"122\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-09-10 00:00:00\" in row \"123\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4242,8 +4276,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 122,
-          "rowPosition": 123,
+          "rowNumber": 123,
+          "rowPosition": 124,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4252,7 +4286,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-11-11 00:00:00\" in row \"123\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-11-11 00:00:00\" in row \"124\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4276,8 +4310,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 123,
-          "rowPosition": 124,
+          "rowNumber": 124,
+          "rowPosition": 125,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4286,7 +4320,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-11-12 00:00:00\" in row \"124\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-11-12 00:00:00\" in row \"125\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4310,8 +4344,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 124,
-          "rowPosition": 125,
+          "rowNumber": 125,
+          "rowPosition": 126,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4320,7 +4354,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-12-27 00:00:00\" in row \"125\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-12-27 00:00:00\" in row \"126\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4344,8 +4378,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 125,
-          "rowPosition": 126,
+          "rowNumber": 126,
+          "rowPosition": 127,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4354,7 +4388,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-01-07 00:00:00\" in row \"126\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-01-07 00:00:00\" in row \"127\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4378,8 +4412,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 126,
-          "rowPosition": 127,
+          "rowNumber": 127,
+          "rowPosition": 128,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4388,7 +4422,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-01-15 00:00:00\" in row \"127\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-01-15 00:00:00\" in row \"128\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4412,8 +4446,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 127,
-          "rowPosition": 128,
+          "rowNumber": 128,
+          "rowPosition": 129,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4422,7 +4456,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-01-21 00:00:00\" in row \"128\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-01-21 00:00:00\" in row \"129\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4446,8 +4480,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 128,
-          "rowPosition": 129,
+          "rowNumber": 129,
+          "rowPosition": 130,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4456,7 +4490,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-04 00:00:00\" in row \"129\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-04 00:00:00\" in row \"130\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4480,8 +4514,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 129,
-          "rowPosition": 130,
+          "rowNumber": 130,
+          "rowPosition": 131,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4490,7 +4524,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-13 00:00:00\" in row \"130\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-13 00:00:00\" in row \"131\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4514,8 +4548,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 130,
-          "rowPosition": 131,
+          "rowNumber": 131,
+          "rowPosition": 132,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4524,7 +4558,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-15 00:00:00\" in row \"131\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-15 00:00:00\" in row \"132\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4548,8 +4582,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 131,
-          "rowPosition": 132,
+          "rowNumber": 132,
+          "rowPosition": 133,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4558,7 +4592,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-28 00:00:00\" in row \"132\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-28 00:00:00\" in row \"133\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4582,8 +4616,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 132,
-          "rowPosition": 133,
+          "rowNumber": 133,
+          "rowPosition": 134,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4592,7 +4626,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-03-19 00:00:00\" in row \"133\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-03-19 00:00:00\" in row \"134\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4604,40 +4638,6 @@
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
             "7460.112434/2019-74",
-            "Inserir o assunto sobre o qual versa a informação",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2019-03-21 00:00:00",
-            "2019-03-21",
-            "2024-05-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 133,
-          "rowPosition": 134,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-03-21 00:00:00\" in row \"134\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-03-21 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112435/2019-74",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
@@ -4671,7 +4671,7 @@
           "cells": [
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
-            "7460.112436/2019-74",
+            "7460.112435/2019-74",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
@@ -4698,6 +4698,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2019-03-21 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112436/2019-74",
+            "Inserir o assunto sobre o qual versa a informação",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2019-03-21 00:00:00",
+            "2019-03-21",
+            "2024-05-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 136,
+          "rowPosition": 137,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-03-21 00:00:00\" in row \"137\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2019-03-25 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -4718,8 +4752,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 136,
-          "rowPosition": 137,
+          "rowNumber": 137,
+          "rowPosition": 138,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4728,7 +4762,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-03-25 00:00:00\" in row \"137\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-03-25 00:00:00\" in row \"138\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4752,8 +4786,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 137,
-          "rowPosition": 138,
+          "rowNumber": 138,
+          "rowPosition": 139,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4762,7 +4796,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-03-27 00:00:00\" in row \"138\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-03-27 00:00:00\" in row \"139\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4786,8 +4820,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 138,
-          "rowPosition": 139,
+          "rowNumber": 139,
+          "rowPosition": 140,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4796,7 +4830,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-03-27 00:00:00\" in row \"139\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-03-27 00:00:00\" in row \"140\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4820,8 +4854,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 139,
-          "rowPosition": 140,
+          "rowNumber": 140,
+          "rowPosition": 141,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4830,7 +4864,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-04-04 00:00:00\" in row \"140\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-04-04 00:00:00\" in row \"141\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4854,8 +4888,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 140,
-          "rowPosition": 141,
+          "rowNumber": 141,
+          "rowPosition": 142,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4864,7 +4898,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-04-15 00:00:00\" in row \"141\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-04-15 00:00:00\" in row \"142\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4876,40 +4910,6 @@
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
             "7460.112442/2019-75",
-            "Inserir o assunto sobre o qual versa a informação",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2019-04-16 00:00:00",
-            "2019-04-16",
-            "2024-05-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 141,
-          "rowPosition": 142,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-04-16 00:00:00\" in row \"142\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-04-16 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112443/2019-74",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
@@ -4936,6 +4936,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2019-04-16 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112443/2019-74",
+            "Inserir o assunto sobre o qual versa a informação",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2019-04-16 00:00:00",
+            "2019-04-16",
+            "2024-05-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 143,
+          "rowPosition": 144,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-04-16 00:00:00\" in row \"144\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2019-05-14 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -4956,8 +4990,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 143,
-          "rowPosition": 144,
+          "rowNumber": 144,
+          "rowPosition": 145,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -4966,7 +5000,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-05-14 00:00:00\" in row \"144\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-05-14 00:00:00\" in row \"145\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -4990,8 +5024,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 144,
-          "rowPosition": 145,
+          "rowNumber": 145,
+          "rowPosition": 146,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5000,7 +5034,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-05-24 00:00:00\" in row \"145\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-05-24 00:00:00\" in row \"146\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5024,8 +5058,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 145,
-          "rowPosition": 146,
+          "rowNumber": 146,
+          "rowPosition": 147,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5034,7 +5068,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-15 00:00:00\" in row \"146\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-15 00:00:00\" in row \"147\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5058,8 +5092,8 @@
             "2025-06-09",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 146,
-          "rowPosition": 147,
+          "rowNumber": 147,
+          "rowPosition": 148,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5068,7 +5102,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2023-10-26 00:00:00\" in row \"147\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2023-10-26 00:00:00\" in row \"148\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5092,8 +5126,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 147,
-          "rowPosition": 148,
+          "rowNumber": 148,
+          "rowPosition": 149,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5102,7 +5136,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2023-10-26 00:00:00\" in row \"148\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2023-10-26 00:00:00\" in row \"149\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5115,40 +5149,6 @@
             "PMMG",
             "7460.112495/2023-52",
             "Resposta ao Requerimento de informações 557/2023",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VII da Lei Federal nº 12.527/2011",
-            "2023-10-31 00:00:00",
-            "2023-10-31",
-            "",
-            "Classificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 148,
-          "rowPosition": 149,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2023-10-31 00:00:00\" in row \"149\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2023-10-31 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112496/2023-52",
-            "Resposta ao Requerimento de informações 1602/2023",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII da Lei Federal nº 12.527/2011",
@@ -5174,6 +5174,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2023-10-31 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112496/2023-52",
+            "Resposta ao Requerimento de informações 1602/2023",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VII da Lei Federal nº 12.527/2011",
+            "2023-10-31 00:00:00",
+            "2023-10-31",
+            "",
+            "Classificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 150,
+          "rowPosition": 151,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2023-10-31 00:00:00\" in row \"151\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2023-11-06 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -5194,8 +5228,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 150,
-          "rowPosition": 151,
+          "rowNumber": 151,
+          "rowPosition": 152,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5204,7 +5238,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2023-11-06 00:00:00\" in row \"151\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2023-11-06 00:00:00\" in row \"152\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5228,8 +5262,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 151,
-          "rowPosition": 152,
+          "rowNumber": 152,
+          "rowPosition": 153,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5238,7 +5272,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-10-29 00:00:00\" in row \"152\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-10-29 00:00:00\" in row \"153\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5254,40 +5288,6 @@
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VII da Lei Federal nº 12.527/2011",
-            "2019-12-09 00:00:00",
-            "2019-12-09",
-            "2025-05-29",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 152,
-          "rowPosition": 153,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-12-09 00:00:00\" in row \"153\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-12-09 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "0016.112469/2019-52",
-            "Autorização para aquisição de armas de fogo de uso restrito",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso(s) III ,VII, da Lei Federal nº 12.527/2011",
             "2019-12-09 00:00:00",
             "2019-12-09",
             "2025-05-29",
@@ -5317,11 +5317,11 @@
           "cells": [
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
-            "0016.112470/2019-74",
+            "0016.112469/2019-52",
             "Autorização para aquisição de armas de fogo de uso restrito",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso(s)  VII,III da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso(s) III ,VII, da Lei Federal nº 12.527/2011",
             "2019-12-09 00:00:00",
             "2019-12-09",
             "2025-05-29",
@@ -5341,6 +5341,40 @@
           ],
           "note": "type is \"date/default\"",
           "message": "Type error in the cell \"2019-12-09 00:00:00\" in row \"155\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "2019-12-09 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "0016.112470/2019-74",
+            "Autorização para aquisição de armas de fogo de uso restrito",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso(s)  VII,III da Lei Federal nº 12.527/2011",
+            "2019-12-09 00:00:00",
+            "2019-12-09",
+            "2025-05-29",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 155,
+          "rowPosition": 156,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-12-09 00:00:00\" in row \"156\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5364,8 +5398,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 155,
-          "rowPosition": 156,
+          "rowNumber": 156,
+          "rowPosition": 157,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5374,7 +5408,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-05-26 00:00:00\" in row \"156\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-05-26 00:00:00\" in row \"157\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5398,8 +5432,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 156,
-          "rowPosition": 157,
+          "rowNumber": 157,
+          "rowPosition": 158,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5408,7 +5442,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-05-21 00:00:00\" in row \"157\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-05-21 00:00:00\" in row \"158\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5432,8 +5466,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 157,
-          "rowPosition": 158,
+          "rowNumber": 158,
+          "rowPosition": 159,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5442,7 +5476,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-07-04 00:00:00\" in row \"158\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-07-04 00:00:00\" in row \"159\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5466,8 +5500,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 158,
-          "rowPosition": 159,
+          "rowNumber": 159,
+          "rowPosition": 160,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5476,7 +5510,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-07-05 00:00:00\" in row \"159\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-07-05 00:00:00\" in row \"160\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5500,8 +5534,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 159,
-          "rowPosition": 160,
+          "rowNumber": 160,
+          "rowPosition": 161,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5510,7 +5544,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-07-12 00:00:00\" in row \"160\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-07-12 00:00:00\" in row \"161\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5534,8 +5568,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 160,
-          "rowPosition": 161,
+          "rowNumber": 161,
+          "rowPosition": 162,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5544,7 +5578,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-07-22 00:00:00\" in row \"161\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-07-22 00:00:00\" in row \"162\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5568,8 +5602,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 161,
-          "rowPosition": 162,
+          "rowNumber": 162,
+          "rowPosition": 163,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5578,7 +5612,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-01 00:00:00\" in row \"162\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-01 00:00:00\" in row \"163\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5602,8 +5636,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 162,
-          "rowPosition": 163,
+          "rowNumber": 163,
+          "rowPosition": 164,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5612,7 +5646,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-08 00:00:00\" in row \"163\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-08 00:00:00\" in row \"164\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5625,40 +5659,6 @@
             "PMMG",
             "7460.112455/2019-64",
             "Operação caixa forte",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2019-08-09 00:00:00",
-            "2019-08-09",
-            "2025-05-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 163,
-          "rowPosition": 164,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-09 00:00:00\" in row \"164\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-08-09 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112456/2019-63",
-            "Organização criminosa",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
@@ -5684,6 +5684,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2019-08-09 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112456/2019-63",
+            "Organização criminosa",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2019-08-09 00:00:00",
+            "2019-08-09",
+            "2025-05-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 165,
+          "rowPosition": 166,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-09 00:00:00\" in row \"166\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2019-08-26 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -5704,8 +5738,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 165,
-          "rowPosition": 166,
+          "rowNumber": 166,
+          "rowPosition": 167,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5714,7 +5748,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-26 00:00:00\" in row \"166\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-26 00:00:00\" in row \"167\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5738,8 +5772,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 166,
-          "rowPosition": 167,
+          "rowNumber": 167,
+          "rowPosition": 168,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5748,7 +5782,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-08-30 00:00:00\" in row \"167\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-08-30 00:00:00\" in row \"168\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5772,8 +5806,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 167,
-          "rowPosition": 168,
+          "rowNumber": 168,
+          "rowPosition": 169,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5782,7 +5816,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-09-02 00:00:00\" in row \"168\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-09-02 00:00:00\" in row \"169\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5795,40 +5829,6 @@
             "PMMG",
             "7460.112461/2019-74",
             "Infomações crime organizado",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2019-09-24 00:00:00",
-            "2019-09-24",
-            "2025-05-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 168,
-          "rowPosition": 169,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-09-24 00:00:00\" in row \"169\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-09-24 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "7460.112462/2019-74",
-            "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
@@ -5854,6 +5854,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2019-09-24 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "7460.112462/2019-74",
+            "Inserir o assunto sobre o qual versa a informação",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2019-09-24 00:00:00",
+            "2019-09-24",
+            "2025-05-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 170,
+          "rowPosition": 171,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-09-24 00:00:00\" in row \"171\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2019-11-18 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -5874,8 +5908,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 170,
-          "rowPosition": 171,
+          "rowNumber": 171,
+          "rowPosition": 172,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5884,7 +5918,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-11-18 00:00:00\" in row \"171\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-11-18 00:00:00\" in row \"172\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5908,8 +5942,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 171,
-          "rowPosition": 172,
+          "rowNumber": 172,
+          "rowPosition": 173,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5918,7 +5952,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-11-22 00:00:00\" in row \"172\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-11-22 00:00:00\" in row \"173\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5942,8 +5976,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 172,
-          "rowPosition": 173,
+          "rowNumber": 173,
+          "rowPosition": 174,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5952,7 +5986,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-02-11 00:00:00\" in row \"173\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-02-11 00:00:00\" in row \"174\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -5976,8 +6010,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 173,
-          "rowPosition": 174,
+          "rowNumber": 174,
+          "rowPosition": 175,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -5986,7 +6020,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-02-13 00:00:00\" in row \"174\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-02-13 00:00:00\" in row \"175\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6010,8 +6044,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 174,
-          "rowPosition": 175,
+          "rowNumber": 175,
+          "rowPosition": 176,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6020,7 +6054,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2017-07-21 00:00:00\" in row \"175\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2017-07-21 00:00:00\" in row \"176\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6044,8 +6078,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 175,
-          "rowPosition": 176,
+          "rowNumber": 176,
+          "rowPosition": 177,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6054,7 +6088,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-01-30 00:00:00\" in row \"176\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-01-30 00:00:00\" in row \"177\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6078,8 +6112,8 @@
             "",
             "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
           ],
-          "rowNumber": 176,
-          "rowPosition": 177,
+          "rowNumber": 177,
+          "rowPosition": 178,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6088,7 +6122,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-07-31 00:00:00\" in row \"177\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-07-31 00:00:00\" in row \"178\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6100,40 +6134,6 @@
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
             "0063.112423/2019-75",
-            "Inserir o assunto sobre o qual versa a informação",
-            "Reservado",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso(s) III ,VII,V  da Lei Federal nº 12.527/2011",
-            "2019-01-25 00:00:00",
-            "2019-01-25",
-            "2024-07-16",
-            "Desclassificada",
-            "5",
-            "",
-            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
-          ],
-          "rowNumber": 177,
-          "rowPosition": 178,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-01-25 00:00:00\" in row \"178\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2019-01-25 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Polícia Militar do Estado de Minas Gerais - PMMG",
-            "PMMG",
-            "0063.112424/2019-75",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
@@ -6167,11 +6167,11 @@
           "cells": [
             "Polícia Militar do Estado de Minas Gerais - PMMG",
             "PMMG",
-            "0063.112425/2019-75",
+            "0063.112424/2019-75",
             "Inserir o assunto sobre o qual versa a informação",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso(s) V ,VIII, III, II  da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso(s) III ,VII,V  da Lei Federal nº 12.527/2011",
             "2019-01-25 00:00:00",
             "2019-01-25",
             "2024-07-16",
@@ -6191,6 +6191,40 @@
           ],
           "note": "type is \"date/default\"",
           "message": "Type error in the cell \"2019-01-25 00:00:00\" in row \"180\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "2019-01-25 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Polícia Militar do Estado de Minas Gerais - PMMG",
+            "PMMG",
+            "0063.112425/2019-75",
+            "Inserir o assunto sobre o qual versa a informação",
+            "Reservado",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso(s) V ,VIII, III, II  da Lei Federal nº 12.527/2011",
+            "2019-01-25 00:00:00",
+            "2019-01-25",
+            "2024-07-16",
+            "Desclassificada",
+            "5",
+            "",
+            "https://www.policiamilitar.mg.gov.br/site/externo/pagina/10081/lei-de-acesso-%C3%A0-informa%C3%A7%C3%A3o"
+          ],
+          "rowNumber": 180,
+          "rowPosition": 181,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2019-01-25 00:00:00\" in row \"181\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6214,8 +6248,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 180,
-          "rowPosition": 181,
+          "rowNumber": 181,
+          "rowPosition": 182,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6224,7 +6258,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-02-25 00:00:00\" in row \"181\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-02-25 00:00:00\" in row \"182\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6237,40 +6271,6 @@
             "SEF",
             "-",
             "Regimes   especiais que dispõem sobre obrigações principais e acessórias, e respectivos   pareceres e estudos que os embasaram",
-            "Ultrassecreto",
-            "7 - Economia e Finanças",
-            "Art. 23, inciso IV e art. 24, caput, § 1º, inciso I e § 5º, inciso I, da Lei Federal nº 12.527/2011",
-            "2025-06-13 00:00:00",
-            "2022-02-25",
-            "",
-            "Classificada",
-            "25",
-            "2026-04-16",
-            "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
-          ],
-          "rowNumber": 181,
-          "rowPosition": 182,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-06-13 00:00:00\" in row \"182\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2025-06-13 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria de Estado de Fazenda - SEF",
-            "SEF",
-            "-",
-            "Processos e documentos referentes à aplicação   de benefícios fiscais de que tratam o RICMS/02 e seus anexos I, II, IV, IX e   XVI, exceto as consultas sobre aplicação da Legislação Tributária",
             "Ultrassecreto",
             "7 - Economia e Finanças",
             "Art. 23, inciso IV e art. 24, caput, § 1º, inciso I e § 5º, inciso I, da Lei Federal nº 12.527/2011",
@@ -6296,6 +6296,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2025-06-13 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria de Estado de Fazenda - SEF",
+            "SEF",
+            "-",
+            "Processos e documentos referentes à aplicação   de benefícios fiscais de que tratam o RICMS/02 e seus anexos I, II, IV, IX e   XVI, exceto as consultas sobre aplicação da Legislação Tributária",
+            "Ultrassecreto",
+            "7 - Economia e Finanças",
+            "Art. 23, inciso IV e art. 24, caput, § 1º, inciso I e § 5º, inciso I, da Lei Federal nº 12.527/2011",
+            "2025-06-13 00:00:00",
+            "2022-02-25",
+            "",
+            "Classificada",
+            "25",
+            "2026-04-16",
+            "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
+          ],
+          "rowNumber": 183,
+          "rowPosition": 184,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2025-06-13 00:00:00\" in row \"184\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2022-12-28 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -6316,8 +6350,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 183,
-          "rowPosition": 184,
+          "rowNumber": 184,
+          "rowPosition": 185,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6326,7 +6360,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-12-28 00:00:00\" in row \"184\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-12-28 00:00:00\" in row \"185\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6350,8 +6384,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 184,
-          "rowPosition": 185,
+          "rowNumber": 185,
+          "rowPosition": 186,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6360,7 +6394,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-12-30 00:00:00\" in row \"185\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-12-30 00:00:00\" in row \"186\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6384,8 +6418,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 185,
-          "rowPosition": 186,
+          "rowNumber": 186,
+          "rowPosition": 187,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6394,7 +6428,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-02-25 00:00:00\" in row \"186\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-02-25 00:00:00\" in row \"187\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6418,8 +6452,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 186,
-          "rowPosition": 187,
+          "rowNumber": 187,
+          "rowPosition": 188,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6428,7 +6462,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-12-29 00:00:00\" in row \"187\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-12-29 00:00:00\" in row \"188\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6452,8 +6486,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 187,
-          "rowPosition": 188,
+          "rowNumber": 188,
+          "rowPosition": 189,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6462,7 +6496,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-08-18 00:00:00\" in row \"188\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2021-08-18 00:00:00\" in row \"189\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6475,40 +6509,6 @@
             "SEF",
             "-",
             "Disponibilidade de Caixa - Contrato de Prestação de Serviços   Financeiros e outras Avenças, N.º 1900010998, que entre si celebram o Estado   de Minas Gerais e o Banco do Brasil S.A., de 21/12/2021, exceto as   informações publicadas no Diário Oficial do Estado de Minas Gerais em   22/12/2021",
-            "Reservado",
-            "7 - Economia e Finanças",
-            "Art. 23, inciso IV e art. 24, caput e § 1º, inciso III e § 5º, inciso I, da Lei Federal nº 12.527/2011",
-            "2025-06-12 00:00:00",
-            "2025-06-12",
-            "",
-            "Classificada",
-            "5",
-            "2026-04-16",
-            "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
-          ],
-          "rowNumber": 188,
-          "rowPosition": 189,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-06-12 00:00:00\" in row \"189\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2025-06-12 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria de Estado de Fazenda - SEF",
-            "SEF",
-            "-",
-            "Folha de Pagamento - CONTRATO Nº 1900010957/2021, DE PRESTAÇÃO   DE SERVIÇOS, QUE ENTRE SI CELEBRAM O ESTADO DE MINAS GERAIS, POR INTERMÉDIO   DA SECRETARIA DE ESTADO DE FAZENDA - SEF/MG E O ITAÚ UNIBANCO S/A, de   02/08/2021, exceto as informações publicadas no Diário Oficial do Estado de   Minas Gerais em em 03/08/2021",
             "Reservado",
             "7 - Economia e Finanças",
             "Art. 23, inciso IV e art. 24, caput e § 1º, inciso III e § 5º, inciso I, da Lei Federal nº 12.527/2011",
@@ -6534,6 +6534,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2025-06-12 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria de Estado de Fazenda - SEF",
+            "SEF",
+            "-",
+            "Folha de Pagamento - CONTRATO Nº 1900010957/2021, DE PRESTAÇÃO   DE SERVIÇOS, QUE ENTRE SI CELEBRAM O ESTADO DE MINAS GERAIS, POR INTERMÉDIO   DA SECRETARIA DE ESTADO DE FAZENDA - SEF/MG E O ITAÚ UNIBANCO S/A, de   02/08/2021, exceto as informações publicadas no Diário Oficial do Estado de   Minas Gerais em em 03/08/2021",
+            "Reservado",
+            "7 - Economia e Finanças",
+            "Art. 23, inciso IV e art. 24, caput e § 1º, inciso III e § 5º, inciso I, da Lei Federal nº 12.527/2011",
+            "2025-06-12 00:00:00",
+            "2025-06-12",
+            "",
+            "Classificada",
+            "5",
+            "2026-04-16",
+            "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
+          ],
+          "rowNumber": 190,
+          "rowPosition": 191,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2025-06-12 00:00:00\" in row \"191\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2022-06-22 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -6554,8 +6588,8 @@
             "2026-04-16",
             "https://www.fazenda.mg.gov.br/transparencia/informacoes-classificadas-e-desclassificadas/"
           ],
-          "rowNumber": 190,
-          "rowPosition": 191,
+          "rowNumber": 191,
+          "rowPosition": 192,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6564,7 +6598,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-06-22 00:00:00\" in row \"191\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-06-22 00:00:00\" in row \"192\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6588,8 +6622,8 @@
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
-          "rowNumber": 191,
-          "rowPosition": 192,
+          "rowNumber": 192,
+          "rowPosition": 193,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -6598,7 +6632,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-07-15 00:00:00\" in row \"192\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-07-15 00:00:00\" in row \"193\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6611,40 +6645,6 @@
             "SEJUSP",
             "026.06.1450",
             "Informações contidas nos manuais de procedimentos de segurança e rotinas de trabalho no âmbito do DEPEN/SEJUSP.",
-            "Ultrassecreto",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
-            "2021-06-01 00:00:00",
-            "2021-06-02",
-            "",
-            "Classificada",
-            "25",
-            "2026-04-29",
-            "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
-          ],
-          "rowNumber": 192,
-          "rowPosition": 193,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-06-01 00:00:00\" in row \"193\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2021-06-01 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
-            "SEJUSP",
-            "029.06.1450",
-            "Informações contidas em prontuários jurídicos de Indivíduos Privados de Liberdade.",
             "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
@@ -6677,8 +6677,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "030.06.1450",
-            "Informações referentes aos componentes e registros de armamentos, explosivos, equipamentos de segurança, apetrechos de uso policial, dispositivos de dispersão e munições gerenciados e utilizados pela SEJUSP. [9]",
+            "029.06.1450",
+            "Informações contidas em prontuários jurídicos de Indivíduos Privados de Liberdade.",
             "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
@@ -6711,16 +6711,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "003.06.1450",
-            "Informações referentes a veículos, contratados e oficiais, para transporte rodoviário de servidores públicos e de carga utilizados no âmbito da SEJUSP. [1]",
-            "Reservado",
+            "030.06.1450",
+            "Informações referentes aos componentes e registros de armamentos, explosivos, equipamentos de segurança, apetrechos de uso policial, dispositivos de dispersão e munições gerenciados e utilizados pela SEJUSP. [9]",
+            "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "5",
+            "25",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -6745,8 +6745,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "007.06.1450",
-            "Dados relacionados ao processo de visitação a presos nas unidades prisionais.",
+            "003.06.1450",
+            "Informações referentes a veículos, contratados e oficiais, para transporte rodoviário de servidores públicos e de carga utilizados no âmbito da SEJUSP. [1]",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
@@ -6779,8 +6779,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "008.06.1450",
-            "Informações relativas a escolta/acompanhamento de Indivíduos Privados de Liberdade (IPLs), de adolescentes autores de atos infracionais e de adolescentes acautelados e equipamentos de segurança nos sistemas prisional e socioeducativo. [2]",
+            "007.06.1450",
+            "Dados relacionados ao processo de visitação a presos nas unidades prisionais.",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
@@ -6813,8 +6813,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "009.06.1450",
-            "Dados de frequência e codificação do sistema de radiocomunicação das unidades prisionais, socioeducativas e administrativas da Sejusp. [3]",
+            "008.06.1450",
+            "Informações relativas a escolta/acompanhamento de Indivíduos Privados de Liberdade (IPLs), de adolescentes autores de atos infracionais e de adolescentes acautelados e equipamentos de segurança nos sistemas prisional e socioeducativo. [2]",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
@@ -6847,16 +6847,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "015.06.1450",
-            "Informações relacionadas à análise de provisionamento e à vagas  livres de cargo ofertado em concurso público ou em processo seletivo.",
-            "Secreto",
+            "009.06.1450",
+            "Dados de frequência e codificação do sistema de radiocomunicação das unidades prisionais, socioeducativas e administrativas da Sejusp. [3]",
+            "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "15",
+            "5",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -6881,16 +6881,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "027.06.1450",
-            "Informações contidas nos planos de segurança no âmbito do DEPEN/SEJUSP.",
-            "Ultrassecreto",
+            "015.06.1450",
+            "Informações relacionadas à análise de provisionamento e à vagas  livres de cargo ofertado em concurso público ou em processo seletivo.",
+            "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "25",
+            "15",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -6915,16 +6915,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "002.06.1450",
-            "Dados de ocorrências no âmbito das unidades prisionais.",
-            "Reservado",
+            "027.06.1450",
+            "Informações contidas nos planos de segurança no âmbito do DEPEN/SEJUSP.",
+            "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VII da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso III, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "5",
+            "25",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -6949,16 +6949,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "019.06.1450",
-            "Informações contidas em relatórios de auditoria consolidados pela inteligência.",
-            "Secreto",
+            "002.06.1450",
+            "Dados de ocorrências no âmbito das unidades prisionais.",
+            "Reservado",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "Art. 23, inciso VII da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "15",
+            "5",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -6973,6 +6973,40 @@
           ],
           "note": "type is \"date/default\"",
           "message": "Type error in the cell \"2021-06-01 00:00:00\" in row \"203\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "2021-06-01 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
+            "SEJUSP",
+            "019.06.1450",
+            "Informações contidas em relatórios de auditoria consolidados pela inteligência.",
+            "Secreto",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2021-06-01 00:00:00",
+            "2021-06-02",
+            "",
+            "Classificada",
+            "15",
+            "2026-04-29",
+            "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
+          ],
+          "rowNumber": 203,
+          "rowPosition": 204,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2021-06-01 00:00:00\" in row \"204\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -6996,8 +7030,8 @@
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
-          "rowNumber": 203,
-          "rowPosition": 204,
+          "rowNumber": 204,
+          "rowPosition": 205,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7006,7 +7040,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-09-04 00:00:00\" in row \"204\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-09-04 00:00:00\" in row \"205\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7027,40 +7061,6 @@
             "",
             "Classificada",
             "15",
-            "2026-04-29",
-            "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
-          ],
-          "rowNumber": 204,
-          "rowPosition": 205,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-06-01 00:00:00\" in row \"205\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2021-06-01 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
-            "SEJUSP",
-            "028.06.1450",
-            "Informações relacionadas a integrantes e líderes de facções criminosas acautelados em unidades prisionais.",
-            "Ultrassecreto",
-            "6 - Defesa Social e Segurança Pública",
-            "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
-            "2021-06-01 00:00:00",
-            "2021-06-02",
-            "",
-            "Classificada",
-            "25",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7085,16 +7085,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "005.06.1450",
-            "Informações de localização física dos Indivíduos Privados de Liberdade.",
-            "Reservado",
+            "028.06.1450",
+            "Informações relacionadas a integrantes e líderes de facções criminosas acautelados em unidades prisionais.",
+            "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "5",
+            "25",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7119,8 +7119,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "006.06.1450",
-            "Informações de visitação a locais, divisões ou seções em unidades prisionais.",
+            "005.06.1450",
+            "Informações de localização física dos Indivíduos Privados de Liberdade.",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
@@ -7153,8 +7153,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "010.06.1450",
-            "Informações originadas por meio de denúncias e averiguações, que possam comprometer a fonte delatora e as investigações dos fatos. [4]",
+            "006.06.1450",
+            "Informações de visitação a locais, divisões ou seções em unidades prisionais.",
             "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
@@ -7187,16 +7187,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "011.06.1450",
-            "Informações referentes a estudo de dimensionamento da força de trabalho do Sistema Prisional.",
-            "Secreto",
+            "010.06.1450",
+            "Informações originadas por meio de denúncias e averiguações, que possam comprometer a fonte delatora e as investigações dos fatos. [4]",
+            "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "15",
+            "5",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7221,8 +7221,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "014.06.1450",
-            "Informações relacionadas à gestão da segurança prisional e socioeducativa envolvendo o quadro de pessoal.",
+            "011.06.1450",
+            "Informações referentes a estudo de dimensionamento da força de trabalho do Sistema Prisional.",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
@@ -7255,8 +7255,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "012.06.1450",
-            "Informações relacionadas a nomes, a lotação, a exercício, a quantitativos, a escala de trabalhos, e a postos de serviço de agentes públicos (ativos, inativos ou desligados) das unidades administrativas, das unidades prisionais, das unidades socioeducativas e das Regiões Integradas de Segurança Pública (RISP). [5]",
+            "014.06.1450",
+            "Informações relacionadas à gestão da segurança prisional e socioeducativa envolvendo o quadro de pessoal.",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
@@ -7289,8 +7289,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "013.06.1450",
-            "Lista e quantitativo de servidores afastados e em gozo de férias regulamentares e férias prêmio, por unidade prisional ou socioeducativa.",
+            "012.06.1450",
+            "Informações relacionadas a nomes, a lotação, a exercício, a quantitativos, a escala de trabalhos, e a postos de serviço de agentes públicos (ativos, inativos ou desligados) das unidades administrativas, das unidades prisionais, das unidades socioeducativas e das Regiões Integradas de Segurança Pública (RISP). [5]",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
@@ -7323,8 +7323,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "016.06.1450",
-            "Informações sobre absenteísmo nas unidades prisionais e socioeducativas.",
+            "013.06.1450",
+            "Lista e quantitativo de servidores afastados e em gozo de férias regulamentares e férias prêmio, por unidade prisional ou socioeducativa.",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
@@ -7357,11 +7357,11 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "020.06.1450",
-            "Informações contidas em bancos de dados internos e soluções tecnológicas adotadas pela SEJUSP: descrições, configurações, projetos, códigos fonte e os produtos de soluções tecnológicas, incluindo todos os seus componentes de hardware, software e rede. [8]",
+            "016.06.1450",
+            "Informações sobre absenteísmo nas unidades prisionais e socioeducativas.",
             "Secreto",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, incisos III e VIII, da Lei Federal nº 12.527/2011",
+            "Art. 23, incisos III e VII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
@@ -7391,16 +7391,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "021.06.1450",
-            "Informações das abas Homicídios / Vulnerabilidade Criminal / Dinâmica das Vulnerabilidades dos Relatórios de Gestão Estratégica (RGE).",
-            "Ultrassecreto",
+            "020.06.1450",
+            "Informações contidas em bancos de dados internos e soluções tecnológicas adotadas pela SEJUSP: descrições, configurações, projetos, códigos fonte e os produtos de soluções tecnológicas, incluindo todos os seus componentes de hardware, software e rede. [8]",
+            "Secreto",
             "6 - Defesa Social e Segurança Pública",
-            "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
+            "Art. 23, incisos III e VIII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "25",
+            "15",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7425,8 +7425,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "022.06.1450",
-            "Informações dos Relatórios Analíticos de Dinâmica Criminal.",
+            "021.06.1450",
+            "Informações das abas Homicídios / Vulnerabilidade Criminal / Dinâmica das Vulnerabilidades dos Relatórios de Gestão Estratégica (RGE).",
             "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
@@ -7459,16 +7459,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "017.06.1450",
-            "Informações referentes ao conteúdo das chamadas ao teleatendimento emergencial, via 190, 193 e 197. [6]",
-            "Secreto",
+            "022.06.1450",
+            "Informações dos Relatórios Analíticos de Dinâmica Criminal.",
+            "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "15",
+            "25",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7493,16 +7493,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "023.06.1450",
-            "Selo Prevenção Minas - Informações das atas das reuniões das Comissões Municipais.",
-            "Ultrassecreto",
+            "017.06.1450",
+            "Informações referentes ao conteúdo das chamadas ao teleatendimento emergencial, via 190, 193 e 197. [6]",
+            "Secreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "25",
+            "15",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7527,8 +7527,8 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "025.06.1450",
-            "Informações das atas das reuniões do Grupo de Intervenções Estratégicas - GIE.",
+            "023.06.1450",
+            "Selo Prevenção Minas - Informações das atas das reuniões das Comissões Municipais.",
             "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
@@ -7561,16 +7561,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "004.06.1450",
-            "Informações das atas das reuniões do eixo Núcleo Integrado de monitoramento à violência contra a mulher do programa MG Mulher.",
-            "Reservado",
+            "025.06.1450",
+            "Informações das atas das reuniões do Grupo de Intervenções Estratégicas - GIE.",
+            "Ultrassecreto",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "5",
+            "25",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7595,16 +7595,16 @@
           "cells": [
             "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
             "SEJUSP",
-            "024.06.1450",
-            "Selo Prevenção Minas - Informações das entrevistas do Diagnóstico Municipal de Segurança Cidadã.",
-            "Ultrassecreto",
+            "004.06.1450",
+            "Informações das atas das reuniões do eixo Núcleo Integrado de monitoramento à violência contra a mulher do programa MG Mulher.",
+            "Reservado",
             "6 - Defesa Social e Segurança Pública",
             "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
             "2021-06-01 00:00:00",
             "2021-06-02",
             "",
             "Classificada",
-            "25",
+            "5",
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
@@ -7619,6 +7619,40 @@
           ],
           "note": "type is \"date/default\"",
           "message": "Type error in the cell \"2021-06-01 00:00:00\" in row \"222\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
+          "cell": "2021-06-01 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria de Estado de Justiça e Segurança Pública - SEJUSP",
+            "SEJUSP",
+            "024.06.1450",
+            "Selo Prevenção Minas - Informações das entrevistas do Diagnóstico Municipal de Segurança Cidadã.",
+            "Ultrassecreto",
+            "6 - Defesa Social e Segurança Pública",
+            "Art. 23, incisos III, VII e VIII, da Lei Federal nº 12.527/2011",
+            "2021-06-01 00:00:00",
+            "2021-06-02",
+            "",
+            "Classificada",
+            "25",
+            "2026-04-29",
+            "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
+          ],
+          "rowNumber": 222,
+          "rowPosition": 223,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2021-06-01 00:00:00\" in row \"223\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7642,8 +7676,8 @@
             "2026-04-29",
             "https://www.seguranca.mg.gov.br/index.php/transparencia/informacoes-classificadas-e-desclassificadas2"
           ],
-          "rowNumber": 222,
-          "rowPosition": 223,
+          "rowNumber": 223,
+          "rowPosition": 224,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7652,7 +7686,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-03-20 00:00:00\" in row \"223\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-03-20 00:00:00\" in row \"224\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7665,40 +7699,6 @@
             "SEMAD",
             "006.04.1371",
             "Produtos de auditoria – Relatórios, Pareceres, Notas de Auditoria relativos à avaliação e à consultoria de gestão de riscos",
-            "Reservado",
-            "4 – Controle Interno",
-            "Art 23, caput da Lei Federal 12.527/2011",
-            "2021-08-18 00:00:00",
-            "2021-08-18",
-            "",
-            "Classificada",
-            "5",
-            "2026-04-13",
-            "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
-          ],
-          "rowNumber": 223,
-          "rowPosition": 224,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2021-08-18 00:00:00\" in row \"224\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2021-08-18 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável - SEMAD",
-            "SEMAD",
-            "005.04.1371",
-            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do auditor",
             "Reservado",
             "4 – Controle Interno",
             "Art 23, caput da Lei Federal 12.527/2011",
@@ -7724,6 +7724,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2021-08-18 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável - SEMAD",
+            "SEMAD",
+            "005.04.1371",
+            "Papéis de Trabalho produzidos para subsidiar a opinião e convicção do auditor",
+            "Reservado",
+            "4 – Controle Interno",
+            "Art 23, caput da Lei Federal 12.527/2011",
+            "2021-08-18 00:00:00",
+            "2021-08-18",
+            "",
+            "Classificada",
+            "5",
+            "2026-04-13",
+            "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
+          ],
+          "rowNumber": 225,
+          "rowPosition": 226,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2021-08-18 00:00:00\" in row \"226\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2016-12-30 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -7744,8 +7778,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 225,
-          "rowPosition": 226,
+          "rowNumber": 226,
+          "rowPosition": 227,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7754,7 +7788,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2016-12-30 00:00:00\" in row \"226\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2016-12-30 00:00:00\" in row \"227\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7778,8 +7812,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 226,
-          "rowPosition": 227,
+          "rowNumber": 227,
+          "rowPosition": 228,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7788,7 +7822,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2018-02-01 00:00:00\" in row \"227\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2018-02-01 00:00:00\" in row \"228\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7812,8 +7846,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 227,
-          "rowPosition": 228,
+          "rowNumber": 228,
+          "rowPosition": 229,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7822,7 +7856,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-02-04 00:00:00\" in row \"228\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-02-04 00:00:00\" in row \"229\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7846,8 +7880,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 228,
-          "rowPosition": 229,
+          "rowNumber": 229,
+          "rowPosition": 230,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7856,7 +7890,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2019-12-20 00:00:00\" in row \"229\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2019-12-20 00:00:00\" in row \"230\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7880,8 +7914,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 229,
-          "rowPosition": 230,
+          "rowNumber": 230,
+          "rowPosition": 231,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7890,7 +7924,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2020-12-29 00:00:00\" in row \"230\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2020-12-29 00:00:00\" in row \"231\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7914,8 +7948,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 230,
-          "rowPosition": 231,
+          "rowNumber": 231,
+          "rowPosition": 232,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7924,7 +7958,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-12-28 00:00:00\" in row \"231\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-12-28 00:00:00\" in row \"232\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7948,8 +7982,8 @@
             "2026-04-13",
             "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
           ],
-          "rowNumber": 231,
-          "rowPosition": 232,
+          "rowNumber": 232,
+          "rowPosition": 233,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -7958,7 +7992,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2022-12-30 00:00:00\" in row \"232\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2022-12-30 00:00:00\" in row \"233\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -7971,40 +8005,6 @@
             "SEMAD",
             "010.13.1371",
             "Plano Anual de Fiscalização 2024",
-            "Reservado",
-            "13 - Meio Ambiente",
-            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
-            "2025-06-13 00:00:00",
-            "2025-06-13",
-            "",
-            "Classificada",
-            "5",
-            "2026-04-13",
-            "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
-          ],
-          "rowNumber": 232,
-          "rowPosition": 233,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-06-13 00:00:00\" in row \"233\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "2025-06-13 00:00:00",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável - SEMAD",
-            "SEMAD",
-            "011.13.1371",
-            "Plano Anual de Fiscalização 2025",
             "Reservado",
             "13 - Meio Ambiente",
             "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
@@ -8030,6 +8030,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "2025-06-13 00:00:00",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria de Estado de Meio Ambiente e Desenvolvimento Sustentável - SEMAD",
+            "SEMAD",
+            "011.13.1371",
+            "Plano Anual de Fiscalização 2025",
+            "Reservado",
+            "13 - Meio Ambiente",
+            "Art. 23, inciso VIII, da Lei Federal nº 12.527/2011",
+            "2025-06-13 00:00:00",
+            "2025-06-13",
+            "",
+            "Classificada",
+            "5",
+            "2026-04-13",
+            "https://meioambiente.mg.gov.br/informacoes-classificadas-e-desclassificadas?p_l_back_url=%2Fbusca%3Fq%3Dclassificadas"
+          ],
+          "rowNumber": 234,
+          "rowPosition": 235,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"2025-06-13 00:00:00\" in row \"235\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "2025-12-31 00:00:00",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -8050,8 +8084,8 @@
             "2026-04-13",
             ""
           ],
-          "rowNumber": 234,
-          "rowPosition": 235,
+          "rowNumber": 235,
+          "rowPosition": 236,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -8060,7 +8094,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"2025-12-31 00:00:00\" in row \"235\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"2025-12-31 00:00:00\" in row \"236\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -8073,40 +8107,6 @@
             "SEPLAG",
             "1071501",
             "Atas de reuniões do Comitê de Orçamento e Finanças (Cofin)",
-            "Secreto",
-            "7 - Economia e Finanças",
-            "Art. 23, inciso IV, da Lei Federal nº 12.527/2011",
-            "Data da  realização da reunião",
-            "2025-07-04",
-            "",
-            "Classificada",
-            "15",
-            "2026-05-27",
-            ""
-          ],
-          "rowNumber": 235,
-          "rowPosition": 236,
-          "code": "type-error",
-          "name": "Type Error",
-          "tags": [
-            "#table",
-            "#row",
-            "#cell"
-          ],
-          "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"Data da  realização da reunião\" in row \"236\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
-          "description": "The value does not match the schema type and format for this field."
-        },
-        {
-          "cell": "Data da  realização da reunião",
-          "fieldName": "data_producao",
-          "fieldNumber": 8,
-          "fieldPosition": 8,
-          "cells": [
-            "Secretaria dePlanejamento e Gestão - SEPLAG",
-            "SEPLAG",
-            "2091501",
-            "Atas das reuniões da Câmara de Coordenação da Ação Governamental (CCGov)",
             "Secreto",
             "7 - Economia e Finanças",
             "Art. 23, inciso IV, da Lei Federal nº 12.527/2011",
@@ -8132,6 +8132,40 @@
           "description": "The value does not match the schema type and format for this field."
         },
         {
+          "cell": "Data da  realização da reunião",
+          "fieldName": "data_producao",
+          "fieldNumber": 8,
+          "fieldPosition": 8,
+          "cells": [
+            "Secretaria dePlanejamento e Gestão - SEPLAG",
+            "SEPLAG",
+            "2091501",
+            "Atas das reuniões da Câmara de Coordenação da Ação Governamental (CCGov)",
+            "Secreto",
+            "7 - Economia e Finanças",
+            "Art. 23, inciso IV, da Lei Federal nº 12.527/2011",
+            "Data da  realização da reunião",
+            "2025-07-04",
+            "",
+            "Classificada",
+            "15",
+            "2026-05-27",
+            ""
+          ],
+          "rowNumber": 237,
+          "rowPosition": 238,
+          "code": "type-error",
+          "name": "Type Error",
+          "tags": [
+            "#table",
+            "#row",
+            "#cell"
+          ],
+          "note": "type is \"date/default\"",
+          "message": "Type error in the cell \"Data da  realização da reunião\" in row \"238\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "description": "The value does not match the schema type and format for this field."
+        },
+        {
           "cell": "Data de conclusão da produção",
           "fieldName": "data_producao",
           "fieldNumber": 8,
@@ -8152,8 +8186,8 @@
             "2026-05-27",
             ""
           ],
-          "rowNumber": 237,
-          "rowPosition": 238,
+          "rowNumber": 238,
+          "rowPosition": 239,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -8162,7 +8196,7 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"Data de conclusão da produção\" in row \"238\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"Data de conclusão da produção\" in row \"239\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         },
         {
@@ -8186,8 +8220,8 @@
             "2026-05-27",
             ""
           ],
-          "rowNumber": 238,
-          "rowPosition": 239,
+          "rowNumber": 239,
+          "rowPosition": 240,
           "code": "type-error",
           "name": "Type Error",
           "tags": [
@@ -8196,12 +8230,12 @@
             "#cell"
           ],
           "note": "type is \"date/default\"",
-          "message": "Type error in the cell \"data de conclusão da produção\" in row \"239\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
+          "message": "Type error in the cell \"data de conclusão da produção\" in row \"240\" and field \"data_producao\" at position \"8\": type is \"date/default\"",
           "description": "The value does not match the schema type and format for this field."
         }
       ],
       "stats": {
-        "errors": 238
+        "errors": 239
       },
       "valid": false
     },
@@ -8252,13 +8286,13 @@
         "scheme": "file",
         "title": "Insira um título humanamente legível para este recurso.",
         "stats": {
-          "hash": "a88c62f20cc7d03e4560ab0a17cb8912",
-          "bytes": 130555,
+          "hash": "3d55f7fb4860635cf551ba9acecc0316",
+          "bytes": 127242,
           "fields": 7,
-          "rows": 202
+          "rows": 197
         }
       },
-      "time": 0.021,
+      "time": 0.03,
       "scope": [
         "hash-count-error",
         "byte-count-error",
@@ -8288,7 +8322,7 @@
     }
   ],
   "stats": {
-    "errors": 238,
+    "errors": 239,
     "tasks": 2
   },
   "valid": false
